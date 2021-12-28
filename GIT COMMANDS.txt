@@ -17,6 +17,7 @@ COMANDOS BASICOS
 * git log -> muestra historial de commits
 * git clone direcciondeinternet --> para clonar el repositorio de cero
 * git diff --cached --> Podemos ver que es lo que tenemos pendiente de hacer commit con:
+* git remote add origin link
 
 *git checkout -b subbranch_of_b1 branch1
 *  git config -- global user.email "email" Para configurar email del usuario
