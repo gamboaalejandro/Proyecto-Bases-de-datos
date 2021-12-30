@@ -79,7 +79,7 @@
     overflow: visible;
     position: absolute;
     width: 1938px;
-    height: 48px;
+    height: 50px;
     left: 0px;
     top: 147px;
     transform: matrix(1, 0, 0, 1, 0, 0);
@@ -133,10 +133,10 @@
     color: rgba(112, 112, 112, 1);
 }
 
-#Gambi {
+#Ikea {
     filter: drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.161));
-    left: 80px;
-    top: 24px;
+    left: 140px;
+    top: 20px;
     position: absolute;
     overflow: visible;
     width: 250px;
@@ -174,27 +174,30 @@
     overflow: visible;
     position: absolute;
     width: 3px;
-    height: 56px;
+    height: 50px;
     left: 1363px;
     top: 40px;
     transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
-#Buscar {
+#Buscar input {
     opacity: 0.57;
     filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.161));
-    left: 1511px;
-    top: 39px;
+    left: 1465px;
+    top: 38px;
     position: absolute;
     overflow: visible;
-    width: 162px;
+    width: 350px;
+    height: 60px;
     white-space: nowrap;
     text-align: left;
     font-family: Bell MT;
-    font-style: italic;
     font-weight: normal;
-    font-size: 50px;
+    font-size: 35px;
     color: rgba(112, 112, 112, 1);
+    background: none;
+    outline: none;
+    text-indent: 37px;
 }
 
 #Lnea_3 {
