@@ -44,23 +44,43 @@
     margin: auto;
 }
 
-#textDropdown {
+#dropdown-menu {
     font-size: 10px;
-    color: black;
     background-color: #0057a4;
+    padding-right: 20px;
+    border: 2px solid #003e74;
+    text-align: center;
+}
+
+#dropdown-menu a:hover {
+    color: black;
+}
+
+#dropdown-divider {
+    color: white;
+    width: 200px;
+    height: 2px;
+}
+
+#dropdown-productos:hover,
+#dropdown-usuarios:hover,
+#dropdown-tercero:hover {
+    background-color: rgb(255, 255, 255);
 }
 
 #fondoContainer {
-    background-color: green;
     padding-left: 40px;
     padding-right: 40px;
     padding-top: 30px;
     padding-bottom: 40px;
     background-image: url("/img/tabla2.png");
+    background-size: 100%;
 }
 
 #col1 {
     background-color: #0057a4;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
 }
 
 #col2 {
@@ -70,18 +90,24 @@
 
 #col3 {
     background-color: #E8E8E8;
+    width: 85px;
 }
 
 #col4 {
     background-color: #E8E8E8;
+    width: 82px;
 }
 
 #col5 {
     background-color: #E8E8E8;
+    width: 105px;
 }
 
 #col6 {
     background-color: #E8E8E8;
+    width: 110px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 #divPrecioProducto {
@@ -114,5 +140,5 @@
 }
 
 #divBuscarBoton {
-    padding-left: 275px;
+    margin-left: 275px;
 }
