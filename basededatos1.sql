@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-01-2022 a las 03:18:32
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 8.0.9
+-- Tiempo de generación: 04-01-2022 a las 22:52:39
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `basesdedatos1`
+-- Base de datos: `basededatos1`
 --
 
 -- --------------------------------------------------------
@@ -32,6 +32,22 @@ CREATE TABLE `afiliacion` (
   `Descuento` smallint(2) NOT NULL,
   `Años_de_Afiliacion` smallint(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `afiliacion`
+--
+
+INSERT INTO `afiliacion` (`Numero_afiliado`, `Descuento`, `Años_de_Afiliacion`) VALUES
+(14, 40, 10),
+(111, 10, 9),
+(123, 10, 5),
+(169, 20, 7),
+(212, 50, 10),
+(456, 35, 5),
+(487, 60, 7),
+(639, 10, 9),
+(714, 30, 70),
+(779, 20, 8);
 
 -- --------------------------------------------------------
 
@@ -118,6 +134,21 @@ CREATE TABLE `cliente` (
   `Numero_afiliacion` mediumint(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`DocIdentidad`, `Primer_Nombre`, `Segundo_Nombre`, `Primer_Apellido`, `Segundo_Apellido`, `Fecha_nac`, `Numero_afiliacion`) VALUES
+(3531536, 'Carolina', NULL, 'Pintor', 'Pinzon', '1987-05-17', 714),
+(9658741, 'Carlos', 'Didier', 'Castaño', 'Contreras', '1990-07-24', 639),
+(11748962, 'Adriana', 'Marcela', 'Rey', 'Sanchez', '2000-12-29', 487),
+(11874953, 'Alexander', NULL, 'Carvajal', 'Vargas', '1993-08-14', 779),
+(14875934, 'Carlos', 'Emilio', 'Hernandez', 'Monterroza', '1990-03-17', 169),
+(26692889, 'Alejandro', '', 'Garofalo', 'Flores', '2000-12-07', 123),
+(27475935, 'Pedro', 'Eusebio', 'De Gouveia', 'Pontes', '2000-11-10', 111),
+(27790953, 'Alejandro', 'Jose', 'Gamboa', 'Mendez', '2000-12-10', 212),
+(28746951, 'Marco', 'Roberto', 'Perez', 'Torres', '1990-06-30', 456);
+
 -- --------------------------------------------------------
 
 --
@@ -142,8 +173,19 @@ CREATE TABLE `diseñadores` (
   `primer_nombre` varchar(12) NOT NULL,
   `segundo_nombre` varchar(12) DEFAULT NULL,
   `primer_apellido` varchar(12) NOT NULL,
-  `segundo_apellido` varchar(12) NOT NULL
+  `segundo_apellido` varchar(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `diseñadores`
+--
+
+INSERT INTO `diseñadores` (`numero_diseñador`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`) VALUES
+(1, 'IKEA', 'of', 'Sweden', NULL),
+(2, 'Johanna', NULL, 'Jelinek', NULL),
+(3, 'Iina', NULL, 'Vuorivirta', NULL),
+(4, 'Simon', NULL, 'edholm', NULL),
+(5, 'Lisa', NULL, ' Ullenius', NULL);
 
 -- --------------------------------------------------------
 
@@ -202,7 +244,7 @@ CREATE TABLE `hijo` (
   `Cedula` int(8) DEFAULT NULL,
   `Genero` varchar(1) NOT NULL,
   `DocIdentidad` int(8) NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -228,7 +270,7 @@ CREATE TABLE `instrumento_pago` (
   `Id_MetodoPago` smallint(1) NOT NULL,
   `Tipo` varchar(10) NOT NULL,
   `Doc_identidad` int(8) NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -238,10 +280,35 @@ CREATE TABLE `instrumento_pago` (
 
 CREATE TABLE `lugar_geo` (
   `codigo` smallint(2) NOT NULL,
-  `nombre` varchar(12) NOT NULL,
+  `nombre` varchar(18) NOT NULL,
   `tipo` varchar(10) NOT NULL,
   `codigop` smallint(2) DEFAULT NULL
 ) ;
+
+--
+-- Volcado de datos para la tabla `lugar_geo`
+--
+
+INSERT INTO `lugar_geo` (`codigo`, `nombre`, `tipo`, `codigop`) VALUES
+(1, 'España', 'pais', NULL),
+(2, 'EstadosUnidos', 'Pais', NULL),
+(3, 'Mexico', 'Pais', NULL),
+(10, 'Asturias', 'Estado', 1),
+(11, 'Madrid', 'Estado', 1),
+(12, 'Murcia', 'Estado', 1),
+(13, 'Andalucia', 'Estado', 1),
+(14, 'Cataluña', 'Estado', 1),
+(20, 'California', 'Estado', 2),
+(21, 'Florida', 'Estado', 2),
+(22, 'Virginia', 'Estado', 2),
+(30, 'Ciudad De México', 'Estado', 3),
+(100, 'Asturias', 'Ciudad', 10),
+(110, 'Goya', 'Ciudad', 11),
+(130, 'Jerez', 'Ciudad', 13),
+(140, 'Sabadell', 'Ciudad', 14),
+(200, 'San Diego', 'Ciudad', 20),
+(210, 'Miami', 'Ciudad', 21),
+(220, 'Norfolk', 'Ciudad', 22);
 
 -- --------------------------------------------------------
 
@@ -328,15 +395,41 @@ CREATE TABLE `platillo` (
 
 CREATE TABLE `producto` (
   `id_producto` mediumint(3) NOT NULL,
-  `nombre` varchar(12) NOT NULL,
+  `nombre` varchar(80) NOT NULL,
   `Precio` float NOT NULL,
-  `Caracteristicas` varchar(30) NOT NULL,
-  `Instrucciones de uso` varchar(40) NOT NULL,
-  `Materiales` varchar(30) NOT NULL,
+  `Caracteristicas` varchar(300) NOT NULL,
+  `Instrucciones de uso` varchar(400) NOT NULL,
+  `Materiales` varchar(150) NOT NULL,
   `Montaje` tinyint(1) NOT NULL,
   `Id_categoriaP` smallint(2) NOT NULL,
   `Cantidad` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id_producto`, `nombre`, `Precio`, `Caracteristicas`, `Instrucciones de uso`, `Materiales`, `Montaje`, `Id_categoriaP`, `Cantidad`) VALUES
+(1, 'Corona, a mano natural23 cm', 9, 'usamos materiales de desecho de fábricas indias para elaborar esta corona marrón perfecta para colgarla de una puerta o una pared.', 'Limpiar con un plumero, Sólo como adorno, No ingerir.', 'Componentes de plantas secas, 100% yute', 0, 10, 10),
+(2, 'Adorno, juego de 3, árbol de navidad verde', 2.5, 'Es de plástico renovable, una opción más sostenible que el plástico tradicional, que se elabora con recursos como el petróleo.', 'Limpiar con un paño seco.', 'Plástico PET, Plástico de polipropileno, Acero.', 0, 10, 10),
+(3, 'Portavela, blanco 13 cm', 7, 'Puedes utilizar el portavelas con velas o como objeto decorativo independiente.\r\nUn adorno sorprendente y divertido que producirá un gran efecto en tu hogar.\r\n', 'Limpiar con un paño húmedo.', 'loza, Vidriado coloreado', 0, 11, 50),
+(4, 'Farol vela gr, int / ext negro28 cm', 10, 'Adecuado para usar tanto en interiores como en exteriores.\r\nUtiliza solo 1 vela gruesa de 15 cm de alto y ∅7 cm como máximo\r\n', 'Limpiar con un paño húmedo.', 'Acero, Vidrio', 1, 11, 60),
+(5, 'Guirnalda LED 40 bombillas, interior/a pilas gris plata', 10, 'Lleva luces LED, que consumen hasta un 85% menos de electricidad y duran 20 veces más que las bombillas incandescentes. Iluminación de LED integrada.', 'No mezclar pilas de tipos diferentes, ni de capacidades ni fechas de fabricación distintos.\r\nLimpiar con un paño húmedo.\r\n', 'Plástico ABS', 0, 20, 60),
+(6, 'Guirnalda LED 40 bombillas, a pilas mini/pompón blanco/gris', 12, 'Difunde una bonita iluminación decorativa.\r\nDuración aproximada del LED: 25.000 horas.\r\n', 'Utiliza sólo pilas compatibles con el producto. No mezcles pilas nuevas y viejas, ni pilas de marca y tipo distinto.', 'Plástico ABS, Caucho sintético, Plástico de polietileno.', 0, 20, 48),
+(7, 'Guirnalda lum LED 12, interior/a pilas gris plata', 3, 'Difunde una bonita iluminación decorativa.\nComo funciona con pilas, se puede colocar en cualquier sitio sin necesidad de enchufarse.\nLleva luces LED, que consumen hasta un 85% menos de electricidad y duran 20 veces más que las bombillas incandescentes.\n', 'Limpiar con un paño húmedo.', 'Plástico ABS, Plástico policarbonado.', 0, 20, 60),
+(8, 'Guirnalda lum LED 24, exterior energía solar/balón blanco', 29, 'Difunde una bonita iluminación decorativa.\r\nFunciona con un panel solar que transforma la luz del sol en electricidad. Así ahorras energía y cuidas el medio ambiente.\r\nEs fácil de usar, ya que no se necesitan cables ni enchufes.\r\n', 'Sitúa el panel solar a plena luz del sol.\nEn un día de sol, el tiempo de recarga es de 9-12 horas; en un día nublado, 12 horas.\nLa batería se debe reemplazar únicamente por una batería recargable del mismo tipo y capacidad.\nPara un rendimiento óptimo, limpia el panel solar con regularidad para eliminar el polvo y la suciedad.\n', 'Plástico ABS, Plástico policarbonado.', 0, 21, 50),
+(9, 'Guirnalda lum LED 24, exterior negro', 14, 'Difunde una bonita iluminación decorativa.\r\nLleva luces LED, que consumen hasta un 85% menos de electricidad y duran 20 veces más que las bombillas incandescentes.\r\nIluminación de LED integrada.\r\n', 'Retira el enchufe de la toma y después pasa un paño humedecido.\r\nIncluye el driver LED.\r\n', 'Plástico policarbonado', 0, 21, 50),
+(10, 'Salchichas pequeñas congeladas', 4, '0.4 KG.\r\nPrecio/kg 10€\r\nEn Suecia, se sirve frita en el bufé de Navidad, pero también es muy popular durante todo el año.\r\n', 'N/A', 'N/A', 0, 30, 150),
+(11, 'Albóndigas proteína vegetal, congelado500 g', 3.95, '0.5 KG\r\nLas albóndigas vegetales tienen el sabor, la textura y la jugosidad de la carne, pero están hechas de proteína de guisante, avena, patata, cebolla y manzana.\r\nComo no contiene ingredientes de origen animal, es ideal para vegetarianos y veganos.\r\n', 'En sartén: freír en poco aceite a fuego medio/bajo durante unos 10 min. Remover con regularidad.\r\nConserva el producto a -18ºC. No lo congeles de nuevo, una vez descongelado.\r\n', 'N/A', 0, 30, 100),
+(12, 'Cojín para silla, rojo40/35x38x7 cm', 5, 'Gracias a la fijación con velcro, el cojín no se mueve.\r\nComo el cojín es idéntico por los dos lados, podrás darle la vuelta para que no se desgaste más por uno que por el otro.\r\nEs fácil de mantener impecable, porque se puede lavar a máquina.\r\n', 'Lavar a máquina a 40°C como máximo, tratamiento normal. No utilizar lejía. Secar en secadora a temperatura baja (60ºC como máximo).No planchar. No limpiar en seco.\r\n', 'Espuma de poliuretano, Algodón, polipropileno.', 0, 4, 60),
+(13, 'Delantal 63x84 cm', 2, 'Talla única.', 'Encoge un 4% como máx.\r\nLavar a máquina a 60°C como máximo, tratamiento normal..\r\nNo utilizar lejía.\r\nSecar normal en secadora a temperatura normal (80ºC como máximo).\r\nPlanchar a 200ºC como máximo.\r\nNo limpiar en seco.\r\n', 'Algodón.', 0, 4, 100),
+(14, 'Paño de cocina, rojo 45x60 cm', 0.5, 'Los colores se mantienen lavado tras lavado porque el tejido ha sido teñido en hilado.\r\nGracias a la cinta es fácil de colgar cuando no lo usas.\r\nLava este producto antes de usarlo por primera vez.\r\n', 'Encoge un 4% como máx.\r\nLavar a máquina a 60°C como máximo, tratamiento normal.\r\nNo utilizar lejía.\r\nNo secar en secadora.\r\nPlanchar a 200ºC como máximo.\r\nNo limpiar en seco.\r\n', 'Algodón.', 0, 4, 150),
+(15, 'Planta artificial con LED, a pilas/árbol de navidad verde \r\n12 cm\r\n', 15, 'Difunde una bonita iluminación decorativa.\r\nComo funciona con pilas, se puede colocar en cualquier sitio sin necesidad de enchufarse.\r\nLleva luces LED, que consumen hasta un 85% menos de electricidad y duran 20 veces más que las bombillas incandescentes.\r\n', 'La lámpara tiene un temporizador integrado: se apaga automáticamente 8 horas después de haberla encendido.\r\nNo mezclar pilas de tipos diferentes, ni de capacidades ni fechas de fabricación distintos.\r\nUtiliza sólo pilas compatibles con el producto. No mezcles pilas nuevas y viejas, ni pilas de marca y tipo distinto.\r\nLimpiar con un paño seco.\r\n', 'Acero, Plástico de polipropileno, Plástico PET, Plástico de polipropileno, Hormigón armado.', 0, 50, 160),
+(16, 'Planta, 3 bulbo, jacinto colores variados12 cm', 2.5, 'Las plantas de flor pueden florecer a los pocos días o meses, según hayan sido cuidadas.\r\nFlores perfumadas.\r\n', 'Aporta energía a las plantas añadiendo abono cada mes. \r\nSi la planta entra en estado de reposo, déjala hasta la próxima estación.\r\nTemperatura mínima: 0°C.\r\nColocar en un área luminosa, pero resguardado del sol.\r\nRegar con moderación.\r\n', 'Planta cultivada en maceta', 0, 50, 500),
+(17, 'Macetero, vidrio/corcho', 9, 'Este macetero es ideal para orquídeas, ya que el cristal transparente permite que la luz llegue a las raíces de la planta y te ayuda a saber si necesitas regarla', 'Limpiar con un paño húmedo.', 'Vidrio, Corcho.', 0, 51, 50),
+(18, 'Bote con tapa, motivo estrella rojo/blanco 13 cl', 5, 'El bote tiene un cierre hermético para que conserves perfectamente tu mermelada casera favorita.\r\nEste recipiente es hermético y apto para guardar alimentos. \r\nLa junta de caucho debe estar limpia y en buenas condiciones para funcionar correctamente.\r\n', 'Si quieres esterilizar el bote con agua hirviendo, llénalo antes con agua caliente del grifo, para evitar que el vidrio se rompa.\r\nLavar a mano.\r\nLava y seca este producto antes de usarlo por primera vez.\r\n', 'Vidrio, Laca, Caucho natural, Acero inoxidable.', 0, 6, 90),
+(19, 'Bote con tapa, vidrio incoloro 0.5 l', 1.5, 'Las juntas de goma de recambio se venden aparte.\r\nEl bote tiene un cierre hermético para que conserves perfectamente tu mermelada casera favorita.\r\n', 'Si quieres esterilizar el bote con agua hirviendo, llénalo antes con agua caliente del grifo, para evitar que el vidrio se rompa.\r\nEl bote de vidrio es apto para el lavavajillas. La junta se debe lavar a mano.\r\nLava este producto antes de usarlo por primera vez.\r\n\r\n', 'Vidrio (40 % reciclado como mín.), Caucho natural, Acero inoxidable.', 0, 6, 113),
+(20, 'Cortapastas j5, gris plata', 5, 'Usa la creatividad y diviértete decorando tus galletas con dulces y grasa.\r\nIncluye: 5 cortapastas redondos (3, 5, 7, 9 y 11 cm de diámetro).\r\n', 'Lava este producto antes de usarlo por primera vez.\r\nApto para lavavajillas.\r\n', 'Acero inoxidable.', 0, 6, 350);
 
 -- --------------------------------------------------------
 
@@ -371,18 +464,25 @@ CREATE TABLE `telefono` (
 
 CREATE TABLE `tienda` (
   `id_tienda` smallint(2) NOT NULL,
-  `nombre_sucursal` varchar(12) NOT NULL,
-  `direccion` varchar(30) NOT NULL,
+  `nombre_sucursal` varchar(20) NOT NULL,
+  `direccion` varchar(350) NOT NULL,
   `fecha_apertura` date NOT NULL,
   `horario` time(6) NOT NULL,
-  `estilo_arquitectonico` varchar(12) NOT NULL,
-  `tamaño` mediumint(3) NOT NULL,
+  `estilo_arquitectonico` varchar(150) NOT NULL,
+  `tamaño` mediumint(5) NOT NULL,
   `numero_pasillos` smallint(2) NOT NULL,
   `capacidad_almacenmiento` int(3) NOT NULL,
   `cantidad_productos` int(3) NOT NULL,
   `area_de_niños` tinyint(1) NOT NULL,
   `codigo_lugar_geo` smallint(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tienda`
+--
+
+INSERT INTO `tienda` (`id_tienda`, `nombre_sucursal`, `direccion`, `fecha_apertura`, `horario`, `estilo_arquitectonico`, `tamaño`, `numero_pasillos`, `capacidad_almacenmiento`, `cantidad_productos`, `area_de_niños`, `codigo_lugar_geo`) VALUES
+(1, 'Ikea Asturias', 'Centro Comercial Intu Asturias, Autovía Ruta de la Plata, A-66, Km 4.5, 33429 Oviedo, Asturias, España', '2008-03-18', '10:00:00.000000', 'Arquitectura contemporánea', 24, 15, 15, 500, 1, 100);
 
 --
 -- Índices para tablas volcadas
