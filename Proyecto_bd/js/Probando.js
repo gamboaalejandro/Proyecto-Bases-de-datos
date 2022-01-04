@@ -1,8 +1,18 @@
-const dbconec = require("./Conexion.js");
+var dbconec = require("./Conexion.js");
 
-const conexion = dbconec();
-conexion.query('SELECT * from cliente', function(error, resultados, fields) {
-    resultados.forEach(element => {
-        console.log(element);
-    })
-})
+var conexion = dbconec();
+var someVar = [];
+
+conexion.query('SELECT Primer_nombre from cliente where Primer_nombre= "Pedro"', function(err, rows) {
+    if (err) {
+        throw err;
+    } else {
+        setValue(rows);
+    }
+});
+
+function setValue(value) {
+    someVar = value;
+    console.log(someVar[0].Primer_nombre);
+}
+conexion.end();
