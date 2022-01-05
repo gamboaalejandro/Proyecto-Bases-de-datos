@@ -1,4 +1,4 @@
-var dbconec = require("./Conexion.js");
+/*var dbconec = require("./Conexion.js");
 
 var conexion = dbconec();
 var someVar = [];
@@ -15,4 +15,11 @@ function setValue(value) {
     someVar = value;
     console.log(someVar[0].Primer_nombre);
 }
-conexion.end();
+conexion.end();*/
+
+var uno = document.getElementById("floatingInput");
+
+uno.addEventListener('change', function(e) {
+    return e.target.value;
+
+})
