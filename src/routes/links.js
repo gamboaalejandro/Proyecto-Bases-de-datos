@@ -3,9 +3,8 @@ const router = express.Router();
 const pool = require('../database');
 
 router.get('/Producto', (req, res, next) => {
-    res.send('algo')
+    //res.send('algo');
     res.render('links/Producto');
-    next();
 })
 
 router.post('/Producto', async(req, res, next) => {
