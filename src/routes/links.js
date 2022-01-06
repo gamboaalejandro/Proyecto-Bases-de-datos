@@ -17,6 +17,14 @@ router.post('/Producto', async(req, res, next) => {
     console.log(algo);
     console.log(Query);
     res.render('links/Producto', { Query, algo });
+    next();
+});
+
+
+router.post('/Producto', async(req, res, next) => {
+    var producto = req.body;
+    console.log("dadasd", producto);
+
 });
 
 router.get('/', async(req, res, next) => {
