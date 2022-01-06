@@ -140,5 +140,24 @@
 }
 
 #divBuscarBoton {
-    margin-left: 229px;
+    margin-top: 20px;
+    margin-left: 275px;
+}
+
+#textCaracteristicas,
+#textIntrucciones {
+    resize: none;
+    height: 113px;
+}
+
+#textIdProducto,
+#textPrecio,
+#textIdCategoria {
+    resize: none;
+    height: 0;
+}
+
+#textNombre {
+    resize: none;
+    height: 100px;
 }
