@@ -1,0 +1,170 @@
+
+ <!--NavBar-->
+    <nav id="barra" class="navbar navbar-expand-sm navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand " href="# "><img src="/img/IKEA-Logo-1.png " alt=" " width="150px "></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="textNavBar">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Productos
+                    </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown-menu">
+                            <li><a class="dropdown-item" id="dropdown-productos" href="#">Productos</a></li>
+                            <li><a class="dropdown-item" id="dropdown-usuarios" href="#">Usuarios</a></li>
+                            <li>
+                                <hr class="dropdown-divider" id="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" id="dropdown-tercero" href="#">Otra cosa</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--Consola-->
+    <div>
+        <div class="container-fluid" id="fondoContainer">
+            <div class="row">
+                <div class="col-3" id="col1">
+                    <div class="form-floating mb-3 mt-2">
+                        <form action="/links/Producto" method="POST">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="Buscar Producto" name="Producto">
+                        <div id="divBuscarBoton">
+                            <button class="btn btn-primary" type="submit" id="buscarBoton1">Buscar</button>
+                        </div>
+                        </form>
+                    </div>
+                    
+                </div>
+
+                <div class="col" id="col2">
+                    <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
+                <form action="/links/Producto" method="POST">
+                    {{#each Query}}
+                    <div class="mt-2">
+                        <input name = "id_producto" type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" value= {{id_producto}}>
+                    </div>
+                    <div class="mt-2">
+                        <input name = "Nombre"  type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreProducto" maxlength="100" value= {{nombre}}>
+                    </div>
+                    <div class="mt-2" id="divPrecioProducto">
+                        <input name = "Precio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" id="precioProducto" maxlength="10" value={{Precio}}>
+                    </div>
+                    <div class="mt-2" id="divIdCategoriaProducto">
+                        <input name = "CategoriaID" type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" value= {{Id_categoriaP}}>
+                    </div>
+                    <div class="mt-2">
+                    <span class="input-group-text">Caracteristicas</span>
+                    <textarea class="form-control" aria-label="With textarea" placeholder="Caracteristica">{{Caracteristicas}}</textarea>
+                    </div>
+                    <div class="mt-2">
+                        <input name = "Instrucciones" type="text" class="form-control" placeholder="Instrucciones de uso" aria-label="First name" id="intruccionesProducto" maxlength="500" value ={{'Instrucciones de uso'}}>
+                    </div>
+                    <div class="mt-3 mb-3" id="montajeProducto">
+                        <input name = "Montaje" class="form-check-input" type="checkbox" id="gridCheck" value ={{Montaje}}>
+                        <label class="form-check-label" for="gridCheck">Montaje</label>
+                    </div>
+                      <!-- ELSE CUANDO EN LA PRIMERA INSTANCIA EL QUERY ES VACIO -->
+                    {{else}}
+
+                    <div class="mt-2">
+                        <input type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" >
+                    </div>
+                    <div class="mt-2">
+                        <input type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreProducto" maxlength="100" >
+                    </div>
+                    <div class="mt-2" id="divPrecioProducto">
+                        <input type="text" class="form-control" placeholder="Precio" aria-label="Precio" id="precioProducto" maxlength="10" >
+                    </div>
+                    <div class="mt-2" id="divIdCategoriaProducto">
+                        <input type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" >
+                    </div>
+                    <div class="mt-2">
+                        <input type="text" class="form-control" placeholder="Caracteristicas" aria-label="First name" id="caracteristicasProducto" maxlength= "500">
+                    </div>
+                    <div class="mt-2">
+                        <input type="text" class="form-control" placeholder="Instrucciones de uso" aria-label="First name" id="intruccionesProducto" maxlength="500">
+                    </div>
+                    <div class="mt-3 mb-3" id="montajeProducto">
+                        <input class="form-check-input" type="checkbox" id="gridCheck" >
+                        <label class="form-check-label" for="gridCheck">Montaje</label>
+                    </div>
+
+
+                    {{/each}}
+                
+                </div>
+                <div class="col-1" id="col3">
+                    <div class="col">
+                        <div class="mt-2" id="divAñadirBoton">
+                            <button type="submit" class="btn btn-success" >Añadir</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" id="col4">
+                    <div class="mt-2" id="divBorrarBoton">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </div>
+                </div>
+                <div class="col-1" id="col5">
+                    <div class="mt-2" id="divModificarBoton">
+                        <button type="submit" class="btn btn-warning">Modificar</button>
+                    </div>
+                </div>
+                <div class="col-auto" id="col6">
+                    <div class="mt-2" id="divGuardarBoton">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <script src="bundle.js"></script>
+    <script>
+        const pro = require('Producto');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+
+
+
+<!--
+<div class="container p-4">
+    <div class= "row">
+        <div class = "col-md-4">
+            <div class= "card">
+                <div class = "card-body">
+                    <form action="/links/add" method="POST">
+                        <div class= "form-group">
+                            
+                        <input type ="text" class= "form-control" name ="title" autofocus placeholder="Titulo ">
+                        </div>
+                        <div class="form-group">
+                            <input type="url" name = "url" class= "form-control" placeholder="URL">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="description" rows="2" class= "form-control" placeholder="Descripcion "></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button class ="btn btn-success btn block">
+                                Save
+                            </button>
+                        </div>
+
+
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
