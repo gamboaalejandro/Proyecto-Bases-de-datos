@@ -8,7 +8,7 @@ router.get('/Producto', (req, res, next) => {
 })
 
 router.post('/Producto', async(req, res, next) => {
-    const varr = req.body;
+    const varr = req;
     console.log(varr);
     //var Nro_Producto = producto.Producto;
     await pool.query("INSERT into producto set ? ", {
