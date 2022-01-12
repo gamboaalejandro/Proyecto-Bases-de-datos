@@ -4,25 +4,6 @@ const pool = require('../database');
 
 
 
-router.get('/Producto', async(req, res, next) => {
-    console.log(req.body);
-
-
-    /* var producto = req.body;
-    var Nro_Producto = producto.Producto;
-    const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
-    console.log(Query);
-    //var caracteristica = Query[0].Caracteristicas;
-    //var algo = caracteristica.valueOf();
-    //console.log(algo); 
-*/
-    res.render("links/Producto");
-})
-
-router.get('/Productx', (req, res, next) => {
-    res.render('links/Producto');
-})
-
 router.get('/Producto/nuevo', (req, res, next) => {
     //res.send('algo');
     console.log("-----get", );
@@ -59,18 +40,23 @@ router.post('/Producto/ProductoGuardar', async(req, res, next) => {
     //console.log(algo);   
     res.render('links/Producto', { info });
 });
-/*
-router.post('/Producto', async(req, res, next) => {
-    var producto = req.body;
-    var Nro_Producto = producto.Producto;
-    //await pool.query("INSERT into producto set ?", [producto]);
-    const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
-    console.log(Query);
-    //var caracteristica = Query[0].Caracteristicas;
-    //var algo = caracteristica.valueOf();
-    //console.log(algo); 
-    next();
-});*/
+
+router.get('/Producto', async(req, res, next) => {
+
+    var producto = req.query;
+    console.log(Object.keys(producto).length);
+    if (Object.keys(producto).length !== 0) {
+        var Nro_Producto = producto.Producto;
+        const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
+        console.log(Query);
+        res.render('links/Producto', { Query })
+
+    } else {
+        res.render('links/Producto')
+
+    }
+
+});
 
 router.get('/', async(req, res, next) => {
     res.send('algo');
@@ -78,8 +64,16 @@ router.get('/', async(req, res, next) => {
 });
 
 router.get('/adornosDeNavidad', async(req, res, next) => {
-    res.render('links/adornosDeNavidad');
-})
+        res.render('links/adornosDeNavidad');
+    })
+    //Eliminacion de productos
+
+router.get('/delete/:id_producto', async(req, res, next) => {
+    console.log("Entrando A delete");
+    const id_Producto = req.params.id_producto;
+    //await pool.query("DELETE FROM producto where id_producto = ?", [id_Producto]);
+    res.render('links/Producto');
+});
 
 router.get('/lucesNavidad', async(req, res, next) => {
     res.render('links/lucesNavidad');
