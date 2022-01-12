@@ -42,19 +42,18 @@
 
             <div class="col" id="col2">
                 <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
-                <form action="/links/Producto" method="GET">
-                    {{#each Query}}
+                <form action="/links/Producto" method="POST">
                     <div class="mt-2">
-                        <input name="id_producto" type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" value="{{id_producto}}" disabled=true>
+                        <input name="id_producto" type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" >
                     </div>
                     <div class="mt-2">
-                        <input name="Nombre" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreProducto" maxlength="100" value="{{nombre}}" disabled=true>
+                        <input name="Nombre" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreProducto" maxlength="100" >
                     </div>
                     <div class="mt-2" id="divPrecioProducto">
-                        <input name="Precio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" id="precioProducto" maxlength="10" value="{{Precio}}" disabled=true>
+                        <input name="Precio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" id="precioProducto" maxlength="10">
                     </div>
                     <div class="mt-2" id="divIdCategoriaProducto">
-                        <input name="CategoriaID" type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" value= "{{Id_categoriaP}}" disabled=true>
+                        <input name="CategoriaID" type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10">
                     </div>
                     <div class="mt-2">
                         <span class="input-group-text">Caracteristicas</span>
@@ -78,13 +77,9 @@
                 </div>
             </div>
             <div class="col-1" id="col4">
-                <form action="/links/delete" method="GET">
                 <div class="mt-2" id="divBorrarBoton">
-                    <button type="submit" class="btn btn-danger">
-                        <a href="/links/delete/{{id_producto}}"> Borrar</a> 
-                    </button>
+                    <button type="submit" class="btn btn-danger" >Borrar</button>
                 </div> 
-                </form>
             </div>
             <div class="col-1" id="col5">
                 <div class="mt-2" id="divModificarBoton">
