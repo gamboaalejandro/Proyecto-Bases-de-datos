@@ -2,10 +2,21 @@ const express = require("express");
 const router = express.Router();
 const pool = require('../database');
 
-router.get('/Producto', (req, res, next) => {
-    //res.send('algo');
-    console.log("-----get")
-    res.render('links/Producto');
+
+
+router.get('/Producto', async(req, res, next) => {
+    console.log(req.body);
+
+
+    /* var producto = req.body;
+    var Nro_Producto = producto.Producto;
+    const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
+    console.log(Query);
+    //var caracteristica = Query[0].Caracteristicas;
+    //var algo = caracteristica.valueOf();
+    //console.log(algo); 
+*/
+    res.render("links/Producto");
 })
 
 router.get('/Productx', (req, res, next) => {
@@ -14,7 +25,7 @@ router.get('/Productx', (req, res, next) => {
 
 router.get('/Producto/nuevo', (req, res, next) => {
     //res.send('algo');
-    console.log("-----get")
+    console.log("-----get", );
     res.render('links/Producto');
 })
 
@@ -24,17 +35,17 @@ router.get('/Producto/editar', (req, res, next) => {
     res.render('links/Producto');
 })
 
-router.post('/Producto/guardar', async(req, res, next) => {
+router.post('/Producto/ProductoGuardar', async(req, res, next) => {
     const varr = req.body;
     console.log(varr);
-    console.log("-----post")
+    console.log("-----post");
 
     //var Nro_Producto = producto.Producto;
     await pool.query("INSERT into producto set ? ", {
         id_producto: varr.id_producto,
         nombre: varr.nombre,
-        Precio: 9.8,
-        Caracteristicas: 'Roja xl',
+        Precio: varr.Precio,
+        Caracteristicas: 'sadasd',
         Materiales: 'PLASTICO',
         Montaje: 0,
         Id_categoriaP: 1,
