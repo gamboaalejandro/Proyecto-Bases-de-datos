@@ -5,17 +5,6 @@ const pool = require('../database');
 
 
 router.get('/Producto', async(req, res, next) => {
-    console.log(req.body);
-
-
-    /* var producto = req.body;
-    var Nro_Producto = producto.Producto;
-    const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
-    console.log(Query);
-    //var caracteristica = Query[0].Caracteristicas;
-    //var algo = caracteristica.valueOf();
-    //console.log(algo); 
-*/
     res.render("links/Producto");
 })
 
@@ -59,18 +48,19 @@ router.post('/Producto/ProductoGuardar', async(req, res, next) => {
     //console.log(algo);   
     res.render('links/Producto', { info });
 });
-/*
-router.post('/Producto', async(req, res, next) => {
+
+router.get('/Producto', async(req, res, next) => {
     var producto = req.body;
     var Nro_Producto = producto.Producto;
+
     //await pool.query("INSERT into producto set ?", [producto]);
     const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
     console.log(Query);
     //var caracteristica = Query[0].Caracteristicas;
     //var algo = caracteristica.valueOf();
     //console.log(algo); 
-    next();
-});*/
+    res.render('links/Producto', { Query })
+});
 
 router.get('/', async(req, res, next) => {
     res.send('algo');
