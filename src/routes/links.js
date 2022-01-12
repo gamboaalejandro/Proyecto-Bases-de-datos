@@ -81,4 +81,8 @@ router.get('/adornosDeNavidad', async(req, res, next) => {
     res.render('links/adornosDeNavidad');
 })
 
+router.get('/lucesNavidad', async(req, res, next) => {
+    res.render('links/lucesNavidad');
+})
+
 module.exports = router;
