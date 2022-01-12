@@ -68,6 +68,10 @@
     background-color: rgb(255, 255, 255);
 }
 
+#dropdownAdornosDeNavidad:focus {
+    background: white;
+}
+
 #fondoContainer {
     padding-left: 40px;
     padding-right: 40px;

@@ -66,4 +66,8 @@ router.get('/', async(req, res, next) => {
 
 });
 
+router.get('/adornosDeNavidad', async(req, res, next) => {
+    res.render('links/adornosDeNavidad');
+})
+
 module.exports = router;
