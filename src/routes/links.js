@@ -75,4 +75,8 @@ router.get('/delete/:id_producto', async(req, res, next) => {
     res.render('links/Producto');
 });
 
+router.get('/lucesNavidad', async(req, res, next) => {
+    res.render('links/lucesNavidad');
+})
+
 module.exports = router;
