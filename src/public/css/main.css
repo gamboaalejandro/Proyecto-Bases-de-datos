@@ -161,3 +161,41 @@
     resize: none;
     height: 100px;
 }
+
+#tablaFondo {
+    background: #0057a4;
+    border-style: none;
+    border-width: 4px;
+    border-color: white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+#fondoSubcategoria {
+    background: url(/img/tabla2.png);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#rowSubcategoria1 {
+    color: white;
+    margin-left: 10px;
+    padding-bottom: 20px;
+    text-decoration-line: underline;
+}
+
+#precioProductos {
+    text-size-adjust: 100px;
+    margin-top: -10px;
+    font-size: 40px;
+    font-style: italic;
+}
+
+#textDecoration {
+    color: black;
+    text-decoration-line: none;
+}
