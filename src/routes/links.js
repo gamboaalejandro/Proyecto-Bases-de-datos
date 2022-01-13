@@ -15,19 +15,13 @@ router.get('/modificar/:id_producto', async(req, res, next) => {
 router.post('/modificar/:id_producto', async(req, res, next) => {
     const ID = req.params.id_producto;
     const varr = req.body;
-
-    if (varr.Montaje)
-        varr.Montaje = 1;
-    else
-        varr.Montaje = 0;
-
     const producto = {
         id_producto: varr.id_producto,
         nombre: varr.nombre,
         Precio: varr.precio,
         Caracteristicas: varr.caracteristicas,
         Materiales: varr.materiales,
-        Montaje: varr.montaje,
+        Montaje: varr.Montaje,
         Id_categoriaP: varr.categoriaid,
         Cantidad: varr.cantidad,
         Instrucciones: varr.instrucciones
@@ -35,8 +29,6 @@ router.post('/modificar/:id_producto', async(req, res, next) => {
     console.log(producto);
     if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
-        //var Nro_Producto = producto.Producto;
-
         await pool.query("UPDATE producto set ? WHERE id_producto = ? ", [producto, varr.id_producto]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
 
@@ -60,15 +52,10 @@ router.get('/ProductoGuardar', async(req, res, next) => {
 // FUNCIOA PARA ANADIR UN PRODUCTO
 router.post('/ProductoGuardar', async(req, res, next) => {
     const varr = req.body;
-    if (varr.Montaje)
-        varr.Montaje = 1;
-    else
-        varr.Montaje = 0;
     console.log(varr.Montaje);
     if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
-        //var Nro_Producto = producto.Producto;
-        /*await pool.query("INSERT into producto set ? ", {
+        await pool.query("INSERT into producto set ? ", {
             id_producto: varr.id_producto,
             nombre: varr.Nombre,
             Precio: varr.Precio,
@@ -78,7 +65,7 @@ router.post('/ProductoGuardar', async(req, res, next) => {
             Montaje: varr.Montaje,
             Cantidad: varr.cantidad,
             Instrucciones: varr.Instrucciones
-        });*/
+        });
     } else {
         // usar libreria pop up 
         res.send("ta malo maldita");
