@@ -3,7 +3,7 @@ const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
 
-
+// BLOQUE PARA MODIFICAR LOS PRODUCTOS       
 router.get('/modificar/:id_producto', async(req, res, next) => {
     var producto = req.params.id_producto;
     console.log('putaputa')
@@ -39,12 +39,9 @@ router.post('/modificar/:id_producto', async(req, res, next) => {
     }
 })
 
-router.get('/Producto/editar', (req, res, next) => {
-    //res.send('algo');
-    console.log("-----get")
-    res.render('links/Producto');
-})
+//////FIN DEL BLOQUE PARA MODIFICAR ////// 
 
+//////INICIO DEL CODIGO DE PARA ANADIR UN PRODUCTO ////// 
 router.get('/ProductoGuardar', async(req, res, next) => {
     res.render('links/ProductoGuardar');
 });
@@ -74,7 +71,12 @@ router.post('/ProductoGuardar', async(req, res, next) => {
 
 });
 
+//////FIN DEL CODIGO DE PARA ANADIR UN PRODUCTO ////// 
 
+
+//////FIN DEL CODIGO DE PARA ANADIR UN PRODUCTO ////// 
+
+//////BUSQUEDA DE UN PRODUCTO ////// 
 
 router.get('/Producto', async(req, res, next) => {
     var p2 = req.body;
@@ -93,15 +95,21 @@ router.get('/Producto', async(req, res, next) => {
 
     }
 
-});
-
-router.get('/', async(req, res, next) => {
-    res.send('algo');
+    ////// FIN DEL BLOQUE BUSQUEDA DE UN PRODUCTO ////// 
 
 });
+
 
 router.get('/adornosDeNavidad', async(req, res, next) => {
-        res.render('links/adornosDeNavidad');
+
+    res.render('links/adornosDeNavidad');
+})
+router.get('/ProductoPlantilla/:id', async(req, res, next) => {
+        const Nro_Producto = req.params.id;
+        console.log(Nro_Producto);
+        const Query = await pool.query("Select * from Producto where id_producto = ?", Nro_Producto);
+        console.log("asdsadasdadads", Query);
+        res.render('links/productoPlantilla', { Query });
     })
     //Eliminacion de productos
 
