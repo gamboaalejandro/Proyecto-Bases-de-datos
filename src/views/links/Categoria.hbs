@@ -43,9 +43,9 @@
 
             <div class="col" id="col2">
                 <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
-                <form action="/links/Producto" method="GET">
+                <form action="/links/Probandini" method="GET">
                     {{#each Query}}
-                    <select class="form-select mt-2" aria-label="Default select example">
+                    <select class="form-select mt-2" aria-label="Default select example"  >
                         <option selected>Seleccionar categoria</option>
                         <option value="1">Categoria</option>
                         <option value="2">Sub-categoria</option>
@@ -74,7 +74,7 @@
                     <form action="/links/ProductoGuardar" method="GET">
                     <div class="mt-2" id="divAñadirBoton">
                         <button type="submit" class="btn btn-success" id="btnAñadir">
-                            <a href="/links/ProductoGuardar">Añadir</a>
+                            <a href="#">Añadir</a>
                         </button>
                     </div>
                     </form>
@@ -84,7 +84,7 @@
                 <form action="/links/delete" method="GET">
                 <div class="mt-2" id="divBorrarBoton">
                     <button type="submit" class="btn btn-danger" id="btnBorrar">
-                        <a href="/links/delete/{{id_producto}}"> Borrar</a> 
+                        <a href="#"> Borrar</a> 
                     </button>
                 </div> 
                 </form>
@@ -93,7 +93,7 @@
                  <form action="/links/modificar" method="GET">
                 <div class="mt-2" id="divModificarBoton">
                     <button type="submit" class="btn btn-warning" id="btnModificar">
-                        <a href="/links/modificar/{{id_producto}}">Modificar</a>
+                        <a href="#">Modificar</a>
                         </button>
                 </div>
                 </form>
@@ -136,7 +136,7 @@
                 <div class="col">
                     <div class="mt-2" id="divAñadirBoton">
                         <button type="submit" class="btn btn-success" id="btnAñadir">
-                            <a href="/links/ProductoGuardar">Añadir</a>
+                            <a href="#">Añadir</a>
                         </button>
                     </div>
                 </div>
