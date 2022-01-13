@@ -118,12 +118,26 @@
     padding-right: 150px;
 }
 
-#caracteristicasProducto {
+#divCantidadProducto {
+    padding-right: 150px;
+}
+
+#intruccionesProducto,
+#caracteristicasProducto,
+#materialesProducto {
     padding-bottom: 113px;
 }
 
-#intruccionesProducto {
-    padding-bottom: 112px;
+#btnModificar a {
+    text-decoration: none;
+    color: black;
+}
+
+#btnAñadir a,
+#btnBorrar a,
+#btnGuardar a {
+    text-decoration: none;
+    color: white;
 }
 
 #buscarBoton1 {
@@ -145,7 +159,7 @@
 }
 
 #textCaracteristicas,
-#textIntrucciones {
+#textInstrucciones {
     resize: none;
     height: 113px;
 }
@@ -160,4 +174,82 @@
 #textNombre {
     resize: none;
     height: 100px;
+}
+
+#tablaFondo {
+    background: #0057a4;
+    border-style: none;
+    border-width: 4px;
+    border-color: white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+#fondoSubcategoria {
+    background: url(/img/tabla2.png);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#rowSubcategoria1 {
+    color: white;
+    margin-left: 10px;
+    padding-bottom: 20px;
+    text-decoration-line: underline;
+}
+
+#precioProductos {
+    text-size-adjust: 100px;
+    margin-top: -10px;
+    font-size: 40px;
+    font-style: italic;
+}
+
+#textDecoration {
+    color: black;
+    text-decoration-line: none;
+}
+
+#cardProducto:hover {
+    box-shadow: 0px 0px 10px white;
+    animation: crecer .7s alternate infinite ease-in-out;
+}
+
+#fondoProducto {
+    background-image: url("/img/tabla2.png");
+}
+
+#fichaTecnica {
+    background: pink;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#tablaFondoProdunto {
+    background: red;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+#comprarProducto {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+/*Animaciones*/
+
+@keyframes crecer {
+    0% {
+        transform: scale(100%, 100%);
+    }
+    100% {
+        transform: scale(101.5%, 101.5%);
+    }
 }
