@@ -39,108 +39,73 @@
                     </form>
                 </div>
             </div>
-
             <div class="col" id="col2">
                 <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
-                <form action="/links/ProductoGuardar" method="POST">
+                <form action="/links/modificar/{{Query.id_producto}}" method="POST">
                     <div class="mt-2">
-                        <input name="id_producto" type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50">
+                        <input name="id_producto" type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" value="{{Query.id_producto}}" readonly> 
                     </div>
                     <div class="mt-2">
-                        <input name="Nombre" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreProducto" maxlength="100">
+                        <input name="nombre" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreProducto" maxlength="100" value="{{Query.nombre}}" >
                     </div>
                     <div class="mt-2" id="divPrecioProducto">
-                        <input name="Precio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" id="precioProducto" maxlength="10" >
+                        <input name="precio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" id="precioProducto" maxlength="10" value="{{Query.Precio}}" >
                     </div>
                     <div class="mt-2" id="divIdCategoriaProducto">
-                        <input name="CategoriaID" type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" >
+                        <input name="categoriaid" type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" value= "{{Query.Id_categoriaP}}" readonly >
                     </div>
-                     <div class="mt-2" id="divCantidadProducto">
-                        <input name="cantidad" type="text" class="form-control" placeholder="Cantidad" aria-label="First name" id="cantidadProducto" maxlength="100" >
+                    <div class="mt-2" id="divCantidadProducto">
+                        <input name="cantidad" type="text" class="form-control" placeholder="Cantidad" aria-label="First name" id="cantidadProducto" maxlength="100"  value= "{{Query.Cantidad}}"  >
                     </div>
                     <div class="mt-2" id="divMaterialesProducto">
-                        <input name="materiales" type="text" class="form-control" placeholder="Materiales" aria-label="First name" id="materialesProducto" maxlength="100">
+                        <input name="materiales" type="text" class="form-control" placeholder="Materiales" aria-label="First name" id="materialesProducto" maxlength="100"  value= "{{Query.Materiales}}"  >
                     </div>
                     <div class="mt-2">
-                        <textarea rows= "9" name= "Caracteristicas" class="form-control" aria-label="Withtextarea" placeholder="Caracteristica"  id="textCaracteristicas"> </textarea>
+                        <textarea rows= "9" name= "caracteristicas" class="form-control" aria-label="Withtextarea" placeholder="Caracteristica"  id="textCaracteristicas"> {{Query.Caracteristicas}} </textarea>
                     </div>
                     <div class="mt-2">
-                        <textarea rows="5" name= "Instrucciones" class="form-control" aria-label="Withtextarea" placeholder="Instrucciones"  id="textInstrucciones"> </textarea>
+                        <textarea rows="5" name= "instrucciones" class="form-control" aria-label="Withtextarea" placeholder="Instrucciones"  id="textInstrucciones"> {{Query.Instrucciones}} </textarea>
                     </div>
                     <div class="mt-3 mb-3" id="montajeProducto">
-                        <input name="Montaje" class="form-check-input" type="checkbox" id="gridCheck" >
+                        <input name="montaje" class="form-check-input" type="checkbox" id="gridCheck" >
                         <label class="form-check-label" for="gridCheck">Montaje</label>
                     </div>
 
                     {{!-- BOTONES CUANDO YA HE BUSCADO EN LA BASE DE DATOS Y DESEO MODIFICAR ELIMINAR, ANADIR O GUARDAR CAMBIOS --}}
-        </div>
+                        </div>
+       
             <div class="col-1" id="col3">
                 <div class="col">
                     <div class="mt-2" id="divAñadirBoton">
-                        <button type="submit" class="btn btn-success" disabled= true id="btnAñadir">Añadir</button>
+                        <button type="submit" class="btn btn-success" id="btnAñadir" disabled = true>
+                            <a href="/links/ProductoGuardar">Añadir</a>
+                        </button>
                     </div>
-                </div> 
+                </div>
             </div>
             <div class="col-1" id="col4">
                 <div class="mt-2" id="divBorrarBoton">
-                    <button type="submit" class="btn btn-danger" disabled=true  id="btnBorrar">
-                        Borrar
+                    <button type="submit" class="btn btn-danger" id="btnBorrar" disabled = true >
+                       Borrar
                     </button>
                 </div> 
             </div>
             <div class="col-1" id="col5">
                 <div class="mt-2" id="divModificarBoton">
-                    <button type="submit" class="btn btn-warning" disabled = true id="btnModificar">Modificar</button>
+                    <button type="submit" class="btn btn-warning" id="btnModificar" disabled = true>
+                        <a href="/links/modificar/{{Query.id_producto}}">Modificar</a>
+                        </button>
                 </div>
             </div>
             <div class="col-auto" id="col6">
                 <div class="mt-2" id="divGuardarBoton">
-                    <button type="submit" class="btn btn-primary" id="btnGuardar" >
-                     Guardar
-                      {{!-- <a href="/links/ProductoGuardado">Guardar</a> --}}
+                    <button type="submit" class="btn btn-primary" id="btnGuardar">
+                        Guardar
                     </button>
                 </div>
             </div>
         </div>
-                    {{!-- FIN DEL BLOQUE DE BOTONES HABILITADOS PARA ELIMINAR ANADIR O GUARDAR O MODIFICAR --}}
-                    <!-- ELSE CUANDO EN LA PRI  MERA INSTANCIA EL QUERY ES VACIO -->
-    </form> 
+        </form>
     </div>
 </div>
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<!--
-<div class="container p-4">
-    <div class= "row">
-        <div class = "col-md-4">
-            <div class= "card">
-                <div class = "card-body">
-                    <form action="/links/add" method="POST">
-                        <div class= "form-group">
-                            
-                        <input type ="text" class= "form-control" name ="title" autofocus placeholder="Titulo ">
-                        </div>
-                        <div class="form-group">
-                            <input type="url" name = "url" class= "form-control" placeholder="URL">
-                        </div>
-                        <div class="form-group">
-                            <textarea name="description" rows="2" class= "form-control" placeholder="Descripcion "></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <button class ="btn btn-success btn block">
-                                Save
-                            </button>
-                        </div>
-
-
-                    </form>
-                </div>
-
-
-            </div>
-
-        </div>
-    </div>
-</div>-->
