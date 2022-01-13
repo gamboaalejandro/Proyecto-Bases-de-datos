@@ -67,8 +67,20 @@
                         <textarea rows="5" name= "instrucciones" class="form-control" aria-label="Withtextarea" placeholder="Instrucciones"  id="textInstrucciones"> {{Query.Instrucciones}} </textarea>
                     </div>
                     <div class="mt-3 mb-3" id="montajeProducto">
-                        <input name="montaje" class="form-check-input" type="checkbox" id="gridCheck" >
-                        <label class="form-check-label" for="gridCheck">Montaje</label>
+                        {{#if Montaje}}
+                        <select class="form-select" aria-label="Default select example" >
+                            <option>Montaje</option>
+                            <option value="1" selected>Si</option>
+                            <option value="0">No</option>
+                        </select>
+                        {{else}}
+                        <select class="form-select" aria-label="Default select example" >
+                            <option>Montaje</option>
+                            <option value="1">Si</option>
+                            <option value="0" selected>No</option>
+                        </select>
+
+                        {{/if}}
                     </div>
 
                     {{!-- BOTONES CUANDO YA HE BUSCADO EN LA BASE DE DATOS Y DESEO MODIFICAR ELIMINAR, ANADIR O GUARDAR CAMBIOS --}}
