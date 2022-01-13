@@ -136,5 +136,9 @@ router.get('/reposteriaNavidad', async(req, res, next) => {
     res.render('links/reposteriaNavidad');
 })
 
+router.get('/Categoria', async(req, res, next) => {
+    res.render('links/Categoria');
+})
+
 
 module.exports = router;

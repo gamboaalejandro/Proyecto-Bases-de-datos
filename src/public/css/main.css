@@ -352,6 +352,14 @@
     border-radius: 10px;
 }
 
+#descripcionCategoria {
+    padding-bottom: 120px;
+}
+
+#divIdPadreCategoria {
+    padding-bottom: 160px;
+}
+
 
 /*Animaciones*/
 
