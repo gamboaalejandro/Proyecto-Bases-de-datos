@@ -51,6 +51,7 @@ router.post('/ProductoGuardar', async(req, res, next) => {
     console.log(varr.Montaje);
     if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
+        req.flash('success', 'Producto Insertado satisfactoriamente');
         await pool.query("INSERT into producto set ? ", {
             id_producto: varr.id_producto,
             nombre: varr.Nombre,
@@ -148,5 +149,7 @@ router.get('/Categoria', async(req, res, next) => {
     res.render('links/Categoria');
 })
 
-
+router.get('/Probandini', async(req, res) => {
+    res.send("entrando");
+})
 module.exports = router;
