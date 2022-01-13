@@ -2,7 +2,6 @@ const express = require("express");
 const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
-var alerta = require('sweetalert');
 
 
 router.get('/modificar/:id_producto', async(req, res, next) => {
@@ -27,7 +26,7 @@ router.post('/modificar/:id_producto', async(req, res, next) => {
         Precio: varr.precio,
         Caracteristicas: varr.caracteristicas,
         Materiales: varr.materiales,
-        Montaje: varr.montaje,
+        Montaje: varr.Montaje,
         Id_categoriaP: varr.categoriaid,
         Cantidad: varr.cantidad,
         Instrucciones: varr.instrucciones
@@ -68,7 +67,7 @@ router.post('/ProductoGuardar', async(req, res, next) => {
     if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
         //var Nro_Producto = producto.Producto;
-        /*await pool.query("INSERT into producto set ? ", {
+        await pool.query("INSERT into producto set ? ", {
             id_producto: varr.id_producto,
             nombre: varr.Nombre,
             Precio: varr.Precio,
@@ -78,7 +77,7 @@ router.post('/ProductoGuardar', async(req, res, next) => {
             Montaje: varr.Montaje,
             Cantidad: varr.cantidad,
             Instrucciones: varr.Instrucciones
-        });*/
+        });
     } else {
         // usar libreria pop up 
         res.send("ta malo maldita");
@@ -122,7 +121,7 @@ router.get('/adornosDeNavidad', async(req, res, next) => {
 router.get('/delete/:id_producto', async(req, res, next) => {
     console.log("Entrando A delete");
     const id_Producto = req.params.id_producto;
-    //await pool.query("DELETE FROM producto where id_producto = ?", [id_Producto]);
+    await pool.query("DELETE FROM producto where id_producto = ?", [id_Producto]);
     res.render('links/Producto');
 });
 

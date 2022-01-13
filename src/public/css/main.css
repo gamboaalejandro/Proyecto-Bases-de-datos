@@ -110,16 +110,9 @@
     border-top-right-radius: 10px;
 }
 
-#divPrecioProducto {
-    padding-right: 200px;
-}
-
-#divIdCategoriaProducto {
-    padding-right: 150px;
-}
-
-#divCantidadProducto {
-    padding-right: 150px;
+#basic-addon1 {
+    width: 128px;
+    font-weight: bold;
 }
 
 #intruccionesProducto,
