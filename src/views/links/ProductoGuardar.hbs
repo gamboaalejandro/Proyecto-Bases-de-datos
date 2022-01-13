@@ -55,6 +55,12 @@
                     <div class="mt-2" id="divIdCategoriaProducto">
                         <input name="CategoriaID" type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" >
                     </div>
+                     <div class="mt-2" id="divCantidadProducto">
+                        <input name="cantidad" type="text" class="form-control" placeholder="Cantidad" aria-label="First name" id="cantidadProducto" maxlength="100" >
+                    </div>
+                    <div class="mt-2" id="divMaterialesProducto">
+                        <input name="materiales" type="text" class="form-control" placeholder="Materiales" aria-label="First name" id="materialesProducto" maxlength="100">
+                    </div>
                     <div class="mt-2">
                         <textarea rows= "9" name= "Caracteristicas" class="form-control" aria-label="Withtextarea" placeholder="Caracteristica"  id="textCaracteristicas"> </textarea>
                     </div>
@@ -71,26 +77,27 @@
             <div class="col-1" id="col3">
                 <div class="col">
                     <div class="mt-2" id="divAñadirBoton">
-                        <button type="submit" class="btn btn-success" disabled= true>Añadir</button>
+                        <button type="submit" class="btn btn-success" disabled= true id="btnAñadir">Añadir</button>
                     </div>
                 </div> 
             </div>
             <div class="col-1" id="col4">
                 <div class="mt-2" id="divBorrarBoton">
-                    <button type="submit" class="btn btn-danger" disabled=true>
+                    <button type="submit" class="btn btn-danger" disabled=true  id="btnBorrar">
                         Borrar
                     </button>
                 </div> 
             </div>
             <div class="col-1" id="col5">
                 <div class="mt-2" id="divModificarBoton">
-                    <button type="submit" class="btn btn-warning" disabled = true >Modificar</button>
+                    <button type="submit" class="btn btn-warning" disabled = true id="btnModificar">Modificar</button>
                 </div>
             </div>
             <div class="col-auto" id="col6">
                 <div class="mt-2" id="divGuardarBoton">
-                    <button type="submit" class="btn btn-primary" >
-                       {{!-- <a href="/links/ProductoGuardado">Guardar</a> --}}
+                    <button type="submit" class="btn btn-primary" id="btnGuardar" >
+                     Guardar
+                      {{!-- <a href="/links/ProductoGuardado">Guardra</a> --}}
                     </button>
                 </div>
             </div>

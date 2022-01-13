@@ -18,27 +18,38 @@ router.get('/Producto/editar', (req, res, next) => {
 })
 
 router.get('/ProductoGuardar', async(req, res, next) => {
-    const varr = req.body;
-    console.log(varr);
-    console.log("-----post");
-    //var Nro_Producto = producto.Producto;
-    /*  await pool.query("INSERT into producto set ? ", {
-          id_producto: varr.id_producto,
-          nombre: varr.nombre,
-          Precio: varr.Precio,
-          Caracteristicas: 'sadasd',
-          Materiales: 'PLASTICO',
-          Montaje: 0,
-          Id_categoriaP: 1,
-          Cantidad: 10,
-          'Instrucciones de uso': 'prueba'
-      });*/
     res.render('links/ProductoGuardar');
 });
 
 router.post('/ProductoGuardar', async(req, res, next) => {
-    console.log("tomado post")
-    res.send(req.body);
+    const varr = req.body;
+    console.log(varr.id_producto);
+    if (varr.Montaje)
+        varr.Montaje = 1;
+    else
+        varr.Montaje = 0;
+    console.log(varr.Montaje);
+    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
+        console.log("-----post");
+        //var Nro_Producto = producto.Producto;
+        await pool.query("INSERT into producto set ? ", {
+            id_producto: varr.id_producto,
+            nombre: varr.Nombre,
+            Precio: varr.Precio,
+            Id_categoriaP: varr.CategoriaID,
+            Caracteristicas: varr.Caracteristicas,
+            Materiales: varr.materiales,
+            Montaje: varr.Montaje,
+            Cantidad: varr.cantidad,
+            Instrucciones: varr.Instrucciones
+        });
+    } else {
+        // usar libreria pop up 
+        res.send("ta malo maldita");
+
+    }
+    res.render('links/ProductoGuardar');
+
 
 });
 
