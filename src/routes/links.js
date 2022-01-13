@@ -2,6 +2,7 @@ const express = require("express");
 const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
+var alerta = require('sweetalert');
 
 
 router.get('/modificar/:id_producto', async(req, res, next) => {
@@ -37,7 +38,9 @@ router.post('/modificar/:id_producto', async(req, res, next) => {
         //var Nro_Producto = producto.Producto;
 
         await pool.query("UPDATE producto set ? WHERE id_producto = ? ", [producto, varr.id_producto]);
-        //mensaje de que ta bueno
+        //mensaje de que ta bueno *Flash esta disponible desde los request (req)
+
+
         res.render('links/Producto');
     } else {
         // usar libreria pop up mensaje  que ta malo
