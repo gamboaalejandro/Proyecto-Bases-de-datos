@@ -4,16 +4,35 @@ const pool = require('../database');
 
 router.get('/Producto', (req, res, next) => {
     //res.send('algo');
+    console.log("-----get")
     res.render('links/Producto');
 })
 
-router.post('/Producto', async(req, res, next) => {
-    const varr = req;
+router.get('/Productx', (req, res, next) => {
+    res.render('links/Producto');
+})
+
+router.get('/Producto/nuevo', (req, res, next) => {
+    //res.send('algo');
+    console.log("-----get")
+    res.render('links/Producto');
+})
+
+router.get('/Producto/editar', (req, res, next) => {
+    //res.send('algo');
+    console.log("-----get")
+    res.render('links/Producto');
+})
+
+router.post('/Producto/guardar', async(req, res, next) => {
+    const varr = req.body;
     console.log(varr);
+    console.log("-----post")
+
     //var Nro_Producto = producto.Producto;
     await pool.query("INSERT into producto set ? ", {
-        id_producto: 99,
-        nombre: "Falda",
+        id_producto: varr.id_producto,
+        nombre: varr.nombre,
         Precio: 9.8,
         Caracteristicas: 'Roja xl',
         Materiales: 'PLASTICO',
@@ -27,7 +46,7 @@ router.post('/Producto', async(req, res, next) => {
     //var caracteristica = Query[0].Caracteristicas;
     //var algo = caracteristica.valueOf();
     //console.log(algo);   
-    res.render('links/Producto', { Query });
+    res.render('links/Producto', { info });
 });
 /*
 router.post('/Producto', async(req, res, next) => {
