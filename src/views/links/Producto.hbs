@@ -69,8 +69,11 @@
                         <textarea rows="5" name= "Instrucciones" class="form-control" aria-label="Withtextarea" placeholder="Instrucciones" disabled=true id="textInstrucciones"> {{Instrucciones}} </textarea>
                     </div>
                     <div class="mt-3 mb-3" id="montajeProducto">
-                        <input name="Montaje" class="form-check-input" type="checkbox" id="gridCheck" checked =off>
-                        <label class="form-check-label" for="gridCheck">Montaje</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Montaje</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
                     </div>
 
                     {{!-- BOTONES CUANDO YA HE BUSCADO EN LA BASE DE DATOS Y DESEO MODIFICAR ELIMINAR, ANADIR O GUARDAR CAMBIOS --}}
@@ -140,8 +143,11 @@
                         <input name="instrucciones" type="text" class="form-control" placeholder="Instrucciones de uso" aria-label="First name" id="intruccionesProducto" maxlength="500" disabled=true>
                     </div>
                     <div class="mt-3 mb-3" id="montajeProducto">
-                        <input name="check" class="form-check-input" type="checkbox" id="gridCheck" disabled=true>
-                        <label class="form-check-label" for="gridCheck">Montaje</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Montaje</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
                     </div>
                     {{!-- BOTONES CUANDO AUN NO HE BUSCADO NADA EN LA BASE DE DATOS --}}
             </div>
