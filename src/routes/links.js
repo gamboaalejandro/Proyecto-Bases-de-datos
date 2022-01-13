@@ -12,28 +12,37 @@ router.get('/modificar/:id_producto', async(req, res, next) => {
     res.render('links/ProductoModificar', { Query: Query[0] })
 });
 router.post('/modificar/:id_producto', async(req, res, next) => {
-
+    const ID = req.params.id_producto;
     const varr = req.body;
-    console.log(varr.id_p);
-    /* if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
-         console.log("-----post");
-         //var Nro_Producto = producto.Producto;
-         await pool.query("INSERT into producto set ? ", {
-             id_producto: varr.id_producto,
-             nombre: varr.Nombre,
-             Precio: varr.Precio,
-             Id_categoriaP: varr.CategoriaID,
-             Caracteristicas: varr.Caracteristicas,
-             Materiales: varr.materiales,
-             Montaje: varr.Montaje,
-             Cantidad: varr.cantidad,
-             Instrucciones: varr.Instrucciones
-         });
-     } else {
-         // usar libreria pop up 
-         res.send("ta malo maldita");
-     }*/
-    res.send("ta malo maldita");
+
+    if (varr.Montaje)
+        varr.Montaje = 1;
+    else
+        varr.Montaje = 0;
+
+    const producto = {
+        id_producto: varr.id_producto,
+        nombre: varr.nombre,
+        Precio: varr.precio,
+        Caracteristicas: varr.caracteristicas,
+        Materiales: varr.materiales,
+        Montaje: varr.montaje,
+        Id_categoriaP: varr.categoriaid,
+        Cantidad: varr.cantidad,
+        Instrucciones: varr.instrucciones
+    }
+    console.log(producto);
+    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
+        console.log("-----post");
+        //var Nro_Producto = producto.Producto;
+
+        await pool.query("UPDATE producto set ? WHERE id_producto = ? ", [producto, varr.id_producto]);
+        //mensaje de que ta bueno
+        res.render('links/Producto');
+    } else {
+        // usar libreria pop up mensaje  que ta malo
+        res.send("ta malo maldita");
+    }
 })
 
 router.get('/Producto/editar', (req, res, next) => {
@@ -48,7 +57,6 @@ router.get('/ProductoGuardar', async(req, res, next) => {
 // FUNCIOA PARA ANADIR UN PRODUCTO
 router.post('/ProductoGuardar', async(req, res, next) => {
     const varr = req.body;
-    console.log(varr.id_producto);
     if (varr.Montaje)
         varr.Montaje = 1;
     else
@@ -57,7 +65,7 @@ router.post('/ProductoGuardar', async(req, res, next) => {
     if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
         //var Nro_Producto = producto.Producto;
-        await pool.query("INSERT into producto set ? ", {
+        /*await pool.query("INSERT into producto set ? ", {
             id_producto: varr.id_producto,
             nombre: varr.Nombre,
             Precio: varr.Precio,
@@ -67,7 +75,7 @@ router.post('/ProductoGuardar', async(req, res, next) => {
             Montaje: varr.Montaje,
             Cantidad: varr.cantidad,
             Instrucciones: varr.Instrucciones
-        });
+        });*/
     } else {
         // usar libreria pop up 
         res.send("ta malo maldita");
@@ -80,12 +88,14 @@ router.post('/ProductoGuardar', async(req, res, next) => {
 
 
 router.get('/Producto', async(req, res, next) => {
-
+    var p2 = req.body;
     var producto = req.query;
+    console.log("el objeto", p2);
     console.log(Object.keys(producto).length);
     if (Object.keys(producto).length !== 0) {
         var Nro_Producto = producto.Producto;
         const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
+        //validacion de montaje
         console.log(Query);
         res.render('links/Producto', { Query })
 
