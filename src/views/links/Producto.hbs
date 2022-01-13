@@ -2,7 +2,7 @@
 <nav id="barra" class="navbar navbar-expand-sm navbar-light">
 
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="/img/IKEA-Logo-1.png" alt="" width="150px"></a>
+        <a class="navbar-brand" href="/"><img src="/img/IKEA-Logo-1.png" alt="" width="150px"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -77,9 +77,13 @@
                         </div>
             <div class="col-1" id="col3">
                 <div class="col">
+                    <form action="/links/ProductoGuardar" method="GET">
                     <div class="mt-2" id="divAñadirBoton">
-                        <button type="submit" class="btn btn-success" id="btnAñadir">Añadir</button>
+                        <button type="submit" class="btn btn-success" id="btnAñadir">
+                            <a href="/links/ProductoGuardar">Añadir</a>
+                        </button>
                     </div>
+                    </form>
                 </div>
             </div>
             <div class="col-1" id="col4">
@@ -140,7 +144,9 @@
             <div class="col-1" id="col3">
                 <div class="col">
                     <div class="mt-2" id="divAñadirBoton">
-                        <button type="submit" class="btn btn-success" id="btnAñadir">Añadir</button>
+                        <button type="submit" class="btn btn-success" id="btnAñadir">
+                            <a href="/links/ProductoGuardar">Añadir</a>
+                        </button>
                     </div>
                 </div>
             </div>
