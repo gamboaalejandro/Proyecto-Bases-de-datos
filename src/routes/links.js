@@ -131,4 +131,21 @@ router.get('/productoPlantilla', async(req, res, next) => {
     res.render('links/productoPlantilla');
 })
 
+router.get('/comidaNavidad', async(req, res, next) => {
+    res.render('links/comidaNavidad');
+})
+
+router.get('/arbolesNavidad', async(req, res, next) => {
+    res.render('links/arbolesNavidad');
+})
+
+router.get('/mantelesNavidad', async(req, res, next) => {
+    res.render('links/mantelesNavidad');
+})
+
+router.get('/reposteriaNavidad', async(req, res, next) => {
+    res.render('links/reposteriaNavidad');
+})
+
+
 module.exports = router;
