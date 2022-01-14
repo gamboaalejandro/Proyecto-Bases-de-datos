@@ -34,7 +34,7 @@ router.post('/modificar/:id_producto', async(req, res, next) => {
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
         res.render('links/Producto');
     } else {
-        // usar libreria pop up mensaje  que ta malo
+        // usar libreria pop up mensaje  que ta malo  aqui se usa el flash pero toy cansao asi que xd
         res.send("ta malo maldita");
     }
 })
@@ -62,6 +62,7 @@ router.post('/ProductoGuardar', async(req, res, next) => {
             Montaje: varr.Montaje,
             Cantidad: varr.cantidad,
             Instrucciones: varr.Instrucciones
+
         });
     } else {
         // usar libreria pop up 
@@ -88,13 +89,13 @@ router.get('/Producto', async(req, res, next) => {
 });
 
 router.get('/ProductoPlantilla/:id', async(req, res, next) => {
-        const Nro_Producto = req.params.id;
-        console.log(Nro_Producto);
-        const diseñador = await pool.query("select primer_nombre,primer_apellido from diseñadores as dis where dis.numero_diseñador = (select dp.num_diseñador from d_p as dp where dp.id_producto = ? )", Nro_Producto);
-        console.log("Disenador ==== ", diseñador);
-        const Query = await pool.query("Select * from Producto where id_producto = ?", Nro_Producto);
-        res.render('links/productoPlantilla', { Query });
-    })
+    const Nro_Producto = req.params.id;
+    console.log(Nro_Producto);
+    const diseñador = await pool.query("select primer_nombre,primer_apellido from diseñadores as dis where dis.numero_diseñador = (select dp.num_diseñador from d_p as dp where dp.id_producto = ? )", Nro_Producto);
+    console.log("Disenador ==== ", diseñador);
+    const Query = await pool.query("Select * from Producto where id_producto = ?", Nro_Producto);
+    res.render('links/productoPlantilla', { Query });
+})
 
 //ELIMINAR PRODUCTO
 router.get('/delete/:id_producto', async(req, res, next) => {
@@ -113,7 +114,8 @@ router.get('/Categoria/Buscar', async(req, res) => {
         var idcategoria = categoria.Categoria;
         const Query = await pool.query("Select * from categoria where Id_categoria = ? ", idcategoria);
         console.log(Query)
-        res.render('/links/Categoria',{Query});
+            // el res. render estaba asi  res.render('/links/Categoria', { Query }); y era asi como lo puse abajo
+        res.render('links/Categoria', { Query });
     } else {
         res.render('links/Categoria')
 
@@ -122,12 +124,12 @@ router.get('/Categoria/Buscar', async(req, res) => {
 })
 
 //ELIMIMAR CATEGORIA 
-router.get('/Borrar/:id_categoria'),async(req, res, next) =>{
+router.get('/Borrar/:id_categoria'), async(req, res, next) => {
     console.log("Entrando a borrar categoria");
     const id_Categoria = req.params.id_producto;
     await pool.query("DELETE FROM categoria where id_categoria = ?", [id_Categoria])
     res.render('/links/Categoria');
-} 
+}
 
 
 
