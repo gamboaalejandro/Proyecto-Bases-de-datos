@@ -42,29 +42,37 @@
             <div class="col" id="col2">
                 <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
                 <form action="/links/modificar/{{Query.id_producto}}" method="POST">
-                    <div class="mt-2">
-                        <input name="id_producto" type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" value="{{Query.id_producto}}" readonly> 
+                    <div class="mt-2 input-group mb-3">
+                        <input name="id_producto" type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" value="{{Query.id_producto}}" readonly>
+                        <span class="input-group-text" id="basic-addon1">ID Producto</span> 
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-2 input-group mb-3">
                         <input name="nombre" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreProducto" maxlength="100" value="{{Query.nombre}}" >
+                        <span class="input-group-text" id="basic-addon1">Nombre</span>
                     </div>
-                    <div class="mt-2" id="divPrecioProducto">
+                    <div class="mt-2 input-group mb-3" id="divPrecioProducto">
                         <input name="precio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" id="precioProducto" maxlength="10" value="{{Query.Precio}}" >
+                        <span class="input-group-text" id="basic-addon1">Precio</span>
                     </div>
-                    <div class="mt-2" id="divIdCategoriaProducto">
+                    <div class="mt-2 input-group mb-3" id="divIdCategoriaProducto">
                         <input name="categoriaid" type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" value= "{{Query.Id_categoriaP}}" readonly >
+                        <span class="input-group-text" id="basic-addon1">ID Categoria</span>
                     </div>
-                    <div class="mt-2" id="divCantidadProducto">
+                    <div class="mt-2 input-group mb-3" id="divCantidadProducto">
                         <input name="cantidad" type="text" class="form-control" placeholder="Cantidad" aria-label="First name" id="cantidadProducto" maxlength="100"  value= "{{Query.Cantidad}}"  >
+                        <span class="input-group-text" id="basic-addon1">Cantidad</span>
                     </div>
-                    <div class="mt-2" id="divMaterialesProducto">
+                    <div class="mt-2 input-group mb-3" id="divMaterialesProducto">
                         <input name="materiales" type="text" class="form-control" placeholder="Materiales" aria-label="First name" id="materialesProducto" maxlength="100"  value= "{{Query.Materiales}}"  >
+                        <span class="input-group-text" id="basic-addon1">Materiales</span>
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-2 input-group mb-3">
                         <textarea rows= "9" name= "caracteristicas" class="form-control" aria-label="Withtextarea" placeholder="Caracteristica"  id="textCaracteristicas">{{Query.Caracteristicas}}</textarea>
+                        <span class="input-group-text" id="basic-addon1">Caracteristicas</span>
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-2 input-group mb-3">
                         <textarea rows="5" name= "instrucciones" class="form-control" aria-label="Withtextarea" placeholder="Instrucciones"  id="textInstrucciones">{{Query.Instrucciones}}</textarea>
+                        <span class="input-group-text" id="basic-addon1">Instrucciones</span>
                     </div>
                     <div class="mt-3 mb-3" id="montajeProducto">
                         {{#if Query.Montaje}}
