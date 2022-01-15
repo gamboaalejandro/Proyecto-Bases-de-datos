@@ -113,8 +113,7 @@ router.get('/Categoria/Buscar', async(req, res) => {
     if (Object.keys(categoria).length !== 0) {
         var idcategoria = categoria.Categoria;
         const Query = await pool.query("Select * from categoria where Id_categoria = ? ", idcategoria);
-        console.log(Query)
-            // el res. render estaba asi  res.render('/links/Categoria', { Query }); y era asi como lo puse abajo
+        // el res. render estaba asi  res.render('/links/Categoria', { Query }); y era asi como lo puse abajo
         res.render('links/Categoria', { Query });
     } else {
         res.render('links/Categoria')
@@ -122,6 +121,7 @@ router.get('/Categoria/Buscar', async(req, res) => {
     }
     //res.render('/links/Categoria',{Query});
 })
+
 
 //AÑADIR CATEGORIA
 router.get('/CategoriaGuardar', async(req, res, next) => {
@@ -134,7 +134,7 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
         console.log("-----post");
         //req.flash('success', 'Producto Insertado satisfactoriamente');
         await pool.query("INSERT into categoria set ? ", {
-            Id_Categoria: varr.Id_Categoria,
+            Id_Categoria:varr.Id_categoria,
             Nombre: varr.Nombre,
             Descripcion: varr.Descripcion,
             Id_categoria_Padre: varr.Id_categoria_Padre
@@ -143,7 +143,7 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
         // usar libreria pop up 
         res.send("ta malo maldita");
     }
-    res.render('links/ProductoGuardar');
+    res.render('links/Categoria');
 
 });
 
