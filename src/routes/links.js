@@ -158,14 +158,14 @@ router.get('/modificarc/:Id_categoria', async(req, res, next) => {
     res.render('links/Categoriamodificar', { Query: Query[0] })
 })
 
-/*router.post('/modificarc', async(req, res, next) => {
+router.post('/modificarc', async(req, res, next) => {
     const varr = req.body;
     const categoria = {
         Id_Categoria: varr.Id_categoria,
         Nombre: varr.Nombre, 
         Descripcion: varr.Descripcion,
         Id_categoria_Padre: varr.Id_categoria_Padre
-    }
+    }   
     console.log(categoria);
     if ((varr.Id_categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "") && (varr. Id_categoria_Padre !== "")) {
         console.log("MODIFICAR CATEGORIA");
@@ -176,7 +176,7 @@ router.get('/modificarc/:Id_categoria', async(req, res, next) => {
         // usar libreria pop up mensaje  que ta malo  aqui se usa el flash pero toy cansao asi que xd
         res.send("ta malo ");
     }
-})*/
+})
 
 //ELIMIMAR CATEGORIA 
 router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
