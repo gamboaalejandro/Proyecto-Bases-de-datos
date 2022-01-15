@@ -134,7 +134,7 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
         console.log("-----post");
         //req.flash('success', 'Producto Insertado satisfactoriamente');
         await pool.query("INSERT into categoria set ? ", {
-            Id_Categoria:varr.Id_categoria,
+            Id_Categoria: varr.Id_categoria,
             Nombre: varr.Nombre,
             Descripcion: varr.Descripcion,
             Id_categoria_Padre: varr.Id_categoria_Padre
@@ -149,7 +149,7 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
 
 //MODIFICAR CATEGORIA
 router.get('/modificarc/:id_producto', async(req, res, next) => {
-    
+
 })
 
 router.post('/modificarc/:id_producto', async(req, res, next) => {
@@ -199,5 +199,59 @@ router.get('/reposteriaNavidad', async(req, res, next) => {
 router.get('/Categoria', async(req, res, next) => {
     res.render('links/Categoria');
 })
+
+router.get('/adornosDeNavidadEs', async(req, res, next) => {
+    res.render('links/adornosDeNavidadEs');
+})
+
+router.get('/Tienda', async(req, res, next) => {
+    res.render('links/Tienda');
+})
+
+/* TIENDAS -----------------------------------------------------*/
+
+/*ESPAÑA----------------------------*/
+router.get('/tiendas/indexFixAsturias', async(req, res, next) => {
+    res.render('links/tiendas/indexFixAsturias');
+})
+
+router.get('/tiendas/indexFixMadrid', async(req, res, next) => {
+    res.render('links/tiendas/indexFixMadrid');
+})
+
+router.get('/tiendas/indexFixMurcia', async(req, res, next) => {
+    res.render('links/tiendas/indexFixMurcia');
+})
+
+router.get('/tiendas/indexFixAndalucia', async(req, res, next) => {
+    res.render('links/tiendas/indexFixAndalucia');
+})
+
+router.get('/tiendas/indexFixCataluna', async(req, res, next) => {
+    res.render('links/tiendas/indexFixCataluna');
+})
+
+/*ESTADOS UNIDOS--------------------------------*/
+router.get('/tiendas/indexFixVirginia', async(req, res, next) => {
+    res.render('links/tiendas/indexFixVirginia');
+})
+
+router.get('/tiendas/indexFixCalifornia', async(req, res, next) => {
+    res.render('links/tiendas/indexFixCalifornia');
+})
+
+router.get('/tiendas/indexFixFlorida', async(req, res, next) => {
+    res.render('links/tiendas/indexFixFlorida');
+})
+
+/*MEXICO-------------------------------------------*/
+router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
+    res.render('links/tiendas/indexFixCiudadMexico');
+})
+
+
+
+
+
 
 module.exports = router;

@@ -85,7 +85,7 @@
 
 #col2 {
     background-color: #E8E8E8;
-    padding-right: 300px;
+    padding-right: 200px;
 }
 
 #col3 {
@@ -358,6 +358,65 @@
 
 #divIdPadreCategoria {
     padding-bottom: 160px;
+}
+
+#basic-addon2 {
+    width: 190px;
+    font-weight: bold;
+}
+
+#tamañoBanderas {
+    margin-top: 8px;
+    margin-left: 10px;
+    width: 50px;
+    height: 30px;
+    border: solid;
+}
+
+#rowEventos h2 {
+    color: white;
+    margin-left: 10px;
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+
+#rowEventos h1 {
+    color: white;
+    margin-left: 10px;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+#divFormFloating {
+    margin-left: 50px;
+    width: 300px;
+}
+
+#colCard1 h6 {
+    margin-top: -8px;
+}
+
+#cardTextFecha {
+    margin-top: -15px;
+}
+
+#tituloError h1 {
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+#tituloError p {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+#tituloError img {
+    margin: 0 auto;
+    width: 500px;
 }
 
 
