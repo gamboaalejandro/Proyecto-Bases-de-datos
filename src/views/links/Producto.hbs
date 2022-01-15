@@ -69,7 +69,7 @@
                 <form action="/links/Producto" method="GET">
                     {{#each Query}}
                     <div class="mt-2 input-group mb-3">
-                        <input name="id_producto" type="text" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" value="{{id_producto}}" disabled=true>
+                        <input name="id_producto" type="number" class="form-control" placeholder="Id de Producto" aria-label="First name" id="idProducto" maxlength="50" value="{{id_producto}}" disabled=true>
                         <span class="input-group-text" id="basic-addon1">ID Producto</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
@@ -81,11 +81,11 @@
                         <span class="input-group-text" id="basic-addon1">Precio</span>
                     </div>
                     <div class="mt-2 input-group mb-3" id="divIdCategoriaProducto">
-                        <input name="CategoriaID" type="text" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" value= "{{Id_categoriaP}}" disabled=true>
+                        <input name="CategoriaID" type="number" class="form-control" placeholder="Id de Categoria" aria-label="First name" id="idCategoriaProducto" maxlength="10" value= "{{Id_categoriaP}}" disabled=true>
                         <span class="input-group-text" id="basic-addon1">ID Categoria</span>
                     </div>
                     <div class="mt-2 input-group mb-3" id="divCantidadProducto">
-                        <input name="cantidad" type="text" class="form-control" placeholder="Cantidad" aria-label="First name" id="cantidadProducto" maxlength="100" disabled=true value="{{Cantidad}}">
+                        <input name="cantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="First name" id="cantidadProducto" maxlength="100" disabled=true value="{{Cantidad}}">
                         <span class="input-group-text" id="basic-addon1">Cantidad</span>
                     </div>
                     <div class="mt-2 input-group mb-3" id="divMaterialesProducto">

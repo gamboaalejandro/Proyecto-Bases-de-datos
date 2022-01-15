@@ -70,7 +70,7 @@
                 <div class="col">
                     <form action="/links/ProductoGuardar" method="GET">
                     <div class="mt-2" id="divAñadirBoton">
-                        <button type="submit" class="btn btn-success" id="btnAñadir">
+                        <button type="submit" class="btn btn-success" id="btnAñadir" disabled>
                             <a href="#">Añadir</a>
                         </button>
                     </div>
@@ -80,16 +80,16 @@
             <div class="col-1" id="col4">
                 <form action="/links/Borrar" method="GET">
                 <div class="mt-2" id="divBorrarBoton">
-                    <button type="submit" class="btn btn-danger" id="btnBorrar">
+                    <button type="submit" class="btn btn-danger" id="btnBorrar" disabled>
                         <a href="/links/Borrar/{{id_categoria}}"> Borrar</a> 
                     </button>
                 </div> 
                 </form>
             </div>
             <div class="col-1" id="col5">
-                 <form action="/links/modificar" method="GET">
+                <form action="/links/modificar" method="GET">
                 <div class="mt-2" id="divModificarBoton">
-                    <button type="submit" class="btn btn-warning" id="btnModificar">
+                    <button type="submit" class="btn btn-warning" id="btnModificar" disabled>
                         <a href="#">Modificar</a>
                         </button>
                 </div>
