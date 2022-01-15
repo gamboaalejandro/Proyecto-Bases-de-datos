@@ -5,6 +5,23 @@ const pool = require('../database');
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 
+
+//BUSQUEDA DE UN PRODUCTO 
+router.get('/Producto', async(req, res, next) => {
+    var producto = req.query;
+    console.log(Object.keys(producto).length);
+    if (Object.keys(producto).length !== 0) {
+        var Nro_Producto = producto.Producto;
+        const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
+        //validacion de montaje
+        res.render('links/Producto', { Query })
+    } else {
+        res.render('links/Producto')
+
+    }
+});
+
+
 //MODIFICACION DE PRODUCTOS
 router.get('/modificar/:id_producto', async(req, res, next) => {
     var producto = req.params.id_producto;
@@ -72,22 +89,6 @@ router.post('/ProductoGuardar', async(req, res, next) => {
 
 });
 
-
-//BUSQUEDA DE UN PRODUCTO 
-router.get('/Producto', async(req, res, next) => {
-    var producto = req.query;
-    console.log(Object.keys(producto).length);
-    if (Object.keys(producto).length !== 0) {
-        var Nro_Producto = producto.Producto;
-        const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
-        //validacion de montaje
-        res.render('links/Producto', { Query })
-    } else {
-        res.render('links/Producto')
-
-    }
-});
-
 router.get('/ProductoPlantilla/:id', async(req, res, next) => {
     const Nro_Producto = req.params.id;
     console.log(Nro_Producto);
@@ -148,12 +149,32 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
 });
 
 //MODIFICAR CATEGORIA
-router.get('/modificarc/:id_producto', async(req, res, next) => {
-
+router.get('/modificarc/:Id_categoria', async(req, res, next) => {
+    var categoria = req.params.Id_categoria;
+    console.log(categoria);
+    const Query = await pool.query("Select * from categoria where Id_categoria = ? ", [categoria]);
+    console.log(Query);
+    res.render('links/Categoriamodificar', {Query})
 })
 
-router.post('/modificarc/:id_producto', async(req, res, next) => {
-
+router.post('/modificarc', async(req, res, next) => {
+    const varr = req.body;
+    const categoria = {
+        Id_Categoria: varr.Id_categoria,
+        Nombre: varr.Nombre, 
+        Descripcion: varr.Descripcion,
+        Id_categoria_Padre: varr.Id_categoria_Padre
+    }
+    console.log(categoria);
+    if ((varr.Id_categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "") && (varr. Id_categoria_Padre !== "")) {
+        console.log("MODIFICAR CATEGORIA");
+        await pool.query("UPDATE categoria set ? WHERE Id_categoria = ? ", [categoria, varr.Id_categoria]);
+        //mensaje de que ta bueno *Flash esta disponible desde los request (req)
+        res.render('links/Categoria');
+    } else {
+        // usar libreria pop up mensaje  que ta malo  aqui se usa el flash pero toy cansao asi que xd
+        res.send("ta malo ");
+    }
 })
 
 //ELIMIMAR CATEGORIA 
