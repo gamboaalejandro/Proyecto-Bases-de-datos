@@ -123,6 +123,39 @@ router.get('/Categoria/Buscar', async(req, res) => {
     //res.render('/links/Categoria',{Query});
 })
 
+//AÑADIR CATEGORIA
+router.get('/CategoriaGuardar', async(req, res, next) => {
+    res.render('links/Categoriaanadir');
+});
+
+router.post('/CategoriaGuardar', async(req, res, next) => {
+    const varr = req.body;
+    if ((varr.Id_Categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "")) {
+        console.log("-----post");
+        //req.flash('success', 'Producto Insertado satisfactoriamente');
+        await pool.query("INSERT into categoria set ? ", {
+            Id_Categoria: varr.Id_Categoria,
+            Nombre: varr.Nombre,
+            Descripcion: varr.Descripcion,
+            Id_categoria_Padre: varr.Id_categoria_Padre
+        });
+    } else {
+        // usar libreria pop up 
+        res.send("ta malo maldita");
+    }
+    res.render('links/ProductoGuardar');
+
+});
+
+//MODIFICAR CATEGORIA
+router.get('/modificarc/:id_producto', async(req, res, next) => {
+    
+})
+
+router.post('/modificarc/:id_producto', async(req, res, next) => {
+
+})
+
 //ELIMIMAR CATEGORIA 
 router.get('/Borrar/:id_categoria'), async(req, res, next) => {
     console.log("Entrando a borrar categoria");

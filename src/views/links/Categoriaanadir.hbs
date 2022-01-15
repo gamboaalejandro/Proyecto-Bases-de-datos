@@ -1,0 +1,109 @@
+
+<!--NavBar-->
+<nav id="barra" class="navbar navbar-expand-sm navbar-light">
+
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="/img/IKEA-Logo-1.png" alt="" width="150px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="textNavBar">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Productos
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown-menu">
+                        <li><a class="dropdown-item" id="dropdown-productos" href="/links/Producto">Productos</a></li>
+                        <li><a class="dropdown-item" id="dropdown-usuarios" href="#">Categorias</a></li>
+                        <li>
+                            <hr class="dropdown-divider" id="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" id="dropdown-tercero" href="#">Otra cosa</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--Consola-->
+<div>
+    <div class="container-fluid" id="fondoContainer">
+        <div class="row">
+            <div class="col-3" id="col1">
+                <div class="form-floating mb-3 mt-2">
+                    <form action="/links/Categoria/Buscar" method="GET">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="Buscar Producto" name="Producto">
+                        <div id="divBuscarBoton">
+                            <button class="btn btn-primary" type="submit" id="buscarBoton1"> Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col" id="col2">
+                <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
+                <form action="/links/CategoriaGuardar" method="POST">
+                    <select class="form-select mt-2" aria-label="Default select example" disabled  >
+                        <option selected>Seleccionar categoria</option>
+                        <option value="1">Categoria</option>
+                        <option value="2">Sub-categoria</option>
+                    </select>
+                    <div class="mt-2 input-group mb-3">
+                        <input name="Id_categoria" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" >
+                        <span class="input-group-text" id="basic-addon1">ID Categoria</span>
+                    </div>
+                    <div class="mt-2 input-group mb-3">
+                        <input name="Nombre" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreCategoria" maxlength="50" >
+                        <span class="input-group-text" id="basic-addon1">Nombre</span>
+                    </div>
+                    <div class="mt-2 input-group mb-3">
+                        <input name="Descripcion" type="text" class="form-control" placeholder="Descripción" aria-label="First name" id="descripcionCategoria" maxlength="50" >
+                        <span class="input-group-text" id="basic-addon1">Descripción</span>
+                    </div>
+                    <div class="mt-2 input-group mb-3" id="divIdPadreCategoria">
+                        <input name="Id_categoria_Padre" type="text" class="form-control" placeholder="Id Padre" aria-label="First name" id="idPadreCategoria" maxlength="50" >
+                        <span class="input-group-text" id="basic-addon1">ID Padre</span>
+                    </div>
+
+                    {{!-- BOTONES CUANDO YA HE BUSCADO EN LA BASE DE DATOS Y DESEO MODIFICAR ELIMINAR, ANADIR O GUARDAR CAMBIOS --}}
+        </div>
+             <div class="col-1" id="col3">
+                <div class="col">
+                    <div class="mt-2" id="divAñadirBoton">
+                        <button type="submit" class="btn btn-success" disabled= true id="btnAñadir">
+                            <a href="#">Añadir</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1" id="col4">
+                <div class="mt-2" id="divBorrarBoton">
+                    <button type="submit" class="btn btn-danger"  disabled= true id="btnBorrar">
+                        Borrar
+                    </button>
+                </div> 
+            </div>
+            <div class="col-1" id="col5">
+                <div class="mt-2" id="divModificarBoton">
+                    <button type="submit" class="btn btn-warning"  disabled= true id="btnModificar">
+                        Modificar
+                        </button>
+                </div>
+            </div>
+            <div class="col-auto" id="col6">
+                <div class="mt-2" id="divGuardarBoton">
+                    <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                        Guardar
+                        </button>
+                </div>
+            </div>
+        </div>
+
+                    {{!-- FIN DEL BLOQUE DE BOTONES HABILITADOS PARA ELIMINAR ANADIR O GUARDAR O MODIFICAR --}}
+                    <!-- ELSE CUANDO EN LA PRIMERA INSTANCIA EL QUERY ES VACIO -->
+    </form>       
+    </div>
+</div>
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
