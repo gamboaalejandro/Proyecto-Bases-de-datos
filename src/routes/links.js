@@ -150,13 +150,11 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
 
 //MODIFICAR CATEGORIA
 router.get('/modificarc/:Id_categoria', async(req, res, next) => {
-    var categoria = req.params.Id_categoria;
-    console.log("lo que sea", categoria);
+    var categoria = req.params.Id_categoria;      
     console.log("sexo");
     const Query = await pool.query("Select * from categoria where Id_categoria = ? ", categoria);
     console.log(Query);
-    // res.render('links/Categoriamodificar', { Query })
-    res.send("logrado")
+    res.render('links/Categoriamodificar', { Query })
 })
 
 /*router.post('/modificarc', async(req, res, next) => {
