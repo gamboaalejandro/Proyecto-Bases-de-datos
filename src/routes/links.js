@@ -167,5 +167,13 @@ router.get('/Categoria', async(req, res, next) => {
     res.render('links/Categoria');
 })
 
+router.get('/adornosDeNavidadEs', async(req, res, next) => {
+    res.render('links/adornosDeNavidadEs');
+})
+
+router.get('/Tienda', async(req, res, next) => {
+    res.render('links/Tienda');
+})
+
 
 module.exports = router;

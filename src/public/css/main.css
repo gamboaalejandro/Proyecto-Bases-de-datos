@@ -85,7 +85,7 @@
 
 #col2 {
     background-color: #E8E8E8;
-    padding-right: 300px;
+    padding-right: 200px;
 }
 
 #col3 {
@@ -358,6 +358,11 @@
 
 #divIdPadreCategoria {
     padding-bottom: 160px;
+}
+
+#basic-addon2 {
+    width: 190px;
+    font-weight: bold;
 }
 
 
