@@ -365,6 +365,14 @@
     font-weight: bold;
 }
 
+#tamañoBanderas {
+    margin-top: 8px;
+    margin-left: 10px;
+    width: 50px;
+    height: 30px;
+    border: solid;
+}
+
 
 /*Animaciones*/
 

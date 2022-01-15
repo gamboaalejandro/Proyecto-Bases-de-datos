@@ -175,5 +175,26 @@ router.get('/Tienda', async(req, res, next) => {
     res.render('links/Tienda');
 })
 
+router.get('/tiendas/indexFixAsturias', async(req, res, next) => {
+    res.render('links/tiendas/indexFixAsturias');
+})
+
+router.get('/tiendas/indexFixMadrid', async(req, res, next) => {
+    res.render('links/tiendas/indexFixMadrid');
+})
+
+router.get('/tiendas/indexFixMurcia', async(req, res, next) => {
+    res.render('links/tiendas/indexFixMurcia');
+})
+
+router.get('/tiendas/indexFixAndalucia', async(req, res, next) => {
+    res.render('links/tiendas/indexFixAndalucia');
+})
+
+router.get('/tiendas/indexFixCataluna', async(req, res, next) => {
+    res.render('links/tiendas/indexFixCataluna');
+})
+
+
 
 module.exports = router;
