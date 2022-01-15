@@ -113,6 +113,7 @@ router.get('/Categoria/Buscar', async(req, res) => {
     if (Object.keys(categoria).length !== 0) {
         var idcategoria = categoria.Categoria;
         const Query = await pool.query("Select * from categoria where Id_categoria = ? ", idcategoria);
+        console.log(Query);
         // el res. render estaba asi  res.render('/links/Categoria', { Query }); y era asi como lo puse abajo
         res.render('links/Categoria', { Query });
     } else {
@@ -155,8 +156,7 @@ router.get('/modificarc/:Id_categoria', async(req, res, next) => {
     console.log("sexo");
     const Query = await pool.query("Select * from categoria where Id_categoria = ? ", categoria);
     console.log(Query);
-    // res.render('links/Categoriamodificar', { Query })
-    res.send("logrado")
+    res.render('links/Categoriamodificar', { Query: Query[0] })
 })
 
 router.post('/modificarc/:id_producto', async(req, res, next) => {
@@ -164,7 +164,7 @@ router.post('/modificarc/:id_producto', async(req, res, next) => {
 })
 
 //ELIMIMAR CATEGORIA 
-router.get('/Borrar/:id_categoria'), async(req, res, next) => {
+router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
     console.log("Entrando a borrar categoria");
     const id_Categoria = req.params.Id_categoria;
     await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
