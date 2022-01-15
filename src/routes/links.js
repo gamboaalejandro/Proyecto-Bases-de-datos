@@ -159,8 +159,8 @@ router.post('/modificarc/:id_producto', async(req, res, next) => {
 //ELIMIMAR CATEGORIA 
 router.get('/Borrar/:id_categoria'), async(req, res, next) => {
     console.log("Entrando a borrar categoria");
-    const id_Categoria = req.params.id_producto;
-    await pool.query("DELETE FROM categoria where id_categoria = ?", [id_Categoria])
+    const id_Categoria = req.params.Id_categoria;
+    await pool.query("DELETE FROM categoria where Id_categoria = ?", [id_Categoria])
     res.render('/links/Categoria');
 }
 
@@ -199,6 +199,5 @@ router.get('/reposteriaNavidad', async(req, res, next) => {
 router.get('/Categoria', async(req, res, next) => {
     res.render('links/Categoria');
 })
-
 
 module.exports = router;
