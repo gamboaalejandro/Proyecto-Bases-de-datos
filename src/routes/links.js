@@ -148,8 +148,15 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
 });
 
 //MODIFICAR CATEGORIA
-router.get('/modificarc/:id_producto', async(req, res, next) => {
-
+router.get('/modificarc/:Id_categoria', async(req, res, next) => {
+    ///////////////////////////////
+    var categoria = req.params.Id_categoria;
+    console.log("lo que sea", categoria);
+    console.log("sexo");
+    const Query = await pool.query("Select * from categoria where Id_categoria = ? ", categoria);
+    console.log(Query);
+    // res.render('links/Categoriamodificar', { Query })
+    res.send("logrado")
 })
 
 router.post('/modificarc/:id_producto', async(req, res, next) => {
@@ -160,7 +167,7 @@ router.post('/modificarc/:id_producto', async(req, res, next) => {
 router.get('/Borrar/:id_categoria'), async(req, res, next) => {
     console.log("Entrando a borrar categoria");
     const id_Categoria = req.params.Id_categoria;
-    await pool.query("DELETE FROM categoria where Id_categoria = ?", [id_Categoria])
+    await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
     res.render('/links/Categoria');
 }
 
@@ -207,6 +214,7 @@ router.get('/adornosDeNavidadEs', async(req, res, next) => {
 router.get('/Tienda', async(req, res, next) => {
     res.render('links/Tienda');
 })
+
 
 /* TIENDAS -----------------------------------------------------*/
 
