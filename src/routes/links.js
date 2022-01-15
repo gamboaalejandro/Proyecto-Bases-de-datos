@@ -139,7 +139,7 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
             Nombre: varr.Nombre,
             Descripcion: varr.Descripcion,
             Id_categoria_Padre: varr.Id_categoria_Padre
-        });
+        }); 
     } else {
         // usar libreria pop up 
         res.send("ta malo maldita");
@@ -151,13 +151,15 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
 //MODIFICAR CATEGORIA
 router.get('/modificarc/:Id_categoria', async(req, res, next) => {
     var categoria = req.params.Id_categoria;
-    console.log(categoria);
-    const Query = await pool.query("Select * from categoria where Id_categoria = ? ", [categoria]);
+    console.log("lo que sea", categoria);
+    console.log("sexo");
+    const Query = await pool.query("Select * from categoria where Id_categoria = ? ", categoria);
     console.log(Query);
-    res.render('links/Categoriamodificar', {Query})
+    // res.render('links/Categoriamodificar', { Query })
+    res.send("logrado")
 })
 
-router.post('/modificarc', async(req, res, next) => {
+/*router.post('/modificarc', async(req, res, next) => {
     const varr = req.body;
     const categoria = {
         Id_Categoria: varr.Id_categoria,
@@ -175,7 +177,7 @@ router.post('/modificarc', async(req, res, next) => {
         // usar libreria pop up mensaje  que ta malo  aqui se usa el flash pero toy cansao asi que xd
         res.send("ta malo ");
     }
-})
+})*/
 
 //ELIMIMAR CATEGORIA 
 router.get('/Borrar/:id_categoria'), async(req, res, next) => {
