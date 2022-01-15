@@ -373,6 +373,52 @@
     border: solid;
 }
 
+#rowEventos h2 {
+    color: white;
+    margin-left: 10px;
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+
+#rowEventos h1 {
+    color: white;
+    margin-left: 10px;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+#divFormFloating {
+    margin-left: 50px;
+    width: 300px;
+}
+
+#colCard1 h6 {
+    margin-top: -8px;
+}
+
+#cardTextFecha {
+    margin-top: -15px;
+}
+
+#tituloError h1 {
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+#tituloError p {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+#tituloError img {
+    margin: 0 auto;
+    width: 500px;
+}
+
 
 /*Animaciones*/
 

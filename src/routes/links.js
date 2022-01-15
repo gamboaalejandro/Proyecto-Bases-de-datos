@@ -134,7 +134,7 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
         console.log("-----post");
         //req.flash('success', 'Producto Insertado satisfactoriamente');
         await pool.query("INSERT into categoria set ? ", {
-            Id_Categoria:varr.Id_categoria,
+            Id_Categoria: varr.Id_categoria,
             Nombre: varr.Nombre,
             Descripcion: varr.Descripcion,
             Id_categoria_Padre: varr.Id_categoria_Padre
@@ -248,6 +248,7 @@ router.get('/tiendas/indexFixFlorida', async(req, res, next) => {
 router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
     res.render('links/tiendas/indexFixCiudadMexico');
 })
+
 
 
 
