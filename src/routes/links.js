@@ -249,5 +249,10 @@ router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
     res.render('links/tiendas/indexFixCiudadMexico');
 })
 
+router.get('/login', async(req, res, next) => {
+    res.render('links/login');
+})
+
+
 
 module.exports = router;
