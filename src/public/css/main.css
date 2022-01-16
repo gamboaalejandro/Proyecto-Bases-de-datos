@@ -430,6 +430,19 @@
     height: 220px;
 }
 
+#btn-color {
+    background-color: #0057a4;
+    color: #fff;
+}
+
+#cardbody-color {
+    background-color: #ebf2fa;
+}
+
+#fondoLogin {
+    background-image: url(/img/carousel1.png);
+}
+
 
 /*Animaciones*/
 
