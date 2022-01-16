@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-3" id="col1">
                 <div class="form-floating mb-3 mt-2">
-                    <form action="/links/Categoria/Buscar" method="GET">
+                    <form action="/links/Tienda" method="GET">
                         <input type="number" class="form-control" id="floatingInput" placeholder="Buscar Tienda" name="Categoria">
                         <div id="divBuscarBoton">
                             <button class="btn btn-primary" type="submit" id="buscarBoton1">Buscar</button>
@@ -43,58 +43,60 @@
 
             <div class="col" id="col2">
                 <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
-                <form action="/links/Categoria/Buscar" method="GET">
-                    {{#each Query}}
+                <form action="/links/modificart" method="POST">
                     <div class="mt-2 input-group mb-3">
-                        <input name="Id_tienda" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idTienda" maxlength="50" >
+                        <input name="id_tienda" type="number" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idTienda" maxlength="50" value="{{Query.id_tienda}}" disabled >
                         <span class="input-group-text" id="basic-addon2">ID Tienda</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="NombreSucursal" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreSucursal" maxlength="50" >
+                        <input name="nombre_sucursal" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreSucursal" maxlength="50" value="{{Query.nombre_sucursal}}">
                         <span class="input-group-text" id="basic-addon2">Nombre Sucursal</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="Direccion" type="text" class="form-control" placeholder="Descripción" aria-label="First name" id="direccion" maxlength="50" >
+                        <input name="direccion" type="text" class="form-control" placeholder="Descripción" aria-label="First name" id="direccion" maxlength="50" value="{{Query.direccion}}" disabled>
                         <span class="input-group-text" id="basic-addon2">Dirección</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="fechaApertura" type="date" class="form-control" aria-label="First name" id="fechaApertura" >
+                        <input name="fecha_apertura" type="text" class="form-control" placeholder="AÑO-MES-DIA" aria-label="First name" id="fechaApertura" value="{{Query.fecha_apertura}}" disabled>
                         <span class="input-group-text" id="basic-addon2">Fecha de Apertura</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="horarioApertura" type="time" class="form-control" id="horarioApertura">
-                        <input name="HorarioCierre" type="time" class="form-control" id="horarioCierre">
-                        <span class="input-group-text" id="basic-addon2">Horario</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="estiloArquitectonico" type="text" class="form-control" placeholder="Estilo Arquitectonico" aria-label="First name" id="estiloArquitectonico" maxlength="50" >
+                        <input name="estilo_arquitectonico" type="text" class="form-control" placeholder="Estilo Arquitectonico" aria-label="First name" id="estiloArquitectonico" maxlength="50" value="{{Query.estilo_arquitectonico}}" disabled>
                         <span class="input-group-text" id="basic-addon2">Estilo Arquitectonico</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="tamano" type="text" class="form-control" placeholder="Tamaño" id="tamano" maxlength="50" >
+                        <input name="tamano" type="number" class="form-control" placeholder="Tamaño" id="tamano" maxlength="50" value="{{Query.tamano}}">
                         <span class="input-group-text" id="basic-addon2">Tamaño</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="numeroPasillos" type="text" class="form-control" placeholder="Numero de pasillos" aria-label="First name" id="numeroPasillos" maxlength="50" >
+                        <input name="numero_pasillos" type="number" class="form-control" placeholder="Numero de pasillos" aria-label="First name" id="numeroPasillos" maxlength="50" value="{{Query. numero_pasillos}}">
                         <span class="input-group-text" id="basic-addon2">Numero de pasillos</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="capacidadAlmacenamiento" type="text" class="form-control" placeholder="Capacidad de Almacenamiento" aria-label="First name" id="capacidadAlmacenamiento" maxlength="50" >
+                        <input name="capacidad_almacenamiento" type="number" class="form-control" placeholder="Capacidad de Almacenamiento" aria-label="First name" id="capacidadAlmacenamiento" maxlength="50" value="{{Query.capacidad_almacenmiento}}">
                         <span class="input-group-text" id="basic-addon2">Capacidad Anaqueles</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="cantidadProductos" type="text" class="form-control" placeholder="Cantidad de productos" aria-label="First name" id="cantidadProductosTienda" maxlength="50" >
+                        <input name="cantidad_productos" type="number" class="form-control" placeholder="Cantidad de productos" aria-label="First name" id="cantidadProductosTienda" maxlength="50" value="{{Query.cantidad_productos}}">
                         <span class="input-group-text" id="basic-addon2">Cantidad de productos</span>
                     </div>
-                    <div class="mt-2 input-group mb-3">
-                    <select class="form-select mt-2" aria-label="Default select example">
-                        <option selected>Area de niños</option>
-                        <option value="1">Si</option>
-                        <option value="2">No</option>
-                    </select>
+                        <div class="mt-2 input-group mb-3">
+                        {{#if Query.area_de_ninos}}
+                        <select class="form-select mt-2" aria-label="Default select example" name="area"  disabled>
+                            <option selected>Area de niños</option>
+                            <option value="1"selected>Si</option>
+                            <option value="0">No</option>
+                        </select>
+                        {{else}}
+                        <select class="form-select mt-2" aria-label="Default select example" name="area"  disabled>
+                            <option selected>Area de niños</option>
+                            <option value="1">Si</option>
+                            <option value="0" selected>No</option>
+                        </select>
+                        {{/if}}
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="codigoLugarGeo" type="text" class="form-control" placeholder="Codigo Lugar-Geo" aria-label="First name" id="codigoLugarGeo" maxlength="50" >
+                        <input name="codigo_lugar_geo" type="text" class="form-control" placeholder="Codigo Lugar-Geo" aria-label="First name" id="codigoLugarGeo" maxlength="50" value="{{Query.codigo_lugar_geo}}" disabled>
                         <span class="input-group-text" id="basic-addon2">Codigo Lugar-Geo</span>
                     </div>
 
@@ -102,126 +104,37 @@
                         </div>
             <div class="col-1" id="col3">
                 <div class="col">
-                    <form action="/links/ProductoGuardar" method="GET">
                     <div class="mt-2" id="divAñadirBoton">
-                        <button type="submit" class="btn btn-success" id="btnAñadir">
-                            <a href="#">Añadir</a>
+                        <button type="submit" class="btn btn-success" id="btnAñadir" disabled>
+                            Añadir
                         </button>
                     </div>
-                    </form>
                 </div>
             </div>
             <div class="col-1" id="col4">
-                <form action="/links/Borrar" method="GET">
                 <div class="mt-2" id="divBorrarBoton">
-                    <button type="submit" class="btn btn-danger" id="btnBorrar">
-                        <a href="/links/Borrar/{{id_categoria}}"> Borrar</a> 
+                    <button type="submit" class="btn btn-danger" id="btnBorrar"disabled>
+                        Borrar 
                     </button>
                 </div> 
-                </form>
             </div>
             <div class="col-1" id="col5">
-                 <form action="/links/modificar" method="GET">
                 <div class="mt-2" id="divModificarBoton">
-                    <button type="submit" class="btn btn-warning" id="btnModificar">
-                        <a href="#">Modificar</a>
-                        </button>
+                    <button type="submit" class="btn btn-warning" id="btnModificar"disabled>
+                       Modificar
+                    </button>
                 </div>
-                </form>
             </div>
             <div class="col-auto" id="col6">
                 <div class="mt-2" id="divGuardarBoton">
-                    <button type="submit" class="btn btn-primary" id="btnGuardar" disabled>Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardar" >
+                        Guardar</button>
                 </div>
             </div>
         </div>
 
                     {{!-- FIN DEL BLOQUE DE BOTONES HABILITADOS PARA ELIMINAR ANADIR O GUARDAR O MODIFICAR --}}
-                    <!-- ELSE CUANDO EN LA PRIMERA INSTANCIA EL QUERY ES VACIO -->
-                    {{else}}
-
-                    <div class="mt-2 input-group mb-3">
-                        <input name="Id_tienda" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idTienda" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">ID Tienda</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="NombreSucursal" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreSucursal" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">Nombre Sucursal</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="Direccion" type="text" class="form-control" placeholder="Descripción" aria-label="First name" id="direccion" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">Dirección</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="fechaApertura" type="date" class="form-control" aria-label="First name" id="fechaApertura" >
-                        <span class="input-group-text" id="basic-addon2">Fecha de Apertura</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="horarioApertura" type="time" class="form-control" id="horarioApertura">
-                        <input name="HorarioCierre" type="time" class="form-control" id="horarioCierre">
-                        <span class="input-group-text" id="basic-addon2">Horario</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="estiloArquitectonico" type="text" class="form-control" placeholder="Estilo Arquitectonico" aria-label="First name" id="estiloArquitectonico" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">Estilo Arquitectonico</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="tamano" type="text" class="form-control" placeholder="Tamaño" id="tamano" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">Tamaño</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="numeroPasillos" type="text" class="form-control" placeholder="Numero de pasillos" aria-label="First name" id="numeroPasillos" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">Numero de pasillos</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="capacidadAlmacenamiento" type="text" class="form-control" placeholder="Capacidad de Almacenamiento" aria-label="First name" id="capacidadAlmacenamiento" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">Capacidad Anaqueles</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="cantidadProductos" type="text" class="form-control" placeholder="Cantidad de productos" aria-label="First name" id="cantidadProductosTienda" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">Cantidad de productos</span>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                    <select class="form-select mt-2" aria-label="Default select example">
-                        <option selected>Area de niños</option>
-                        <option value="1">Si</option>
-                        <option value="2">No</option>
-                    </select>
-                    </div>
-                    <div class="mt-2 input-group mb-3">
-                        <input name="codigoLugarGeo" type="text" class="form-control" placeholder="Codigo Lugar-Geo" aria-label="First name" id="codigoLugarGeo" maxlength="50" >
-                        <span class="input-group-text" id="basic-addon2">Codigo Lugar-Geo</span>
-                    </div>
-                    {{!-- BOTONES CUANDO AUN NO HE BUSCADO NADA EN LA BASE DE DATOS --}}
-            </div>
-            <div class="col-1" id="col3">
-                <div class="col">
-                    <div class="mt-2" id="divAñadirBoton">
-                        <button type="submit" class="btn btn-success" id="btnAñadir">
-                            <a href="#">Añadir</a>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1" id="col4">
-                <div class="mt-2" id="divBorrarBoton">
-                    <button type="submit" class="btn btn-danger" disabled= true id="btnBorrar">Borrar</button>
-                </div>
-            </div>
-            <div class="col-1" id="col5">
-                <div class="mt-2" id="divModificarBoton">
-                    <button type="submit" class="btn btn-warning" disabled= true id="btnModificar">Modificar</button>
-                </div>
-            </div>
-            <div class="col-auto" id="col6">
-                <div class="mt-2" id="divGuardarBoton">
-                    <button type="submit" class="btn btn-primary" disabled= true id="btnGuardar">Guardar</button>
-                </div>
-            </div>
-        </div>
-                    {{!-- FIN DEL BLOQUE ANTES DE BUSQUEDA --}}
-                    {{/each}}
-
+                    
                 </form>
           
     </div>

@@ -58,7 +58,7 @@
                         <span class="input-group-text" id="basic-addon2">Dirección</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="fecha_apertura" type="date" class="form-control" aria-label="First name" id="fechaApertura" value="{{fecha_apertura}}" >
+                        <input name="fecha_apertura" type="text" class="form-control" aria-label="First name" id="fechaApertura" value="{{fecha_apertura}}" disabled>
                         <span class="input-group-text" id="basic-addon2">Fecha de Apertura</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
@@ -66,7 +66,7 @@
                         <span class="input-group-text" id="basic-addon2">Estilo Arquitectonico</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="tamaño" type="number" class="form-control" placeholder="Tamaño" id="tamano" maxlength="50" value="{{tamaño}}" disabled>
+                        <input name="tamaño" type="number" class="form-control" placeholder="Tamaño" id="tamano" maxlength="50" value="{{tamano}}" disabled>
                         <span class="input-group-text" id="basic-addon2">Tamaño</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
@@ -83,21 +83,21 @@
                     </div>
                     <div class="mt-2 input-group mb-3">
                     {{#if 'area_de_niños'}}
-                    <select class="form-select mt-2" aria-label="Default select example" name="area">
+                    <select class="form-select mt-2" aria-label="Default select example" name="area"disabled>
                         <option selected>Area de niños</option>
                         <option value="1" selected>Si</option>
-                        <option value="2">No</option>
+                        <option value="0">No</option>
                     </select>
                     {{else}}
-                        <select class="form-select mt-2" aria-label="Default select example" name="area">
+                        <select class="form-select mt-2" aria-label="Default select example" name="area"disabled>
                         <option selected>Area de niños</option>
                         <option value="1">Si</option>
-                        <option value="2" selected>No</option>
+                        <option value="0" selected>No</option>
                     </select>
                     {{/if}}
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="codigo_lugar_geo" type="text" class="form-control" placeholder="Codigo Lugar-Geo" aria-label="First name" id="codigoLugarGeo" maxlength="50" value="{{codigo_lugar_geo}}" >
+                        <input name="codigo_lugar_geo" type="text" class="form-control" placeholder="Codigo Lugar-Geo" aria-label="First name" id="codigoLugarGeo" maxlength="50" value="{{codigo_lugar_geo}}" disabled>
                         <span class="input-group-text" id="basic-addon2">Codigo Lugar-Geo</span>
                     </div>
 
@@ -124,10 +124,10 @@
                 </form>
             </div>
             <div class="col-1" id="col5">
-                 <form action="/links/modificart" method="GET">
+                <form action="/links/modificart" method="GET">
                 <div class="mt-2" id="divModificarBoton">
                     <button type="submit" class="btn btn-warning" id="btnModificar">
-                        <a href="/links/modificart">Modificar</a>
+                        <a href="/links/modificart/{{id_tienda}}">Modificar</a>
                         </button>
                 </div>
                 </form>
@@ -155,7 +155,7 @@
                         <span class="input-group-text" id="basic-addon2">Dirección</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="fecha_apertura" type="date" class="form-control" aria-label="First name" id="fechaApertura" >
+                        <input name="fecha_apertura" type="text" class="form-control" placeholder="AÑO-MES-DIA" aria-label="First name" id="fechaApertura" disabled>
                         <span class="input-group-text" id="basic-addon2">Fecha de Apertura</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
@@ -179,14 +179,14 @@
                         <span class="input-group-text" id="basic-addon2">Cantidad de productos</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                    <select class="form-select mt-2" aria-label="Default select example">
+                    <select class="form-select mt-2" aria-label="Default select example" disabled>
                         <option selected>Area de niños</option>
                         <option value="1">Si</option>
                         <option value="2">No</option>
                     </select>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="codigo_lugar_geo" type="text" class="form-control" placeholder="Codigo Lugar-Geo" aria-label="First name" id="codigoLugarGeo" maxlength="50" >
+                        <input name="codigo_lugar_geo" type="text" class="form-control" placeholder="Codigo Lugar-Geo" aria-label="First name" id="codigoLugarGeo" maxlength="50" disabled>
                         <span class="input-group-text" id="basic-addon2">Codigo Lugar-Geo</span>
                     </div>
 
@@ -194,11 +194,13 @@
             </div>
             <div class="col-1" id="col3">
                 <div class="col">
+                    <form action="/links/TiendaGuardar" method="GET"></form>
                     <div class="mt-2" id="divAñadirBoton">
                         <button type="submit" class="btn btn-success" id="btnAñadir">
-                            <a href="#">Añadir</a>
+                            <a href="/links/TiendaGuardar">Añadir</a>
                         </button>
                     </div>
+                    </form>
                 </div>
             </div>
             <div class="col-1" id="col4">

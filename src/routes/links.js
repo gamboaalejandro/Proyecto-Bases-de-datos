@@ -2,6 +2,7 @@ const express = require("express");
 const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
+const moment =require('moment');
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 
@@ -39,19 +40,18 @@ router.post('/modificar/:id_producto', async(req, res, next) => {
         Caracteristicas: varr.caracteristicas,
         Materiales: varr.materiales,
         Montaje: varr.Montaje,
-        Id_categoriaP: varr.categoriaid,
         Cantidad: varr.cantidad,
         Instrucciones: varr.instrucciones
     }
     console.log(producto);
-    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
+    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
         await pool.query("UPDATE producto set ? WHERE id_producto = ? ", [producto, varr.id_producto]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
         res.render('links/Producto');
     } else {
-        // usar libreria pop up mensaje  que ta malo  aqui se usa el flash pero toy cansao asi que xd
-        res.send("ta malo maldita");
+        // usar libreria pop up mensaje  que ta malo aqui se usa el flash pero toy cansao asi que xd
+        res.send("ta malo");
     }
 })
 
@@ -63,14 +63,13 @@ router.get('/ProductoGuardar', async(req, res, next) => {
 router.post('/ProductoGuardar', async(req, res, next) => {
     const varr = req.body;
     console.log(varr.Montaje);
-    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
+    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
         req.flash('success', 'Producto Insertado satisfactoriamente');
         await pool.query("INSERT into producto set ? ", {
             id_producto: varr.id_producto,
             nombre: varr.Nombre,
             Precio: varr.Precio,
-            Id_categoriaP: varr.CategoriaID,
             Caracteristicas: varr.Caracteristicas,
             Materiales: varr.materiales,
             Montaje: varr.Montaje,
@@ -115,6 +114,7 @@ router.get('/CategoriaGuardar', async(req, res, next) => {
     res.render('links/Categoriaanadir');
 });
 
+
 router.post('/CategoriaGuardar', async(req, res, next) => {
     const varr = req.body;
     if ((varr.Id_Categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "")) {
@@ -135,7 +135,6 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
 //MODIFICAR CATEGORIA
 router.get('/modificarc/:Id_categoria', async(req, res, next) => {
     var categoria = req.params.Id_categoria;      
-    console.log("sexo");
     const Query = await pool.query("Select * from categoria where Id_categoria = ? ", categoria);
     console.log(Query);
     res.render('links/Categoriamodificar', { Query: Query[0] })
@@ -163,7 +162,6 @@ router.post('/modificarc', async(req, res, next) => {
 
 //ELIMINAR CATEGORIA 
 router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
-    console.log("Entrando a borrar categoria");
     const id_Categoria = req.params.Id_categoria;
     await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
     res.render('/links/Categoria');
@@ -174,56 +172,57 @@ router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
 //BUSCAR TIENDAS
 router.get('/Tienda', async(req, res, next) => {
     var tienda2=req.query;
-    console.log("daa0",req.query);
     if (Object.keys(tienda2).length !== 0) {
         var id_tienda = tienda2.Tienda;
         const Query = await pool.query("Select * from tienda where id_tienda = ? ", id_tienda);
-        console.log("Perra puta",Query[0].fecha_apertura);
-        Query.fecha_apertura= new Date(Query[0].fecha_apertura);
-        console.log(Query);
+        Query[0].fecha_apertura=moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
         res.render('links/Tienda', {Query})
     } else {
-        console.log("NO ENTRO");
         res.render('links/Tienda')
 
     }
 });
 
-//AÑADIR TIENDAd
+//AÑADIR TIENDA
 router.get('/TiendaGuardar', async(req, res, next) => {
     res.render('links/Tiendaanadir');
 });
 
 router.post('/TiendaGuardar', async(req, res, next) => {
     const varr = req.body;
-    if ((varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.fecha_apertura !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (arr.area_ninos !== "") && (varr.codigo_lugar_geo !== "")) {
+    console.log(varr);
+    if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") &&  (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
         await pool.query("INSERT into tienda set ? ", {
             id_tienda: varr.id_tienda,
             nombre_sucursal: varr.nombre_sucursal,
             direccion: varr.direccion,
             fecha_apertura: varr.fecha_apertura,
             estilo_arquitectonico: varr.estilo_arquitectonico,
-            tamaño: varr.tamaño,
+            tamano: varr.tamano,
             numero_pasillos: varr.numero_pasillos,
-            capacidad_almacenamiento: varr.capacidad_almacenamiento,
+            capacidad_almacenmiento: varr.capacidad_almacenamiento,
             cantidad_productos: varr.cantidad_productos,
-            area_ninos: varr.area_ninos,
+            area_de_ninos: varr.area,
             codigo_lugar_geo: varr.codigo_lugar_geo
         }); 
     } else {
         // usar libreria pop up 
-        res.send("ta malo maldita");
+        res.send("ta malo ");
     }
-    res.render('links/Categoria');
+    res.render('links/Tienda');
 });
 
 //MODIFICAR TIENDA
 
 router.get('/modificart/:id_tienda', async(req, res, next) => {
-    var tienda = req.params.id_tienda;      
-    const Query = await pool.query("Select * from tienda where id_tienda = ? ", tienda);
+    console.log("ENTRO AL MODIFICAR GET");
+    var tienda = req.params.id_tienda;    
+    const Query = await pool.query("Select * from tienda where id_tienda = ? ",tienda);
+    Query[0].fecha_apertura=moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
     console.log(Query);
-    res.render('links/Tiendamodificar', { Query: Query[0] })
+    console.log("SE VA A SALIR");
+    res.render('links/Tiendamodificar',{Query: Query[0]})
+    //res.render('links/Tienda',{Query});
 })
 
 router.post('/modificart', async(req, res, next) => {
@@ -234,15 +233,15 @@ router.post('/modificart', async(req, res, next) => {
         direccion: varr.direccion,
         fecha_apertura: varr.fecha_apertura,
         estilo_arquitectonico: varr.estilo_arquitectonico,
-        tamaño: varr.tamaño,
+        tamano: varr.tamano,
         numero_pasillos: varr.numero_pasillos,
-        capacidad_almacenamiento: varr.capacidad_almacenamiento,
+        capacidad_almacenmiento: varr.capacidad_almacenamiento,
         cantidad_productos: varr.cantidad_productos,
-        area_ninos: varr.area_ninos,
+        area_de_ninos: varr.area,
         codigo_lugar_geo: varr.codigo_lugar_geo
     }   
     console.log(tienda);
-    if ((varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.fecha_apertura !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (arr.area_ninos !== "") && (varr.codigo_lugar_geo !== "")) {
+    if ((varr.capacidad_almacenamiento< varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
         console.log("MODIFICAR TIENDA");
         await pool.query("UPDATE tienda set ? WHERE id_tienda = ? ", [tienda, varr.id_tienda]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
