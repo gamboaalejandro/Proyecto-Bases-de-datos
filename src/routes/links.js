@@ -250,8 +250,4 @@ router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
 })
 
 
-
-
-
-
 module.exports = router;
