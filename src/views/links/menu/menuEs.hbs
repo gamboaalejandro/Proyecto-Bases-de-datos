@@ -1,0 +1,197 @@
+<nav class="navbar navbar-expand-lg navbar-light" id="barra">
+        <div class="container-fluid ">
+            <a class="navbar-brand " href="/"><img src="/img/IKEA-Logo-1.png " alt=" " width="150px "></a>
+            <button class="navbar-toggler " type="button " data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false " aria-label="Toggle navigation ">
+                <span class="navbar-toggler-icon "></span>
+              </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="textNavBar">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Productos
+                    </a>
+                    
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown-menu">
+                            <li><a class="dropdown-item" href="adornosDeNavidad" id="dropdownAdornosDeNavidad">Adornos de navidad</a></li>
+                            <li><a class="dropdown-item" href="lucesNavidad">Luces de navidad</a></li>
+                            <li><a class="dropdown-item" href="comidaNavidad">Comida navideña</a></li>
+                            <li><a class="dropdown-item" href="mantelesNavidad">Manteles y textiles de navidad</a></li>
+                            <li><a class="dropdown-item" href="arbolesNavidad">Árboles, macetas y plantas de navidad</a></li>
+                            <li><a class="dropdown-item" href="reposteriaNavidad">Repostería de navidad y moldes para galleta</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="Producto">Administración</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="# ">Servicios</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                </ul>
+                <form class="d-flex ">
+                    <input class="form-control me-2" type="search" placeholder="Buscar... " aria-label="Search">
+                    <button id="buscarBoton" class="btn btn-outline-success " type="submit ">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!--Contenido-->
+    <div class="container-fluid" id="fondoSubcategoria">
+         <div class="container" id="tablaFondo">
+        {{!-- PRIMERA FILA --}}
+        <div class="row" id="rowMenu">
+            <div class="col"> 
+                <h2>Desayunos</h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/1.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Desayuno mediterráneo.</h4>
+                        <p class="card-text">Pan tostado con aceite de oliva virgen extra, tomate natural triturado y café Ecológico.</p>
+                        <h2 class="card-text" style="font-style: italic;">1,00€</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/2.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Desayuno serrano.</h4>
+                        <p class="card-text">Pan tostado con jamón serrano gran reserva, aceite de oliva virgen extra, tomate natural triturado y café Ecológico.</p>
+                        <h2 class="card-text" style="font-style: italic;">2,00€</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/3.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Desayuno especial.</h4>
+                        <p class="card-text">Pan tostado, pincho de tortilla de patatas, salchicha, bacón, mantequilla, mermelada y café Ecológico.</p>
+                        <h2 class="card-text" style="font-style: italic;">3,00€</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2" id="rowMenu">
+            <div class="col"> 
+                <h2>Platos Principales</h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/5.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Albóndigas vegetales.</h4>
+                        <p class="card-text">Con granos mixtos, mezcla de judías y ragú de tomate y espinaca.</p>
+                        <h2 class="card-text" style="font-style: italic;">3,95€</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/6.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Albóndigas suecas.</h4>
+                        <p class="card-text">Tradicionales, con puré de patata, mermelada de arándanos rojos, guisantes y salsa de nata.</p>
+                        <h2 class="card-text" style="font-style: italic;">4,95€</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/7.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Filete de salmón.</h4>
+                        <p class="card-text">Con medallón de verdura, brócoli y salsa holandesa.</p>
+                        <h2 class="card-text" style="font-style: italic;">6,95€</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2" id="rowMenu">
+            <div class="col"> 
+                <h2>Meriendas y cenas</h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/9.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Tortillas con sirope.</h4>
+                        <p class="card-text mt-4">Dos tortitas con nata y sirope.</p>
+                        <h2 class="card-text" style="font-style: italic;">1,00€</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/10.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text mt-2">Chocolate con churros.</h4>
+                        <p class="card-text mt-4">Chocolate con churros.</p>
+                        <h2 class="card-text" style="font-style: italic;">2,50€</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/11.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Menú merienda.</h4>
+                        <p class="card-text">Albóndigas. + tortitas con nata + agua, cerveza o refresco con sabor a fruta.</p>
+                        <h2 class="card-text" style="font-style: italic;">8,95€</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2" id="rowMenu">
+            <div class="col"> 
+                <h2>Postres</h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/13.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text">Tarta Daim.</h4>
+                        <p class="card-text mt-4">Con chocolate y crujiente de caramelo.</p>
+                        <h2 class="card-text" style="font-style: italic;">2,50€</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/14.png" class="card-img-top" alt="...">
+                    <div class="card-body" id="cardBody">
+                        <h4 class="card-text mt-2">Tarta Premium de Zanahoria.</h4>
+                        <p class="card-text mt-4">Tarta Premium de Zanahoria.</p>
+                        <h2 class="card-text" style="font-style: italic;">3,00€</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/menu/15.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-text">Bol de frutas.</h4>
+                        <p class="card-text">Ración individual.</p>
+                        <h2 class="card-text" style="font-style: italic;">1,50€</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
