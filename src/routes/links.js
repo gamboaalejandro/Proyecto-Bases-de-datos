@@ -178,6 +178,8 @@ router.get('/Tienda', async(req, res, next) => {
     if (Object.keys(tienda2).length !== 0) {
         var id_tienda = tienda2.Tienda;
         const Query = await pool.query("Select * from tienda where id_tienda = ? ", id_tienda);
+        console.log("Perra puta",Query[0].fecha_apertura);
+        Query.fecha_apertura= new Date(Query[0].fecha_apertura);
         console.log(Query);
         res.render('links/Tienda', {Query})
     } else {
