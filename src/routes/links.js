@@ -2,7 +2,7 @@ const express = require("express");
 const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
-const moment =require('moment');
+const moment = require('moment');
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 
@@ -124,7 +124,7 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
             Nombre: varr.Nombre,
             Descripcion: varr.Descripcion,
             Id_categoria_Padre: varr.Id_categoria_Padre
-        }); 
+        });
     } else {
         // usar libreria pop up 
         res.send("ta malo maldita");
@@ -134,7 +134,7 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
 
 //MODIFICAR CATEGORIA
 router.get('/modificarc/:Id_categoria', async(req, res, next) => {
-    var categoria = req.params.Id_categoria;      
+    var categoria = req.params.Id_categoria;
     const Query = await pool.query("Select * from categoria where Id_categoria = ? ", categoria);
     console.log(Query);
     res.render('links/Categoriamodificar', { Query: Query[0] })
@@ -144,12 +144,12 @@ router.post('/modificarc', async(req, res, next) => {
     const varr = req.body;
     const categoria = {
         Id_Categoria: varr.Id_categoria,
-        Nombre: varr.Nombre, 
+        Nombre: varr.Nombre,
         Descripcion: varr.Descripcion,
         Id_categoria_Padre: varr.Id_categoria_Padre
-    }   
+    }
     console.log(categoria);
-    if ((varr.Id_categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "") && (varr. Id_categoria_Padre !== "")) {
+    if ((varr.Id_categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "") && (varr.Id_categoria_Padre !== "")) {
         console.log("MODIFICAR CATEGORIA");
         await pool.query("UPDATE categoria set ? WHERE Id_categoria = ? ", [categoria, varr.Id_categoria]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
@@ -171,12 +171,12 @@ router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
 
 //BUSCAR TIENDAS
 router.get('/Tienda', async(req, res, next) => {
-    var tienda2=req.query;
+    var tienda2 = req.query;
     if (Object.keys(tienda2).length !== 0) {
         var id_tienda = tienda2.Tienda;
         const Query = await pool.query("Select * from tienda where id_tienda = ? ", id_tienda);
-        Query[0].fecha_apertura=moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
-        res.render('links/Tienda', {Query})
+        Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
+        res.render('links/Tienda', { Query })
     } else {
         res.render('links/Tienda')
 
@@ -191,7 +191,7 @@ router.get('/TiendaGuardar', async(req, res, next) => {
 router.post('/TiendaGuardar', async(req, res, next) => {
     const varr = req.body;
     console.log(varr);
-    if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") &&  (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
+    if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
         await pool.query("INSERT into tienda set ? ", {
             id_tienda: varr.id_tienda,
             nombre_sucursal: varr.nombre_sucursal,
@@ -204,7 +204,7 @@ router.post('/TiendaGuardar', async(req, res, next) => {
             cantidad_productos: varr.cantidad_productos,
             area_de_ninos: varr.area,
             codigo_lugar_geo: varr.codigo_lugar_geo
-        }); 
+        });
     } else {
         // usar libreria pop up 
         res.send("ta malo ");
@@ -216,13 +216,13 @@ router.post('/TiendaGuardar', async(req, res, next) => {
 
 router.get('/modificart/:id_tienda', async(req, res, next) => {
     console.log("ENTRO AL MODIFICAR GET");
-    var tienda = req.params.id_tienda;    
-    const Query = await pool.query("Select * from tienda where id_tienda = ? ",tienda);
-    Query[0].fecha_apertura=moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
+    var tienda = req.params.id_tienda;
+    const Query = await pool.query("Select * from tienda where id_tienda = ? ", tienda);
+    Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
     console.log(Query);
     console.log("SE VA A SALIR");
-    res.render('links/Tiendamodificar',{Query: Query[0]})
-    //res.render('links/Tienda',{Query});
+    res.render('links/Tiendamodificar', { Query: Query[0] })
+        //res.render('links/Tienda',{Query});
 })
 
 router.post('/modificart', async(req, res, next) => {
@@ -239,9 +239,9 @@ router.post('/modificart', async(req, res, next) => {
         cantidad_productos: varr.cantidad_productos,
         area_de_ninos: varr.area,
         codigo_lugar_geo: varr.codigo_lugar_geo
-    }   
+    }
     console.log(tienda);
-    if ((varr.capacidad_almacenamiento< varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
+    if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
         console.log("MODIFICAR TIENDA");
         await pool.query("UPDATE tienda set ? WHERE id_tienda = ? ", [tienda, varr.id_tienda]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
@@ -356,6 +356,90 @@ router.get('/login', async(req, res, next) => {
     res.render('links/login');
 })
 
+/* REDIRECT DE España*/
+router.get('/adornosDeNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/adornosDeNavidad-Es");
+});
+
+router.get('/lucesNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/lucesNavidad-Es");
+});
+router.get('/comidaNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/comidaNavidad-Es");
+});
+router.get('/mantelesNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/mantelesNavidad-Es");
+});
+router.get('/arbolesNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/arbolesNavidad-Es");
+});
+router.get('/reposteriaNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/reposteriaNavidad-Es");
+});
+
+router.get('/menuEs', (req, res) => {
+    res.render("links/menu/menuEs");
+});
+
+router.get('/EventoAsturias', (req, res) => {
+    res.render("links/eventos/eventoikeaAsturias");
+});
+
+router.get('/EventoAndalucia', (req, res) => {
+    res.render("links/eventos/eventoikeaAndalucia");
+});
+router.get('/EventoCataluna', (req, res) => {
+    res.render("links/eventos/eventoikeaCataluna");
+});
+router.get('/EventoMadrid', (req, res) => {
+    res.render("links/eventos/eventoikeaMadrid");
+});
+router.get('/EventoMurcia', (req, res) => {
+    res.render("links/eventos/eventoikeaMurcia");
+});
+
+/* REDIRECT DE USA*/
+
+router.get('/adornosDeNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/adornosDeNavidad-Us");
+});
+router.get('/lucesNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/lucesNavidad-Us");
+});
+router.get('/comidaNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/comidaNavidad-Us");
+});
+router.get('/mantelesNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/mantelesNavidad-Us");
+});
+router.get('/arbolesNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/arbolesNavidad-Us");
+});
+router.get('/reposteriaNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/reposteriaNavidad-Us");
+});
+
+
+/* REDIRECT DE MX*/
+
+router.get('/adornosDeNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/adornosDeNavidad-Mx");
+});
+router.get('/lucesNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/lucesNavidad-Mx");
+});
+router.get('/comidaNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/comidaNavidad-Mx");
+});
+router.get('/mantelesNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/mantelesNavidad-Mx");
+});
+router.get('/arbolesNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/arbolesNavidad-Mx");
+});
+router.get('/reposteriaNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/reposteriaNavidad-Mx");
+});
 
 
 module.exports = router;
