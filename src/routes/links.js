@@ -287,10 +287,13 @@ router.get('/Eliminar/:id_tienda'), async(req, res, next) => {
 router.get('/ProductoPlantilla/:id', async(req, res, next) => {
     const Nro_Producto = req.params.id;
     console.log(Nro_Producto);
-    const diseñador = await pool.query("select primer_nombre,primer_apellido from diseñadores as dis where dis.numero_diseñador = (select dp.num_diseñador from d_p as dp where dp.id_producto = ? )", Nro_Producto);
-    console.log("Disenador ==== ", diseñador);
+    //const diseñador = await pool.query("select primer_nombre,primer_apellido from diseñadores as dis where dis.numero_diseñador = (select dp.num_diseñador from d_p as dp where dp.id_producto = ? )", Nro_Producto);
+    //console.log("Disenador ==== ", diseñador);
     const Query = await pool.query("Select * from Producto where id_producto = ?", Nro_Producto);
-    res.render('links/productoPlantilla', { Query });
+    const str = "/img/productos/" + Nro_Producto + "a.png"
+    const str2 = "/img/productos/" + Nro_Producto + "b.png"
+    console.log(str);
+    res.render('links/productoPlantilla', { Query, str, str2 });
 })
 
 router.get('/adornosDeNavidad', async(req, res, next) => {
