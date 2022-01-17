@@ -11,7 +11,10 @@ const bodyParser = require('body-parser');
 const { database } = require('./keys');
 
 // Intializations
+
 const app = express();
+
+app.use(flash());
 
 // Settings
 app.set('port', process.env.PORT || 4000);
@@ -26,6 +29,7 @@ app.engine('.hbs', exphbs.engine({
 app.set('view engine', '.hbs');
 
 // Middlewares
+
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -36,12 +40,11 @@ app.use(session({
     saveUninitialized: false,
     store: new MySQLStore(database)
 }));
-app.use(flash());
 
 // Global variables
 app.use((req, res, next) => {
-    app.locals.message = req.flash('message');
-    app.locals.success = req.flash('success');
+    app.locals.nosuccess = req.flash('nosuccess');
+    res.locals.success = req.flash('success');
     app.locals.user = req.user;
     next();
 });

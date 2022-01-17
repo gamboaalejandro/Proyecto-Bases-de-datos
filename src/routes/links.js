@@ -3,10 +3,12 @@ const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
 const moment = require('moment');
-
+var mensaje = true;
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 
 //BUSQUEDA DE UN PRODUCTO 
+
+
 router.get('/Producto', async(req, res, next) => {
     var producto = req.query;
     console.log(Object.keys(producto).length);
@@ -16,7 +18,7 @@ router.get('/Producto', async(req, res, next) => {
         //validacion de montaje
         res.render('links/Producto', { Query })
     } else {
-        res.render('links/Producto')
+        res.render('links/Producto', )
 
     }
 });
@@ -31,7 +33,8 @@ router.get('/modificar/:id_producto', async(req, res, next) => {
 });
 
 router.post('/modificar/:id_producto', async(req, res, next) => {
-    const ID = req.params.id_producto;
+
+    var mensajito = "Producto modificado exitosamente";
     const varr = req.body;
     const producto = {
         id_producto: varr.id_producto,
@@ -44,14 +47,14 @@ router.post('/modificar/:id_producto', async(req, res, next) => {
         Instrucciones: varr.instrucciones
     }
     console.log(producto);
-    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
+    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.precio !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
         await pool.query("UPDATE producto set ? WHERE id_producto = ? ", [producto, varr.id_producto]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
-        res.render('links/Producto');
+        res.render('links/Producto', { mensaje, mensajito });
     } else {
-        // usar libreria pop up mensaje  que ta malo aqui se usa el flash pero toy cansao asi que xd
-        res.send("ta malo");
+        mensajito = "El producto no pudo ser modificado";
+        res.render('links/Producto', { mensaje, mensajito });
     }
 })
 
@@ -61,11 +64,13 @@ router.get('/ProductoGuardar', async(req, res, next) => {
 });
 
 router.post('/ProductoGuardar', async(req, res, next) => {
+
+    var mensajito = "Producto añadido exitosamente";
     const varr = req.body;
+
     console.log(varr.Montaje);
     if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
-        req.flash('success', 'Producto Insertado satisfactoriamente');
         await pool.query("INSERT into producto set ? ", {
             id_producto: varr.id_producto,
             nombre: varr.Nombre,
@@ -77,20 +82,23 @@ router.post('/ProductoGuardar', async(req, res, next) => {
             Instrucciones: varr.Instrucciones
 
         });
+        res.render('links/Producto', { mensaje, mensajito });
     } else {
-        // usar libreria pop up 
-        res.send("ta malo maldita");
+        mensajito = "No es posible añadir el producto";
+        res.render('links/Producto', { mensaje, mensajito });
     }
-    res.render('links/ProductoGuardar');
+
 
 });
 
 //ELIMINAR PRODUCTO
 router.get('/delete/:id_producto', async(req, res, next) => {
+
+    var mensajito = "Producto Eliminado exitosamente";
     console.log("Entrando a borrar producto");
     const id_Producto = req.params.id_producto;
     await pool.query("DELETE FROM producto where id_producto = ?", [id_Producto]);
-    res.render('links/Producto');
+    res.render('links/Producto', { mensaje, mensajito });
 });
 
 //---------------------------------------------PROCEDIMIENTOS DE CATEGORIAS
@@ -116,6 +124,8 @@ router.get('/CategoriaGuardar', async(req, res, next) => {
 
 
 router.post('/CategoriaGuardar', async(req, res, next) => {
+
+    var mensajito = "Categoria añadida exitosamente";
     const varr = req.body;
     if ((varr.Id_Categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "")) {
         //req.flash('success', 'Producto Insertado satisfactoriamente');
@@ -125,11 +135,12 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
             Descripcion: varr.Descripcion,
             Id_categoria_Padre: varr.Id_categoria_Padre
         });
+        res.render('links/Categoria', { mensaje, mensajito });
     } else {
-        // usar libreria pop up 
-        res.send("ta malo maldita");
+        mensajito = "No es posible añadir la categoria";
+        res.render('links/Categoria', { mensaje, mensajito });
     }
-    res.render('links/Categoria');
+
 });
 
 //MODIFICAR CATEGORIA
@@ -141,6 +152,8 @@ router.get('/modificarc/:Id_categoria', async(req, res, next) => {
 })
 
 router.post('/modificarc', async(req, res, next) => {
+
+    var mensajito = "Categoria Modificada exitosamente";
     const varr = req.body;
     const categoria = {
         Id_Categoria: varr.Id_categoria,
@@ -153,18 +166,20 @@ router.post('/modificarc', async(req, res, next) => {
         console.log("MODIFICAR CATEGORIA");
         await pool.query("UPDATE categoria set ? WHERE Id_categoria = ? ", [categoria, varr.Id_categoria]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
-        res.render('links/Categoria');
+        res.render('links/Categoria', { mensaje, mensajito });
     } else {
-        // usar libreria pop up mensaje  que ta malo  aqui se usa el flash pero toy cansao asi que xd
-        res.send("ta malo ");
+        mensajito = "No es posible modificar la categoria";
+        res.render('links/Categoria', { mensaje, mensajito });
     }
 })
 
 //ELIMINAR CATEGORIA 
 router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
+
+    var mensajito = "Categoria Eliminada exitosamente";
     const id_Categoria = req.params.Id_categoria;
     await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
-    res.render('/links/Categoria');
+    res.render('/links/Categoria', { mensaje, mensajito });
 }
 
 //------------------------------------------------------PROCEDIMIENTOS DE TIENDAS
@@ -175,6 +190,7 @@ router.get('/Tienda', async(req, res, next) => {
     if (Object.keys(tienda2).length !== 0) {
         var id_tienda = tienda2.Tienda;
         const Query = await pool.query("Select * from tienda where id_tienda = ? ", id_tienda);
+        console.log(Query)
         Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
         res.render('links/Tienda', { Query })
     } else {
@@ -189,6 +205,8 @@ router.get('/TiendaGuardar', async(req, res, next) => {
 });
 
 router.post('/TiendaGuardar', async(req, res, next) => {
+
+    var mensajito = "Tienda añadida exitosamente";
     const varr = req.body;
     console.log(varr);
     if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
@@ -205,11 +223,12 @@ router.post('/TiendaGuardar', async(req, res, next) => {
             area_de_ninos: varr.area,
             codigo_lugar_geo: varr.codigo_lugar_geo
         });
+        res.render('links/Tienda', mensaje, mensajito);
     } else {
-        // usar libreria pop up 
-        res.send("ta malo ");
+        mensajito = "No es posible añadir la tienda";
+        res.render('links/Tienda', mensaje, mensajito);
     }
-    res.render('links/Tienda');
+
 });
 
 //MODIFICAR TIENDA
@@ -225,7 +244,9 @@ router.get('/modificart/:id_tienda', async(req, res, next) => {
         //res.render('links/Tienda',{Query});
 })
 
-router.post('/modificart', async(req, res, next) => {
+router.post('/modificart/:id_tienda', async(req, res, next) => {
+
+    var mensajito = "Tienda Modificada exitosamente";
     const varr = req.body;
     const tienda = {
         id_tienda: varr.id_tienda,
@@ -245,19 +266,20 @@ router.post('/modificart', async(req, res, next) => {
         console.log("MODIFICAR TIENDA");
         await pool.query("UPDATE tienda set ? WHERE id_tienda = ? ", [tienda, varr.id_tienda]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
-        res.render('links/Tienda');
+        res.render('links/Tienda', { mensaje, mensajito });
     } else {
-        // usar libreria pop up mensaje  que ta malo  aqui se usa el flash pero toy cansao asi que xd
-        res.send("ta malo ");
+        mensajito = "No es posible modificar la tienda";
+        res.render('links/Tienda', { mensaje, mensajito });
     }
 })
 
 //ELIMINAR TIENDA 
 router.get('/Eliminar/:id_tienda'), async(req, res, next) => {
+    var mensajito = "Tienda Eliminada exitosamente";
     console.log("Entrando a borrar tienda");
     const id_tienda = req.params.id_tienda;
     await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda)
-    res.render('/links/Tienda');
+    res.render('/links/Tienda', { mensaje, mensajito });
 }
 
 //---------------------------------------------REDIRECCCIONAMIENTOS DEL FRONT

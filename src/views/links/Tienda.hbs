@@ -39,7 +39,11 @@
                         </div>
                     </form>
                 </div>
+                 {{#if mensaje}}
+                {{>Popup headline= mensajito }}
+                {{/if}}
             </div>
+           
 
             <div class="col" id="col2">
                 <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
@@ -82,7 +86,7 @@
                         <span class="input-group-text" id="basic-addon2">Cantidad de productos</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                    {{#if 'area_de_niños'}}
+                    {{#if area_de_ninos}}
                     <select class="form-select mt-2" aria-label="Default select example" name="area"disabled>
                         <option selected>Area de niños</option>
                         <option value="1" selected>Si</option>
