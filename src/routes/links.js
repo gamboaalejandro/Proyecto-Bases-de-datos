@@ -4,6 +4,7 @@ const router = express.Router();
 const pool = require('../database');
 const moment = require('moment');
 var mensaje = true;
+var carrito = [];
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 
 //BUSQUEDA DE UN PRODUCTO 
@@ -296,7 +297,14 @@ router.get('/ProductoPlantilla/:id', async(req, res, next) => {
     res.render('links/productoPlantilla', { Query, str, str2 });
 })
 
+router.get('/comprando/:id_producto', async(req, res) => {
+    carrito.push(req.params.id_producto);
+    console.log(carrito);
+    res.render('links/indexFix');
+})
+
 router.get('/adornosDeNavidad', async(req, res, next) => {
+    console.log(carrito);
     res.render('links/adornosDeNavidad');
 })
 
@@ -384,7 +392,7 @@ router.get('/carrito', async(req, res, next) => {
 })
 
 router.get('/factura', async(req, res, next) => {
-    console.log(req.body);
+    console.log(req.query);
     res.render('links/factura');
 })
 

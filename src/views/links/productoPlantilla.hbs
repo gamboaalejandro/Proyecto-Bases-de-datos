@@ -13,12 +13,12 @@
                       Productos
                     </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown-menu">
-                            <li><a class="dropdown-item" href="adornosDeNavidad" id="dropdownAdornosDeNavidad">Adornos de navidad</a></li>
-                            <li><a class="dropdown-item" href="lucesNavidad">Luces de navidad</a></li>
-                            <li><a class="dropdown-item" href="comidaNavidad">Comida navideña</a></li>
-                            <li><a class="dropdown-item" href="mantelesNavidad">Manteles y textiles de navidad</a></li>
-                            <li><a class="dropdown-item" href="arbolesNavidad">Árboles, macetas y plantas de navidad</a></li>
-                            <li><a class="dropdown-item" href="reposteriaNavidad">Repostería de navidad y moldes para galleta</a></li>
+                            <li><a class="dropdown-item" href="/links/adornosDeNavidad" id="dropdownAdornosDeNavidad">Adornos de navidad</a></li>
+                            <li><a class="dropdown-item" href="/links/lucesNavidad">Luces de navidad</a></li>
+                            <li><a class="dropdown-item" href="/links/comidaNavidad">Comida navideña</a></li>
+                            <li><a class="dropdown-item" href="/links/mantelesNavidad">Manteles y textiles de navidad</a></li>
+                            <li><a class="dropdown-item" href="/links/arbolesNavidad">Árboles, macetas y plantas de navidad</a></li>
+                            <li><a class="dropdown-item" href="/links/reposteriaNavidad">Repostería de navidad y moldes para galleta</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="links/Producto">Algo random aqui</a></li>
                         </ul>
@@ -81,8 +81,11 @@
                             <textarea name="" id="precioPlantilla" disabled>{{Precio}}$</textarea>
                         </div>
                     </div>
-                    <div class="row" id="rowComprarProducto">
-                        <button type="button" class="btn btn-primary" id="comprarProducto">Comprar</button>
+                  
+                    <div class="row" id="rowComprarProducto">                       
+                        <button type="button" class="btn btn-primary" id="comprarProducto">
+                            <a href="/links/comprando/{{id_producto}}">Comprar</a>
+                            </button>
                     </div>
                 </div>
             

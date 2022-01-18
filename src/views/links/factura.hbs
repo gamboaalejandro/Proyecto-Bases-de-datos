@@ -94,10 +94,10 @@
             </div>
             <div class="row">
                     <div class="col pt-2" id="col1Factura">
-                    <form class="row g-3 pb-3 needs-validation" novalidate>
+                    <form class="row g-3 pb-3 needs-validation" novalidate action="/links/factura" method="GET">
                         <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
                         <div class="col-md-2 input-group mt-3">
-                            <input type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required>
+                            <input form = "form1"  name ="cedula" type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required>
                             <button class="btn btn-success">Buscar</button>
                             <div class="invalid-feedback" style="font-weight: bold; border-color: white;">
                                 Debe colocar una cédula!
@@ -134,9 +134,9 @@
                  <div class="col-4 pt-2 pb-3" id="col2Factura">
                     <div class="col pb-2" id="datosCarrito">
                     
-                        <form class="needs-validation" novalidate action="/links/factura" method="GET" >
+                        <form id = "form1" class="needs-validation" novalidate action="/links/factura" method="GET" >
                             <div class="col-md-4" id="numCaja">
-                            <select class="form-select" required>
+                            <select class="form-select" required name = "pene">
                             <option disabled selected value=""># Caja</option>
                             <option>1</option>
                             <option>2</option>
