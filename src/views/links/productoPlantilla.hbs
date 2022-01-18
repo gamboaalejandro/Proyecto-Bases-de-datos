@@ -47,17 +47,13 @@
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                        <img id="tamañoImagen" src="/img/productos/4a.png" class="d-block w-100">
+                        <img id="tamañoImagen" src={{str}} class="d-block w-100">
                         </div>
                         <div class="carousel-item">
-                        <img id="tamañoImagen" src="/img/productos/4b.png" class="d-block w-100">
-                        </div>
-                        <div class="carousel-item">
-                        <img id="tamañoImagen" src="/img/productos/4c.png" class="d-block w-100">
+                        <img id="tamañoImagen" src={{str2}} class="d-block w-100">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" id="botonesCarousel">
@@ -79,7 +75,7 @@
                             {{!-- <textarea name="nombre" id="nombrePlantilla" disabled>{{nombre}}</textarea> --}}
                         </div>
                         <div class="row">
-                            <textarea name="" id="diseñadorPlantilla" disabled>IKEA of Sweden</textarea>
+                            <textarea name="" id="diseñadorPlantilla" disabled>{{diseñador}}</textarea>
                         </div>
                         <div class="row">
                             <textarea name="" id="precioPlantilla" disabled>{{Precio}}$</textarea>

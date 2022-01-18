@@ -39,6 +39,9 @@
                         </div>
                     </form>
                 </div>
+                {{#if mensaje}}
+                {{>Popup headline= mensajito }}
+                {{/if}}
             </div>
 
             <div class="col" id="col2">
@@ -51,19 +54,19 @@
                         <option value="2">Sub-categoria</option>
                     </select>
                     <div class="mt-2 input-group mb-3">
-                        <input name="Id_categoria" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" value="{{Id_categoria}}">
+                        <input name="Id_categoria" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" value="{{Id_categoria}}" readonly>
                         <span class="input-group-text" id="basic-addon1">ID Categoria</span>
                     </div> 
                     <div class="mt-2 input-group mb-3">
-                        <input name="Nombre" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreCategoria" maxlength="50" value="{{Nombre}}" >
+                        <input name="Nombre" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreCategoria" maxlength="50" value="{{Nombre}}" disabled>
                         <span class="input-group-text" id="basic-addon1">Nombre</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="Descripcion" type="text" class="form-control" placeholder="Descripción" aria-label="First name" id="descripcionCategoria" maxlength="50" value="{{Descripcion}}">
+                        <input name="Descripcion" type="text" class="form-control" placeholder="Descripción" aria-label="First name" id="descripcionCategoria" maxlength="50" value="{{Descripcion}}"disabled>
                         <span class="input-group-text" id="basic-addon1">Descripción</span>
                     </div>
                     <div class="mt-2 input-group mb-3" id="divIdPadreCategoria">
-                        <input name="Id_categoria_Padre" type="text" class="form-control" placeholder="Id Padre" aria-label="First name" id="idPadreCategoria" maxlength="50" value="{{Id_categoria_Padre}}">
+                        <input name="Id_categoria_Padre" type="text" class="form-control" placeholder="Id Padre" aria-label="First name" id="idPadreCategoria" maxlength="50" value="{{Id_categoria_Padre}}"disabled>
                         <span class="input-group-text" id="basic-addon1">ID Padre</span>
                     </div>
 
@@ -84,7 +87,7 @@
                 <form action="/links/Borrar" method="GET">
                 <div class="mt-2" id="divBorrarBoton">
                     <button type="submit" class="btn btn-danger" id="btnBorrar">
-                        <a href="/links/Borrar/{{id_categoria}}"> Borrar</a> 
+                        <a href="/links/Borrar/{{Id_categoria}}"> Borrar</a> 
                     </button>
                 </div> 
                 </form>
@@ -93,14 +96,14 @@
                  <form action="/links/modificarc" method="GET">
                 <div class="mt-2" id="divModificarBoton">
                     <button type="submit" class="btn btn-warning" id="btnModificar">
-                        <a href="#">Modificar</a>
+                        <a href="/links/modificarc/{{Id_categoria}}">Modificar</a>
                         </button>
                 </div>
                 </form>
             </div>
             <div class="col-auto" id="col6">
                 <div class="mt-2" id="divGuardarBoton">
-                    <button type="submit" class="btn btn-primary" id="btnGuardar" disabled>Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
                 </div>
             </div>
         </div>
@@ -115,45 +118,49 @@
                         <option value="2">Sub-categoria</option>
                     </select>
                     <div class="mt-2 input-group mb-3">
-                        <input name="id_producto" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" disabled=true>
+                        <input name="id_producto" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" disabled>
                         <span class="input-group-text" id="basic-addon1">ID Categoria</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="id_producto" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreCategoria" maxlength="50" disabled=true>
+                        <input name="id_producto" type="text" class="form-control" placeholder="Nombre" aria-label="First name" id="nombreCategoria" maxlength="50" disabled>
                         <span class="input-group-text" id="basic-addon1">Nombre</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="id_producto" type="text" class="form-control" placeholder="Descripción" aria-label="First name" id="descripcionCategoria" maxlength="50" disabled=true>
+                        <input name="id_producto" type="text" class="form-control" placeholder="Descripción" aria-label="First name" id="descripcionCategoria" maxlength="50" disabled>
                         <span class="input-group-text" id="basic-addon1">Descripción</span>
                     </div>
                     <div class="mt-2 input-group mb-3" id="divIdPadreCategoria">
-                        <input name="id_producto" type="text" class="form-control" placeholder="Id Padre" aria-label="First name" id="idPadreCategoria" maxlength="50" disabled=true>
+                        <input name="id_producto" type="text" class="form-control" placeholder="Id Padre" aria-label="First name" id="idPadreCategoria" maxlength="50" disabled>
                         <span class="input-group-text" id="basic-addon1">ID Padre</span>
                     </div>
                     {{!-- BOTONES CUANDO AUN NO HE BUSCADO NADA EN LA BASE DE DATOS --}}
             </div>
             <div class="col-1" id="col3">
                 <div class="col">
+                    <form action="/links/CategoriaGuardar" method="GET"></form>
                     <div class="mt-2" id="divAñadirBoton">
                         <button type="submit" class="btn btn-success" id="btnAñadir">
-                            <a href="#">Añadir</a>
+                            <a href="/links/CategoriaGuardar">Añadir</a>
                         </button>
                     </div>
+                    </form>
                 </div>
             </div>
             <div class="col-1" id="col4">
                 <div class="mt-2" id="divBorrarBoton">
-                    <button type="submit" class="btn btn-danger" disabled= true id="btnBorrar">Borrar</button>
+                    <button type="submit" class="btn btn-danger" id="btnBorrar"disabled>
+                        Borrar
+                        </button>
                 </div>
             </div>
             <div class="col-1" id="col5">
                 <div class="mt-2" id="divModificarBoton">
-                    <button type="submit" class="btn btn-warning" disabled= true id="btnModificar">Modificar</button>
+                    <button type="submit" class="btn btn-warning" disabled id="btnModificar">Modificar</button>
                 </div>
             </div>
             <div class="col-auto" id="col6">
                 <div class="mt-2" id="divGuardarBoton">
-                    <button type="submit" class="btn btn-primary" disabled= true id="btnGuardar">Guardar</button>
+                    <button type="submit" class="btn btn-primary" disabled id="btnGuardar">Guardar</button>
                 </div>
             </div>
         </div>

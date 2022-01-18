@@ -2,8 +2,27 @@ const express = require("express");
 const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
-
+const moment = require('moment');
+var mensaje = true;
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
+
+//BUSQUEDA DE UN PRODUCTO 
+
+
+router.get('/Producto', async(req, res, next) => {
+    var producto = req.query;
+    console.log(Object.keys(producto).length);
+    if (Object.keys(producto).length !== 0) {
+        var Nro_Producto = producto.Producto;
+        const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
+        //validacion de montaje
+        res.render('links/Producto', { Query })
+    } else {
+        res.render('links/Producto', )
+
+    }
+});
+
 
 //MODIFICACION DE PRODUCTOS
 router.get('/modificar/:id_producto', async(req, res, next) => {
@@ -14,7 +33,8 @@ router.get('/modificar/:id_producto', async(req, res, next) => {
 });
 
 router.post('/modificar/:id_producto', async(req, res, next) => {
-    const ID = req.params.id_producto;
+
+    var mensajito = "Producto modificado exitosamente";
     const varr = req.body;
     const producto = {
         id_producto: varr.id_producto,
@@ -23,40 +43,38 @@ router.post('/modificar/:id_producto', async(req, res, next) => {
         Caracteristicas: varr.caracteristicas,
         Materiales: varr.materiales,
         Montaje: varr.Montaje,
-        Id_categoriaP: varr.categoriaid,
         Cantidad: varr.cantidad,
         Instrucciones: varr.instrucciones
     }
     console.log(producto);
-    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
+    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.precio !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
         await pool.query("UPDATE producto set ? WHERE id_producto = ? ", [producto, varr.id_producto]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
-        res.render('links/Producto');
+        res.render('links/Producto', { mensaje, mensajito });
     } else {
-        // usar libreria pop up mensaje  que ta malo  aqui se usa el flash pero toy cansao asi que xd
-        res.send("ta malo maldita");
+        mensajito = "El producto no pudo ser modificado";
+        res.render('links/Producto', { mensaje, mensajito });
     }
 })
-
 
 //AÑADIR UN PRODUCTO 
 router.get('/ProductoGuardar', async(req, res, next) => {
     res.render('links/ProductoGuardar');
 });
 
-
 router.post('/ProductoGuardar', async(req, res, next) => {
+
+    var mensajito = "Producto añadido exitosamente";
     const varr = req.body;
+
     console.log(varr.Montaje);
-    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.CategoriaID !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
+    if ((varr.id_producto !== "") && (varr.Nombre !== "") && (varr.Precio !== "") && (varr.cantidad !== "") && (varr.materiales !== "") && (varr.Caracteristicas !== "") && (varr.Instrucciones !== "")) {
         console.log("-----post");
-        req.flash('success', 'Producto Insertado satisfactoriamente');
         await pool.query("INSERT into producto set ? ", {
             id_producto: varr.id_producto,
             nombre: varr.Nombre,
             Precio: varr.Precio,
-            Id_categoriaP: varr.CategoriaID,
             Caracteristicas: varr.Caracteristicas,
             Materiales: varr.materiales,
             Montaje: varr.Montaje,
@@ -64,45 +82,23 @@ router.post('/ProductoGuardar', async(req, res, next) => {
             Instrucciones: varr.Instrucciones
 
         });
+        res.render('links/Producto', { mensaje, mensajito });
     } else {
-        // usar libreria pop up 
-        res.send("ta malo maldita");
+        mensajito = "No es posible añadir el producto";
+        res.render('links/Producto', { mensaje, mensajito });
     }
-    res.render('links/ProductoGuardar');
+
 
 });
-
-
-//BUSQUEDA DE UN PRODUCTO 
-router.get('/Producto', async(req, res, next) => {
-    var producto = req.query;
-    console.log(Object.keys(producto).length);
-    if (Object.keys(producto).length !== 0) {
-        var Nro_Producto = producto.Producto;
-        const Query = await pool.query("Select * from Producto where id_producto = ? ", Nro_Producto);
-        //validacion de montaje
-        res.render('links/Producto', { Query })
-    } else {
-        res.render('links/Producto')
-
-    }
-});
-
-router.get('/ProductoPlantilla/:id', async(req, res, next) => {
-    const Nro_Producto = req.params.id;
-    console.log(Nro_Producto);
-    const diseñador = await pool.query("select primer_nombre,primer_apellido from diseñadores as dis where dis.numero_diseñador = (select dp.num_diseñador from d_p as dp where dp.id_producto = ? )", Nro_Producto);
-    console.log("Disenador ==== ", diseñador);
-    const Query = await pool.query("Select * from Producto where id_producto = ?", Nro_Producto);
-    res.render('links/productoPlantilla', { Query });
-})
 
 //ELIMINAR PRODUCTO
 router.get('/delete/:id_producto', async(req, res, next) => {
+
+    var mensajito = "Producto Eliminado exitosamente";
     console.log("Entrando a borrar producto");
     const id_Producto = req.params.id_producto;
     await pool.query("DELETE FROM producto where id_producto = ?", [id_Producto]);
-    res.render('links/Producto');
+    res.render('links/Producto', { mensaje, mensajito });
 });
 
 //---------------------------------------------PROCEDIMIENTOS DE CATEGORIAS
@@ -113,13 +109,11 @@ router.get('/Categoria/Buscar', async(req, res) => {
     if (Object.keys(categoria).length !== 0) {
         var idcategoria = categoria.Categoria;
         const Query = await pool.query("Select * from categoria where Id_categoria = ? ", idcategoria);
-        // el res. render estaba asi  res.render('/links/Categoria', { Query }); y era asi como lo puse abajo
         res.render('links/Categoria', { Query });
     } else {
         res.render('links/Categoria')
 
     }
-    //res.render('/links/Categoria',{Query});
 })
 
 
@@ -128,10 +122,12 @@ router.get('/CategoriaGuardar', async(req, res, next) => {
     res.render('links/Categoriaanadir');
 });
 
+
 router.post('/CategoriaGuardar', async(req, res, next) => {
+
+    var mensajito = "Categoria añadida exitosamente";
     const varr = req.body;
     if ((varr.Id_Categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "")) {
-        console.log("-----post");
         //req.flash('success', 'Producto Insertado satisfactoriamente');
         await pool.query("INSERT into categoria set ? ", {
             Id_Categoria: varr.Id_categoria,
@@ -139,34 +135,166 @@ router.post('/CategoriaGuardar', async(req, res, next) => {
             Descripcion: varr.Descripcion,
             Id_categoria_Padre: varr.Id_categoria_Padre
         });
+        res.render('links/Categoria', { mensaje, mensajito });
     } else {
-        // usar libreria pop up 
-        res.send("ta malo maldita");
+        mensajito = "No es posible añadir la categoria";
+        res.render('links/Categoria', { mensaje, mensajito });
     }
-    res.render('links/Categoria');
 
 });
 
 //MODIFICAR CATEGORIA
-router.get('/modificarc/:id_producto', async(req, res, next) => {
-
+router.get('/modificarc/:Id_categoria', async(req, res, next) => {
+    var categoria = req.params.Id_categoria;
+    const Query = await pool.query("Select * from categoria where Id_categoria = ? ", categoria);
+    console.log(Query);
+    res.render('links/Categoriamodificar', { Query: Query[0] })
 })
 
-router.post('/modificarc/:id_producto', async(req, res, next) => {
+router.post('/modificarc', async(req, res, next) => {
 
+    var mensajito = "Categoria Modificada exitosamente";
+    const varr = req.body;
+    const categoria = {
+        Id_Categoria: varr.Id_categoria,
+        Nombre: varr.Nombre,
+        Descripcion: varr.Descripcion,
+        Id_categoria_Padre: varr.Id_categoria_Padre
+    }
+    console.log(categoria);
+    if ((varr.Id_categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "") && (varr.Id_categoria_Padre !== "")) {
+        console.log("MODIFICAR CATEGORIA");
+        await pool.query("UPDATE categoria set ? WHERE Id_categoria = ? ", [categoria, varr.Id_categoria]);
+        //mensaje de que ta bueno *Flash esta disponible desde los request (req)
+        res.render('links/Categoria', { mensaje, mensajito });
+    } else {
+        mensajito = "No es posible modificar la categoria";
+        res.render('links/Categoria', { mensaje, mensajito });
+    }
 })
 
-//ELIMIMAR CATEGORIA 
-router.get('/Borrar/:id_categoria'), async(req, res, next) => {
-    console.log("Entrando a borrar categoria");
-    const id_Categoria = req.params.id_producto;
-    await pool.query("DELETE FROM categoria where id_categoria = ?", [id_Categoria])
-    res.render('/links/Categoria');
+//ELIMINAR CATEGORIA 
+router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
+
+    var mensajito = "Categoria Eliminada exitosamente";
+    const id_Categoria = req.params.Id_categoria;
+    await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
+    res.render('/links/Categoria', { mensaje, mensajito });
 }
 
+//------------------------------------------------------PROCEDIMIENTOS DE TIENDAS
 
+//BUSCAR TIENDAS
+router.get('/Tienda', async(req, res, next) => {
+    var tienda2 = req.query;
+    if (Object.keys(tienda2).length !== 0) {
+        var id_tienda = tienda2.Tienda;
+        const Query = await pool.query("Select * from tienda where id_tienda = ? ", id_tienda);
+        console.log(Query)
+        Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
+        res.render('links/Tienda', { Query })
+    } else {
+        res.render('links/Tienda')
+
+    }
+});
+
+//AÑADIR TIENDA
+router.get('/TiendaGuardar', async(req, res, next) => {
+    res.render('links/Tiendaanadir');
+});
+
+router.post('/TiendaGuardar', async(req, res, next) => {
+
+    var mensajito = "Tienda añadida exitosamente";
+    const varr = req.body;
+    console.log(varr);
+    if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
+        await pool.query("INSERT into tienda set ? ", {
+            id_tienda: varr.id_tienda,
+            nombre_sucursal: varr.nombre_sucursal,
+            direccion: varr.direccion,
+            fecha_apertura: varr.fecha_apertura,
+            estilo_arquitectonico: varr.estilo_arquitectonico,
+            tamano: varr.tamano,
+            numero_pasillos: varr.numero_pasillos,
+            capacidad_almacenmiento: varr.capacidad_almacenamiento,
+            cantidad_productos: varr.cantidad_productos,
+            area_de_ninos: varr.area,
+            codigo_lugar_geo: varr.codigo_lugar_geo
+        });
+        res.render('links/Tienda', mensaje, mensajito);
+    } else {
+        mensajito = "No es posible añadir la tienda";
+        res.render('links/Tienda', mensaje, mensajito);
+    }
+
+});
+
+//MODIFICAR TIENDA
+
+router.get('/modificart/:id_tienda', async(req, res, next) => {
+    console.log("ENTRO AL MODIFICAR GET");
+    var tienda = req.params.id_tienda;
+    const Query = await pool.query("Select * from tienda where id_tienda = ? ", tienda);
+    Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
+    console.log(Query);
+    console.log("SE VA A SALIR");
+    res.render('links/Tiendamodificar', { Query: Query[0] })
+        //res.render('links/Tienda',{Query});
+})
+
+router.post('/modificart/:id_tienda', async(req, res, next) => {
+
+    var mensajito = "Tienda Modificada exitosamente";
+    const varr = req.body;
+    const tienda = {
+        id_tienda: varr.id_tienda,
+        nombre_sucursal: varr.nombre_sucursal,
+        direccion: varr.direccion,
+        fecha_apertura: varr.fecha_apertura,
+        estilo_arquitectonico: varr.estilo_arquitectonico,
+        tamano: varr.tamano,
+        numero_pasillos: varr.numero_pasillos,
+        capacidad_almacenmiento: varr.capacidad_almacenamiento,
+        cantidad_productos: varr.cantidad_productos,
+        area_de_ninos: varr.area,
+        codigo_lugar_geo: varr.codigo_lugar_geo
+    }
+    console.log(tienda);
+    if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
+        console.log("MODIFICAR TIENDA");
+        await pool.query("UPDATE tienda set ? WHERE id_tienda = ? ", [tienda, varr.id_tienda]);
+        //mensaje de que ta bueno *Flash esta disponible desde los request (req)
+        res.render('links/Tienda', { mensaje, mensajito });
+    } else {
+        mensajito = "No es posible modificar la tienda";
+        res.render('links/Tienda', { mensaje, mensajito });
+    }
+})
+
+//ELIMINAR TIENDA 
+router.get('/Eliminar/:id_tienda'), async(req, res, next) => {
+    var mensajito = "Tienda Eliminada exitosamente";
+    console.log("Entrando a borrar tienda");
+    const id_tienda = req.params.id_tienda;
+    await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda)
+    res.render('/links/Tienda', { mensaje, mensajito });
+}
 
 //---------------------------------------------REDIRECCCIONAMIENTOS DEL FRONT
+
+router.get('/ProductoPlantilla/:id', async(req, res, next) => {
+    const Nro_Producto = req.params.id;
+    console.log(Nro_Producto);
+    //const diseñador = await pool.query("select primer_nombre,primer_apellido from diseñadores as dis where dis.numero_diseñador = (select dp.num_diseñador from d_p as dp where dp.id_producto = ? )", Nro_Producto);
+    //console.log("Disenador ==== ", diseñador);
+    const Query = await pool.query("Select * from Producto where id_producto = ?", Nro_Producto);
+    const str = "/img/productos/" + Nro_Producto + "a.png"
+    const str2 = "/img/productos/" + Nro_Producto + "b.png"
+    console.log(str);
+    res.render('links/productoPlantilla', { Query, str, str2 });
+})
 
 router.get('/adornosDeNavidad', async(req, res, next) => {
     res.render('links/adornosDeNavidad');
@@ -259,6 +387,90 @@ router.get('/factura', async(req, res, next) => {
     res.render('links/factura');
 })
 
+/* REDIRECT DE España*/
+router.get('/adornosDeNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/adornosDeNavidad-Es");
+});
+
+router.get('/lucesNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/lucesNavidad-Es");
+});
+router.get('/comidaNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/comidaNavidad-Es");
+});
+router.get('/mantelesNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/mantelesNavidad-Es");
+});
+router.get('/arbolesNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/arbolesNavidad-Es");
+});
+router.get('/reposteriaNavidad-Es', (req, res) => {
+    res.render("links/catalogoEs/reposteriaNavidad-Es");
+});
+
+router.get('/menuEs', (req, res) => {
+    res.render("links/menu/menuEs");
+});
+
+router.get('/EventoAsturias', (req, res) => {
+    res.render("links/eventos/eventoikeaAsturias");
+});
+
+router.get('/EventoAndalucia', (req, res) => {
+    res.render("links/eventos/eventoikeaAndalucia");
+});
+router.get('/EventoCataluna', (req, res) => {
+    res.render("links/eventos/eventoikeaCataluna");
+});
+router.get('/EventoMadrid', (req, res) => {
+    res.render("links/eventos/eventoikeaMadrid");
+});
+router.get('/EventoMurcia', (req, res) => {
+    res.render("links/eventos/eventoikeaMurcia");
+});
+
+/* REDIRECT DE USA*/
+
+router.get('/adornosDeNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/adornosDeNavidad-Us");
+});
+router.get('/lucesNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/lucesNavidad-Us");
+});
+router.get('/comidaNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/comidaNavidad-Us");
+});
+router.get('/mantelesNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/mantelesNavidad-Us");
+});
+router.get('/arbolesNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/arbolesNavidad-Us");
+});
+router.get('/reposteriaNavidad-Us', (req, res) => {
+    res.render("links/catalogoUs/reposteriaNavidad-Us");
+});
+
+
+/* REDIRECT DE MX*/
+
+router.get('/adornosDeNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/adornosDeNavidad-Mx");
+});
+router.get('/lucesNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/lucesNavidad-Mx");
+});
+router.get('/comidaNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/comidaNavidad-Mx");
+});
+router.get('/mantelesNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/mantelesNavidad-Mx");
+});
+router.get('/arbolesNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/arbolesNavidad-Mx");
+});
+router.get('/reposteriaNavidad-Mx', (req, res) => {
+    res.render("links/catalogoMx/reposteriaNavidad-Mx");
+});
 
 
 module.exports = router;
