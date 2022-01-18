@@ -41,12 +41,34 @@
             <div class="row pt-3">
             <div class="col" id="fila1Factura">
                 <div id="tablaCarrito">
+                    {{#each Query}}
                     <table class="table">
                 <thead>
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Producto</th>
-                    <th scope="col">Descripción</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <th scope="row">{{id_producto}}</th>
+                    <td id="contenidoTabla">{{nombre}}</td>
+                    <td id="contenidoTabla">{{Cantidad}}</td>
+                    <td id="contenidoTabla">{{Precio}}</td>
+                    <td><button class="btn btn-danger">Borrar</button></td>
+                    </tr>
+                </tbody>
+                </table>
+
+                 {{else}}
+
+                 <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Producto</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
                     </tr>
@@ -57,11 +79,16 @@
                     <td id="contenidoTabla"></td>
                     <td id="contenidoTabla"></td>
                     <td id="contenidoTabla"></td>
-                    <td id="contenidoTabla"></td>
                     <td><button class="btn btn-danger">Borrar</button></td>
                     </tr>
                 </tbody>
                 </table>
+
+
+                {{/each}}
+               
+
+
                 </div>
             </div>
             </div>

@@ -1,3 +1,4 @@
+import { pool } from '../database';
 var imagenes = [
     { name: "imagen1", points: 1, img: "/img/carousel1.png" },
     { name: "imagen2", points: 1, img: "/img/carousel2.png" },
@@ -12,12 +13,15 @@ console.log(imagenes.length);
 document.body.onload = addElement;
 
 function addElement() {
-    for (let i = 0; i < imagenes.length; i++) {
+    const Query = await pool.query("Select * from Producto");
+    console.log(Query)
+        //validacion de montaje
+    for (let i = 0; i < Query.length; i++) {
         var divi = "div" + "" + i + "" + "";
         var nuevo_div = document.createElement("div");
         nuevo_div.id = divi;
-        var html = "<img src=" + "" + imagenes[i].img + "" + ">";
+        var html = "  <tr> <th scope=" + "row" + "></th><td id=" + "contenidoTabla" + "></td><td id=" + "contenidoTabla" + "></td><td id=" + "contenidoTabla" + "></td><td id=" + "contenidoTabla" + "></td><td><button class=" + "btn btn-danger" + ">Borrar</button></td></tr>";
         document.body.appendChild(nuevo_div);
-        document.getElementById("div" + i + "").innerHTML = html;
+        document.getElementById("generar").innerHTML = html;
     }
 }

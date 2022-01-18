@@ -378,6 +378,8 @@ router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
 })
 
 router.get('/carrito', async(req, res, next) => {
+    const Query = await pool.query("Select * from producto");
+    console.log(req.query);
     res.render('links/carrito');
 })
 
