@@ -286,7 +286,7 @@
 }
 
 #precioPlantilla {
-    margin-top: 122px;
+    margin-top: 90px;
     margin-right: 5px;
     margin-left: 5px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -300,8 +300,21 @@
     -webkit-text-fill-color: white;
 }
 
-#caracteristicasPlantilla {
+#cantidadProducto {
+    width: 100px;
     background: #0057a4;
+    border-width: 5px;
+    border-color: white;
+    font-weight: bold;
+    color: white;
+}
+
+#cantidadGrupo {
+    padding-left: 30%;
+    padding-right: 20px;
+}
+
+#caracteristicasPlantilla {
     margin-top: 5px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -524,6 +537,10 @@
 #numCaja select {
     border-color: #0057a4;
     border-width: 5px;
+}
+
+#colBotonAfiliado {
+    margin-left: -7%;
 }
 
 
