@@ -93,7 +93,9 @@
             </div>
             </div>
             <div class="row">
-                    <div class="col pt-2" id="col1Factura">
+                {{#if cliente}}
+                    {{#if afiliado}}
+                <div class="col pt-2" id="col1Factura">
                     <form id="form1" class="row g-3 pb-3 needs-validation" novalidate>
                         <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
                         <div class="col-md-2 input-group mt-3">
@@ -131,6 +133,12 @@
                         </div>
                     </form>
                 </div>
+                    {{else}}
+                        {{> clienteNoAfiliado}}
+                    {{/if}}
+                {{else}}
+                    {{> clienteNoRegistrado}}
+                {{/if}}
                  <div class="col-4 pt-2 pb-3" id="col2Factura">
                     <div class="col pb-2" id="datosCarrito">
                         <form id="form2" formclass="needs-validation" action="/links/factura" method="GET" novalidate>
