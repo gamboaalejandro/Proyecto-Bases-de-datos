@@ -254,6 +254,8 @@ router.get('/carrito', async(req, res, next) => {
 })
 
 router.get('/factura', async(req, res, next) => {
+    var body = req.query;
+    console.log(body);
     res.render('links/factura');
 })
 
