@@ -443,6 +443,89 @@
     background-image: url(/img/carousel1.png);
 }
 
+#col1Carrito {
+    background: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+#col2Carrito {
+    background: #0057a4;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#contenidoTabla {
+    max-width: 100px;
+    word-wrap: break-word;
+}
+
+#tablaCarrito {
+    overflow-y: scroll;
+    max-height: 582px;
+}
+
+#datosCarrito {
+    background: white;
+    border-radius: 10px;
+}
+
+.botonImagen {
+    background-image: url(/img/carrito1.png);
+    background-color: transparent;
+    border: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+    background-position: center;
+}
+
+.botonImagen:hover {
+    opacity: 80%;
+}
+
+#datosCarrito h3 {
+    text-align: end;
+    padding-bottom: 10%;
+    padding-left: 10px;
+    padding-right: 2px;
+}
+
+#datosCarrito h4 {
+    text-align: end;
+    padding-right: 2px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+#fila1Factura {
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#col2Factura {
+    background: #0057a4;
+    border-bottom-right-radius: 20px;
+}
+
+#col1Factura {
+    background: #0057a4;
+    border-bottom-left-radius: 20px;
+}
+
+#numCaja {
+    padding-top: 10px;
+    margin-left: 5%;
+    padding-bottom: 20%;
+}
+
+#numCaja select {
+    border-color: #0057a4;
+    border-width: 5px;
+}
+
 
 /*Animaciones*/
 
