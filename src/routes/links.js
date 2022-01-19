@@ -5,6 +5,7 @@ const pool = require('../database');
 const moment = require('moment');
 var mensaje = true;
 var carrito = [];
+var id = [];
 var ciudad = 0;
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
@@ -301,30 +302,53 @@ router.get('/ProductoPlantilla/:id', async(req, res, next) => {
 
 router.get('/comprando/:id_producto', async(req, res) => {
     var mensajito = "Añadido correctamente";
-    console.log("el carrito", carrito);
+    const Query = await pool.query("Select * from Producto where id_producto = ?", req.params.id_producto);
+    console.log("CUERITO", Query[0]);
+    const str = "/img/productos/" + req.params.id_producto + "a.png"
+    const str2 = "/img/productos/" + req.params.id_producto + "b.png"
+    var producto = await pool.query("Select * from producto where id_producto  = ?", req.params.id_producto);
+    const query = await pool.query("Select cantidad from producto where id_producto = ?", req.params.id_producto);
+    var cantidadsita = Number(query[0].cantidad)
+    console.log("cantidadsita", cantidadsita);
+    producto[0].Cantidad = Number(req.query.cantidad);
+    console.log(producto[0]);
     var cont = 0;
-    var producto_carrito = {
-        id_producto: req.params.id_producto,
-        cantidad: req.query.cantidad
-    };
+    /* var producto_carrito = {
+         id_producto: req.params.id_producto,
+         nombre: req.query.nombre,
+         Precio: req.query.precio,
+         cantidad: req.query.cantidad
+     };*/
     if (carrito.length === 0) {
-        carrito.push(producto_carrito);
-        res.render('links/indexFix', { mensajito });
+        if (Number(req.query.cantidad) <= cantidadsita) {
+            carrito.push(producto[0]);
+            console.log("anadio el primer producto");
+            res.render('links/productoPlantilla', { Query, str, str2 });
+        } else {
+            mensajito = "Esa cantidad no se encuentra disponible, el carrito esta cvacio";
+            res.render('links/productoPlantilla', { Query, str, str2 });
+        }
+
     } else {
+        console.log("entro en el else");
         for (let i = 0; i < carrito.length; i++) {
-            if ((carrito[i].id_producto === req.params.id_producto)) {
-                console.log("renderizando");
-                const query = pool.query("Select cantidad from producto where id_producto = ?", req.params.id_producto);
-                console.log(query);
-                carrito[i].cantidad = carrito[i].cantidad + req.query.cantidad
-                mensajito = "El producto ya se encuentra en el carrito"
+            console.log("carrito", carrito[i].id_producto);
+            console.log("params", req.params.id_producto);
+            if ((carrito[i].id_producto === Number(req.params.id_producto))) {
+                if (Number(req.query.cantidad) <= cantidadsita) {
+                    carrito[i].Cantidad = carrito[i].Cantidad + Number(req.query.cantidad)
+                }
+                mensajito = "El producto ya se encuentra en el carrito, Cantidad actualizada"
+                res.render('links/productoPlantilla', { Query, str, str2 });
                 break;
             } else {
                 cont++;
             }
         }
-        if ((cont === carrito.length)) carrito.push(producto_carrito);
-        res.render('links/indexFix', { mensajito });
+        console.log("se salio del for y este es el cont ", cont);
+        if ((cont === carrito.length)) carrito.push(producto[0]);
+        console.log("carrito ", carrito);
+        res.render('links/productoPlantilla', { Query, str, str2 });
     }
 
 })
@@ -413,9 +437,24 @@ router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
 })
 
 router.get('/carrito', async(req, res, next) => {
+    console.log(id);
+    var carrito2 = [];
+    var Cantidad = [];
     const Query = await pool.query("Select * from producto");
-    console.log(req.query);
-    res.render('links/carrito');
+    console.log(Query);
+    /*
+    for (let i = 0; i < carrito.length; i++) {
+        Query = await pool.query("Select * from producto where id_producto = ?", carrito[i].id_producto);
+        console.log("el kueri", Query)
+        carrito2.push(Query[i]);
+    }*/
+
+    //const factura = {}
+    // for (let i = 0; i < carrito.length; i++) {
+    //    const Query = await pool.query("Select id_producto, nombre, Precio from producto where id_producto = ? ", );
+    // }
+    console.log(carrito)
+    res.render('links/carrito', { Query });
 })
 
 router.get('/factura', async(req, res, next) => {

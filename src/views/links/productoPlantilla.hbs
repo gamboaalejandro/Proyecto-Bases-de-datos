@@ -84,27 +84,23 @@
                 </div>
                 <div class="col-4" id="fichaTecnica">
                 {{#each Query}}
+                  <form action = "/links/comprando/{{id_producto}}" method="GET">
                     <div class="row">
                         <div class="row">
-                            <h1 id="nombrePlantilla">{{nombre}}</h1>
+                            <h1 id="nombrePlantilla" name = "nombre">{{nombre}}</h1>
                             {{!-- <textarea name="nombre" id="nombrePlantilla" disabled>{{nombre}}</textarea> --}}
                         </div>
                         <div class="row">
                             <textarea name="" id="diseñadorPlantilla" disabled>{{diseñador}}</textarea>
                         </div>
                         <div class="row">
-                            <textarea name="" id="precioPlantilla" disabled>{{Precio}}$</textarea>
+                            <textarea name="precio" id="precioPlantilla" disabled>{{Precio}}$</textarea>
                         </div>
                     </div>
-                    <form action = "/links/comprando/{{id_producto}}" method="GET">
+                  
                          <div class="input-group mb-3" id="cantidadGrupo">
-<<<<<<< HEAD
                             <span class="input-group-text" id="cantidadProducto">Cantidad</span>
                             <input class="form-control" type="number" placeholder="Cantidad" value="1" name = "cantidad">
-=======
-                            <span class="input-group-text" id="cantidadPlantillaProducto">Cantidad</span>
-                            <input class="form-control" type="number" placeholder="Cantidad" value="1">
->>>>>>> 458ef810009fb7445eecb8f33846626fe255bbe0
                         </div>
                         <div class="row" id="rowComprarProducto">
                             <button type="submit" class="btn btn-primary" id="comprarProducto">Añadir al Carrito</button>
