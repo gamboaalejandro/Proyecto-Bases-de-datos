@@ -485,6 +485,18 @@ router.get('/arbolesNavidad-Us', (req, res) => {
 router.get('/reposteriaNavidad-Us', (req, res) => {
     res.render("links/catalogoUs/reposteriaNavidad-Us");
 });
+router.get('/EventoCalifornia', (req, res) => {
+    res.render("links/eventos/eventoikeaCalifornia");
+});
+router.get('/EventoFlorida', (req, res) => {
+    res.render("links/eventos/eventoikeaFlorida");
+});
+router.get('/EventoVirginia', (req, res) => {
+    res.render("links/eventos/eventoikeaVirginia");
+});
+router.get('/menuUs', (req, res) => {
+    res.render("links/menu/menuUs");
+});
 
 
 /* REDIRECT DE MX*/
@@ -506,6 +518,12 @@ router.get('/arbolesNavidad-Mx', (req, res) => {
 });
 router.get('/reposteriaNavidad-Mx', (req, res) => {
     res.render("links/catalogoMx/reposteriaNavidad-Mx");
+});
+router.get('/menuMx', (req, res) => {
+    res.render("links/menu/menuMx");
+});
+router.get('/EventoCiudadMexico', (req, res) => {
+    res.render("links/eventos/eventoikeaCiudadMexico");
 });
 
 
