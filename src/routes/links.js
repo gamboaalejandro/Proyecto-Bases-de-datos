@@ -5,6 +5,8 @@ const pool = require('../database');
 const moment = require('moment');
 var mensaje = true;
 var carrito = [];
+var ciudad = 0;
+
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 
 //BUSQUEDA DE UN PRODUCTO 
@@ -298,9 +300,33 @@ router.get('/ProductoPlantilla/:id', async(req, res, next) => {
 })
 
 router.get('/comprando/:id_producto', async(req, res) => {
-    carrito.push(req.params.id_producto);
-    console.log(carrito);
-    res.render('links/indexFix');
+    var mensajito = "Añadido correctamente";
+    console.log("el carrito", carrito);
+    var cont = 0;
+    var producto_carrito = {
+        id_producto: req.params.id_producto,
+        cantidad: req.query.cantidad
+    };
+    if (carrito.length === 0) {
+        carrito.push(producto_carrito);
+        res.render('links/indexFix', { mensajito });
+    } else {
+        for (let i = 0; i < carrito.length; i++) {
+            if ((carrito[i].id_producto === req.params.id_producto)) {
+                console.log("renderizando");
+                const query = pool.query("Select cantidad from producto where id_producto = ?", req.params.id_producto);
+                console.log(query);
+                carrito[i].cantidad = carrito[i].cantidad + req.query.cantidad
+                mensajito = "El producto ya se encuentra en el carrito"
+                break;
+            } else {
+                cont++;
+            }
+        }
+        if ((cont === carrito.length)) carrito.push(producto_carrito);
+        res.render('links/indexFix', { mensajito });
+    }
+
 })
 
 router.get('/adornosDeNavidad', async(req, res, next) => {
@@ -348,7 +374,8 @@ router.get('/Tienda', async(req, res, next) => {
 
 /*ESPAÑA----------------------------*/
 router.get('/tiendas/indexFixAsturias', async(req, res, next) => {
-    res.render('links/tiendas/indexFixAsturias');
+    Pais =
+        res.render('links/tiendas/indexFixAsturias');
 })
 
 router.get('/tiendas/indexFixMadrid', async(req, res, next) => {
