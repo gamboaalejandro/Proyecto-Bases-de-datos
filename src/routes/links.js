@@ -304,30 +304,22 @@ router.get('/ProductoPlantilla/:id', async(req, res, next) => {
 router.get('/comprando/:id_producto', async(req, res) => {
     var mensajito = "Añadido correctamente";
     const Query = await pool.query("Select * from Producto where id_producto = ?", req.params.id_producto);
-    console.log("CUERITO", Query[0]);
     const str = "/img/productos/" + req.params.id_producto + "a.png"
     const str2 = "/img/productos/" + req.params.id_producto + "b.png"
     var producto = await pool.query("Select * from producto where id_producto  = ?", req.params.id_producto);
-    const query = await pool.query("Select cantidad from producto where id_producto = ?", req.params.id_producto);
-    var cantidadsita = Number(query[0].cantidad)
+    var cont = 0;
+    var cantidadsita =Number(producto[0].Cantidad);
     console.log("cantidadsita", cantidadsita);
     producto[0].Cantidad = Number(req.query.cantidad);
-    console.log(producto[0]);
-    var cont = 0;
-    /* var producto_carrito = {
-         id_producto: req.params.id_producto,
-         nombre: req.query.nombre,
-         Precio: req.query.precio,
-         cantidad: req.query.cantidad
-     };*/
+    //console.log(producto[0]);
     if (carrito.length === 0) {
         if (Number(req.query.cantidad) <= cantidadsita) {
             carrito.push(producto[0]);
             console.log("anadio el primer producto");
-            res.render('links/productoPlantilla', { Query, str, str2 });
+            res.render('links/productoPlantilla', { Query, str, str2 ,mensajito});
         } else {
             mensajito = "Esa cantidad no se encuentra disponible, el carrito esta cvacio";
-            res.render('links/productoPlantilla', { Query, str, str2 });
+            res.render('links/productoPlantilla', { Query, str, str2,mensajito });
         }
 
     } else {
@@ -340,7 +332,7 @@ router.get('/comprando/:id_producto', async(req, res) => {
                     carrito[i].Cantidad = carrito[i].Cantidad + Number(req.query.cantidad)
                 }
                 mensajito = "El producto ya se encuentra en el carrito, Cantidad actualizada"
-                res.render('links/productoPlantilla', { Query, str, str2 });
+                //res.render('links/productoPlantilla', { Query, str, str2 });
                 break;
             } else {
                 cont++;
@@ -349,7 +341,7 @@ router.get('/comprando/:id_producto', async(req, res) => {
         console.log("se salio del for y este es el cont ", cont);
         if ((cont === carrito.length)) carrito.push(producto[0]);
         console.log("carrito ", carrito);
-        res.render('links/productoPlantilla', { Query, str, str2 });
+        res.render('links/productoPlantilla', { Query, str, str2 ,mensajito});
     }
 
 })
