@@ -24,6 +24,7 @@ router.get('/Producto', async(req, res, next) => {
 });
 
 
+
 //MODIFICACION DE PRODUCTOS
 router.get('/modificar/:id_producto', async(req, res, next) => {
     var producto = req.params.id_producto;
