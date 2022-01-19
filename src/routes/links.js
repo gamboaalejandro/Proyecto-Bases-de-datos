@@ -4,6 +4,10 @@ const router = express.Router();
 const pool = require('../database');
 const moment = require('moment');
 var mensaje = true;
+var carrito = [];
+var id = [];
+var ciudad = 0;
+
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 
 //BUSQUEDA DE UN PRODUCTO 
@@ -297,7 +301,61 @@ router.get('/ProductoPlantilla/:id', async(req, res, next) => {
     res.render('links/productoPlantilla', { Query, str, str2 });
 })
 
+router.get('/comprando/:id_producto', async(req, res) => {
+    var mensajito = "Añadido correctamente";
+    const Query = await pool.query("Select * from Producto where id_producto = ?", req.params.id_producto);
+    console.log("CUERITO", Query[0]);
+    const str = "/img/productos/" + req.params.id_producto + "a.png"
+    const str2 = "/img/productos/" + req.params.id_producto + "b.png"
+    var producto = await pool.query("Select * from producto where id_producto  = ?", req.params.id_producto);
+    const query = await pool.query("Select cantidad from producto where id_producto = ?", req.params.id_producto);
+    var cantidadsita = Number(query[0].cantidad)
+    console.log("cantidadsita", cantidadsita);
+    producto[0].Cantidad = Number(req.query.cantidad);
+    console.log(producto[0]);
+    var cont = 0;
+    /* var producto_carrito = {
+         id_producto: req.params.id_producto,
+         nombre: req.query.nombre,
+         Precio: req.query.precio,
+         cantidad: req.query.cantidad
+     };*/
+    if (carrito.length === 0) {
+        if (Number(req.query.cantidad) <= cantidadsita) {
+            carrito.push(producto[0]);
+            console.log("anadio el primer producto");
+            res.render('links/productoPlantilla', { Query, str, str2 });
+        } else {
+            mensajito = "Esa cantidad no se encuentra disponible, el carrito esta cvacio";
+            res.render('links/productoPlantilla', { Query, str, str2 });
+        }
+
+    } else {
+        console.log("entro en el else");
+        for (let i = 0; i < carrito.length; i++) {
+            console.log("carrito", carrito[i].id_producto);
+            console.log("params", req.params.id_producto);
+            if ((carrito[i].id_producto === Number(req.params.id_producto))) {
+                if (Number(req.query.cantidad) <= cantidadsita) {
+                    carrito[i].Cantidad = carrito[i].Cantidad + Number(req.query.cantidad)
+                }
+                mensajito = "El producto ya se encuentra en el carrito, Cantidad actualizada"
+                res.render('links/productoPlantilla', { Query, str, str2 });
+                break;
+            } else {
+                cont++;
+            }
+        }
+        console.log("se salio del for y este es el cont ", cont);
+        if ((cont === carrito.length)) carrito.push(producto[0]);
+        console.log("carrito ", carrito);
+        res.render('links/productoPlantilla', { Query, str, str2 });
+    }
+
+})
+
 router.get('/adornosDeNavidad', async(req, res, next) => {
+    console.log(carrito);
     res.render('links/adornosDeNavidad');
 })
 
@@ -341,7 +399,8 @@ router.get('/Tienda', async(req, res, next) => {
 
 /*ESPAÑA----------------------------*/
 router.get('/tiendas/indexFixAsturias', async(req, res, next) => {
-    res.render('links/tiendas/indexFixAsturias');
+    Pais =
+        res.render('links/tiendas/indexFixAsturias');
 })
 
 router.get('/tiendas/indexFixMadrid', async(req, res, next) => {
@@ -379,10 +438,28 @@ router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
 })
 
 router.get('/carrito', async(req, res, next) => {
-    res.render('links/carrito');
+    console.log(id);
+    var carrito2 = [];
+    var Cantidad = [];
+    const Query = await pool.query("Select * from producto");
+    console.log(Query);
+    /*
+    for (let i = 0; i < carrito.length; i++) {
+        Query = await pool.query("Select * from producto where id_producto = ?", carrito[i].id_producto);
+        console.log("el kueri", Query)
+        carrito2.push(Query[i]);
+    }*/
+
+    //const factura = {}
+    // for (let i = 0; i < carrito.length; i++) {
+    //    const Query = await pool.query("Select id_producto, nombre, Precio from producto where id_producto = ? ", );
+    // }
+    console.log(carrito)
+    res.render('links/carrito', { Query });
 })
 
 router.get('/factura', async(req, res, next) => {
+    console.log(req.query);
     res.render('links/factura');
 })
 
@@ -448,6 +525,18 @@ router.get('/arbolesNavidad-Us', (req, res) => {
 router.get('/reposteriaNavidad-Us', (req, res) => {
     res.render("links/catalogoUs/reposteriaNavidad-Us");
 });
+router.get('/EventoCalifornia', (req, res) => {
+    res.render("links/eventos/eventoikeaCalifornia");
+});
+router.get('/EventoFlorida', (req, res) => {
+    res.render("links/eventos/eventoikeaFlorida");
+});
+router.get('/EventoVirginia', (req, res) => {
+    res.render("links/eventos/eventoikeaVirginia");
+});
+router.get('/menuUs', (req, res) => {
+    res.render("links/menu/menuUs");
+});
 
 
 /* REDIRECT DE MX*/
@@ -469,6 +558,12 @@ router.get('/arbolesNavidad-Mx', (req, res) => {
 });
 router.get('/reposteriaNavidad-Mx', (req, res) => {
     res.render("links/catalogoMx/reposteriaNavidad-Mx");
+});
+router.get('/menuMx', (req, res) => {
+    res.render("links/menu/menuMx");
+});
+router.get('/EventoCiudadMexico', (req, res) => {
+    res.render("links/eventos/eventoikeaCiudadMexico");
 });
 
 

@@ -8,26 +8,26 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="textNavBar">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Productos
+                      Tiendas
                     </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown-menu">
-                            <li><a class="dropdown-item" href="adornosDeNavidad" id="dropdownAdornosDeNavidad">Adornos de navidad</a></li>
-                            <li><a class="dropdown-item" href="lucesNavidad">Luces de navidad</a></li>
-                            <li><a class="dropdown-item" href="comidaNavidad">Comida navideña</a></li>
-                            <li><a class="dropdown-item" href="mantelesNavidad">Manteles y textiles de navidad</a></li>
-                            <li><a class="dropdown-item" href="arbolesNavidad">Árboles, macetas y plantas de navidad</a></li>
-                            <li><a class="dropdown-item" href="reposteriaNavidad">Repostería de navidad y moldes para galleta</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixAsturias">IKEA Asturias | Asturias</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixMadrid">IKEA Goya | Madrid</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixMurcia">IKEA Murcia | Murcia</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixAndalucia">IKEA Jerez | Andalucía</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixCataluna">IKEA Sabadell | Cataluña</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="Producto">Administración</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixVirginia">IKEA Norfolk | Virginia</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixCalifornia">IKEA San Diego | California</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixFlorida">IKEA Miami | Florida</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixCiudadMexico">IKEA Centro Comercial MallPlaza | Ciudad de México</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="# ">Servicios</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#">Contacto</a>
-                    </li>
                 </ul>
+                <div class="me-5 mt-1">
+                    <a href="/links/carrito"><button class="botonImagen"></button></a>
+                </div>
                 <form class="d-flex ">
                     <input class="form-control me-2" type="search" placeholder="Buscar... " aria-label="Search">
                     <button id="buscarBoton" class="btn btn-outline-success " type="submit ">Buscar</button>
@@ -41,12 +41,34 @@
             <div class="row pt-3">
             <div class="col" id="fila1Factura">
                 <div id="tablaCarrito">
+                    {{#each Query}}
                     <table class="table">
                 <thead>
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Producto</th>
-                    <th scope="col">Descripción</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <th scope="row">{{id_producto}}</th>
+                    <td id="contenidoTabla">{{nombre}}</td>
+                    <td id="contenidoTabla">{{Cantidad}}</td>
+                    <td id="contenidoTabla">{{Precio}}</td>
+                    <td><button class="btn btn-danger">Borrar</button></td>
+                    </tr>
+                </tbody>
+                </table>
+
+                 {{else}}
+
+                 <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Producto</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
                     </tr>
@@ -57,20 +79,27 @@
                     <td id="contenidoTabla"></td>
                     <td id="contenidoTabla"></td>
                     <td id="contenidoTabla"></td>
-                    <td id="contenidoTabla"></td>
                     <td><button class="btn btn-danger">Borrar</button></td>
                     </tr>
                 </tbody>
                 </table>
+
+
+                {{/each}}
+               
+
+
                 </div>
             </div>
             </div>
             <div class="row">
-                    <div class="col pt-2" id="col1Factura">
-                    <form class="row g-3 pb-3 needs-validation" novalidate>
+                {{#if cliente}}
+                    {{#if afiliado}}
+                <div class="col pt-2" id="col1Factura">
+                    <form id="form1" class="row g-3 pb-3 needs-validation" novalidate>
                         <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
                         <div class="col-md-2 input-group mt-3">
-                            <input type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required>
+                            <input form = "form1"  name ="cedula" type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required>
                             <button class="btn btn-success">Buscar</button>
                             <div class="invalid-feedback" style="font-weight: bold; border-color: white;">
                                 Debe colocar una cédula!
@@ -104,11 +133,17 @@
                         </div>
                     </form>
                 </div>
+                    {{else}}
+                        {{> clienteNoAfiliado}}
+                    {{/if}}
+                {{else}}
+                    {{> clienteNoRegistrado}}
+                {{/if}}
                  <div class="col-4 pt-2 pb-3" id="col2Factura">
                     <div class="col pb-2" id="datosCarrito">
-                        <form class="needs-validation" novalidate>
+                        <form id="form2" formclass="needs-validation" action="/links/factura" method="GET" novalidate>
                             <div class="col-md-4" id="numCaja">
-                            <select class="form-select" required>
+                            <select class="form-select" required name = "pene">
                             <option disabled selected value=""># Caja</option>
                             <option>1</option>
                             <option>2</option>
@@ -137,7 +172,7 @@
                         <h4>Cantidad de productos: 100</h4>
                         <h3>Total: 50,53$</h3>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success">Confirmar compra</button>
+                            <button type="submit" class="btn btn-success" onclick="submitForms()">Confirmar compra</button>
                         </div>
                         </form>
                     </div>
@@ -146,6 +181,6 @@
         </div>
     </div>
 
-
+    <script src="/js/enviarFormulario.js"></script>
     <script src="/js/validacionBoostrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

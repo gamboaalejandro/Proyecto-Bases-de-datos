@@ -8,26 +8,26 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="textNavBar">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Productos
+                      Tiendas
                     </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown-menu">
-                            <li><a class="dropdown-item" href="adornosDeNavidad" id="dropdownAdornosDeNavidad">Adornos de navidad</a></li>
-                            <li><a class="dropdown-item" href="lucesNavidad">Luces de navidad</a></li>
-                            <li><a class="dropdown-item" href="comidaNavidad">Comida navideña</a></li>
-                            <li><a class="dropdown-item" href="mantelesNavidad">Manteles y textiles de navidad</a></li>
-                            <li><a class="dropdown-item" href="arbolesNavidad">Árboles, macetas y plantas de navidad</a></li>
-                            <li><a class="dropdown-item" href="reposteriaNavidad">Repostería de navidad y moldes para galleta</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixAsturias">IKEA Asturias | Asturias</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixMadrid">IKEA Goya | Madrid</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixMurcia">IKEA Murcia | Murcia</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixAndalucia">IKEA Jerez | Andalucía</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixCataluna">IKEA Sabadell | Cataluña</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="Producto">Administración</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixVirginia">IKEA Norfolk | Virginia</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixCalifornia">IKEA San Diego | California</a></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixFlorida">IKEA Miami | Florida</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/links/tiendas/indexFixCiudadMexico">IKEA Centro Comercial MallPlaza | Ciudad de México</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="# ">Servicios</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#">Contacto</a>
-                    </li>
                 </ul>
+                <div class="me-5 mt-1">
+                    <a href="/links/carrito"><button class="botonImagen"></button></a>
+                </div>
                 <form class="d-flex ">
                     <input class="form-control me-2" type="search" placeholder="Buscar... " aria-label="Search">
                     <button id="buscarBoton" class="btn btn-outline-success " type="submit ">Buscar</button>
@@ -39,29 +39,44 @@
     <div class="container-fluid" style="background-image: url(/img/tabla2.png); min-height:615px">
         <div class="container pb-3">
             <div class="row pt-3">
+     
             <div class="col" id="col1Carrito">
                 <div id="tablaCarrito">
+                   {{#each Query}} 
                     <table class="table">
                 <thead>
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Producto</th>
-                    <th scope="col">Descripción</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                    <th scope="row"></th>
-                    <td id="contenidoTabla"></td>
-                    <td id="contenidoTabla"></td>
-                    <td id="contenidoTabla"></td>
-                    <td id="contenidoTabla"></td>
+                    <th scope="row">{{id_producto}}</th>
+                    <td id="contenidoTabla">{{nombre}}</td>
+                    <td id="contenidoTabla">{{Cantidad}}</td>
+                    <td id="contenidoTabla">{{Precio}}</td>
                     <td><button class="btn btn-danger">Borrar</button></td>
                     </tr>
+                </tbody>   
+                </table>
+                  {{else}}
+                 <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
                 </tbody>
                 </table>
+                   {{/each}}
                 </div>
             </div>
                 <div class="col-4 pt-5 pb-3" id="col2Carrito">
