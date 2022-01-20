@@ -434,8 +434,19 @@ router.get('/carrito', async(req, res, next) => {
 })
 
 router.get('/factura', async(req, res, next) => {
-    console.log(req.query);
-    res.render('links/factura', { carrito });
+    const cedula = Number(req.query.cedula);
+    console.log("el query", cedula);
+    const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
+    console.log(clientico[0]);
+    const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
+    const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
+    console.log()
+    console.log()
+    console.log()
+    const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+    console.log(telffinal);
+    console.log(ciudad);
+    res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal });
 })
 
 /* REDIRECT DE España*/

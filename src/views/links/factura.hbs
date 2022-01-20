@@ -68,16 +68,16 @@
             <div class="row">
                 {{#if cliente}}
                     {{#if afiliado}}
-                         {{> clienteRegyAf headline=cliente}}
+                         {{> clienteRegyAf headline=cliente var=variable}}
                     {{else}}
-                        {{> clienteNoAfiliado headline=cliente}}
+                        {{>clienteNoAfiliado headline=cliente var=variable}}
                     {{/if}}
                 {{else}}
                     {{> clienteNoRegistrado headline=cliente }}
                 {{/if}}
                  <div class="col-4 pt-2 pb-3" id="col2Factura">
                     <div class="col pb-2" id="datosCarrito">
-                        <form id="form2" formclass="needs-validation" action="/links/factura" method="GET" novalidate>
+                        <form id="form2" formclass="needs-validation" action="/links/comprado" method="GET" novalidate>
                             <div class="col-md-4" id="numCaja">
                             <select class="form-select" required name = "pene">
                             <option disabled selected value=""># Caja</option>
