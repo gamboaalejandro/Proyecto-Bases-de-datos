@@ -469,9 +469,7 @@ router.get('/EliminaCarrito/:id_producto', (req, res) => {
             total = total - carrito[i].Precio;
             cantidadTotal = cantidadTotal - carrito[i].Cantidad;
             carrito.splice(i, 1);
-
         }
-
     }
     res.render("links/carrito", { carrito, total, cantidadTotal });
 })
@@ -484,7 +482,7 @@ router.get('/factura', async(req, res, next) => {
     const cedula = Number(req.query.cedula);
     const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     if (clientico.length === 0) {
-        res.render("links/factura", { carrito, total, cantidadTotal });
+        res.render("links/factura", { carrito, total, cantidadTotal, cedula });
     } else {
         const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
@@ -529,6 +527,18 @@ router.get('/afiliado', async(req, res) => {
         }
     }
 
+})
+
+router.get('/Confirmacion/:cedula', async(req, res) => {
+    //const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
+    // if (clientico.length === 0) {
+    //   res.render("links/factura", { carrito, total, cantidadTotal });
+    // }
+    console.log(req.params.cedula);
+    carrito = [];
+    total = 0;
+    cantidadTotal = 0;
+    res.render("links/PrincipalFactura2", { carrito, total, cantidadTotal })
 })
 
 /* REDIRECT DE España*/
@@ -635,7 +645,7 @@ router.get('/EventoCiudadMexico', (req, res) => {
 });
 
 
-/PAISES---------------------/
+/*PAISES---------------------*/
 router.get('/tiendas/indexFixEspana', (req, res) => {
     res.render("links/tiendas/indexFixEspana");
 });
@@ -651,8 +661,12 @@ router.get("/Registro", (req, res) => {
 })
 
 router.get("/PrincipalFactura2", (req, res) => {
-
-    res.render("links/PrincipalFactura2", { carrito, total, cantidadTotal });
+    var mensajito = "El carrito esta vacio";
+    if (carrito.length !== 0)
+        res.render("links/PrincipalFactura2", { carrito, total, cantidadTotal });
+    else {
+        res.render("links/carrito", { mensajito, total, cantidadTotal })
+    }
 })
 
 

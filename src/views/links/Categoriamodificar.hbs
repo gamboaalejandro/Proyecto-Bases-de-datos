@@ -41,10 +41,10 @@
                 {{>Popup}}
                 {{/if}}
             </div>
-  <form action="/links/modificarc" method="POST">
+        
             <div class="col" id="col2">
+                 <form action="/links/modificarc" method="POST">
                 <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
-              
                     <select class="form-select mt-2" aria-label="Default select example" disabled  >
                         <option selected>Seleccionar categoria</option>
                         <option value="1">Categoria</option>
@@ -71,41 +71,35 @@
                         </div>
             <div class="col-1" id="col3">
                 <div class="col">
-                    <form action="/links/ProductoGuardar" method="GET">
                     <div class="mt-2" id="divAñadirBoton">
                         <button type="submit" class="btn btn-success" id="btnAñadir" disabled>
                             <a href="#">Añadir</a>
                         </button>
                     </div>
-                    </form>
                 </div>
             </div>
             <div class="col-1" id="col4">
-                <form action="/links/Borrar" method="GET">
                 <div class="mt-2" id="divBorrarBoton">
                     <button type="submit" class="btn btn-danger" id="btnBorrar" disabled>
                         <a href="/links/Borrar/{{id_categoria}}"> Borrar</a> 
                     </button>
                 </div> 
-                </form>
             </div>
             <div class="col-1" id="col5">
-                <form action="/links/modificar" method="GET">
                 <div class="mt-2" id="divModificarBoton">
                     <button type="submit" class="btn btn-warning" id="btnModificar" disabled>
                         <a href="#">Modificar</a>
                         </button>
                 </div>
-                </form>
             </div>
             <div class="col-auto" id="col6">
                 <div class="mt-2" id="divGuardarBoton">
                     <button type="submit" class="btn btn-primary" id="btnGuardar" >Guardar</button>
                 </div>
-            </form>
+                
             </div>
+             </form>
         </div>
-        
     </div>
 </div>
 </script>
