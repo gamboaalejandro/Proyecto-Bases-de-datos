@@ -40,6 +40,11 @@
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="/links/tiendas/indexFixCiudadMexico">IKEA Centro Comercial MallPlaza | Ciudad de México</a></li>
                         </ul>
+                        <li>
+                        {{#if mensajito}}
+                            {{>Popup headline= mensajito }}
+                        {{/if}}
+                        </li>
                     </li>
                 </ul>
                 <div class="me-5 mt-1">
@@ -100,7 +105,7 @@
                   
                          <div class="input-group mb-3" id="cantidadGrupo">
                             <span class="input-group-text" id="cantidadPlantillaProducto">Cantidad</span>
-                            <input class="form-control" type="number" placeholder="Cantidad" value="1">
+                            <input class="form-control" type="number" placeholder="Cantidad" value="1" name = "Cantidad">
                         </div>
                         <div class="row" id="rowComprarProducto">
                             <button type="submit" class="btn btn-primary" id="comprarProducto">Añadir al Carrito</button>

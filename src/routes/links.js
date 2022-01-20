@@ -28,6 +28,7 @@ router.get('/Producto', async(req, res, next) => {
 });
 
 
+
 //MODIFICACION DE PRODUCTOS
 router.get('/modificar/:id_producto', async(req, res, next) => {
     var producto = req.params.id_producto;
@@ -265,6 +266,7 @@ router.post('/modificart/:id_tienda', async(req, res, next) => {
         area_de_ninos: varr.area,
         codigo_lugar_geo: varr.codigo_lugar_geo
     }
+
     console.log(tienda);
     if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
         console.log("MODIFICAR TIENDA");
@@ -302,27 +304,25 @@ router.get('/ProductoPlantilla/:id', async(req, res, next) => {
 
 router.get('/comprando/:id_producto', async(req, res) => {
     var mensajito = "Añadido correctamente";
+    const Query = await pool.query("Select * from Producto where id_producto = ?", req.params.id_producto);
+    const str = "/img/productos/" + req.params.id_producto + "a.png"
+    const str2 = "/img/productos/" + req.params.id_producto + "b.png"
     var producto = await pool.query("Select * from producto where id_producto  = ?", req.params.id_producto);
-    const query = await pool.query("Select cantidad from producto where id_producto = ?", req.params.id_producto);
-    var cantidadsita = Number(query[0].cantidad)
-    producto[0].Cantidad = Number(req.query.cantidad);
     var cont = 0;
-    /* var producto_carrito = {
-         id_producto: req.params.id_producto,
-         nombre: req.query.nombre,
-         Precio: req.query.precio,
-         cantidad: req.query.cantidad
-     };*/
+    var cantidadsita = Number(producto[0].Cantidad);
+    console.log("cantidadsita", cantidadsita);
+    producto[0].Cantidad = Number(req.query.Cantidad);
+    //console.log(producto[0]);
+    console.log("Cantidad", req.query.Cantidad);
     if (carrito.length === 0) {
-        if (Number(req.query.cantidad) <= cantidadsita) {
+        if (Number(req.query.Cantidad) <= cantidadsita) {
             carrito.push(producto[0]);
             console.log("anadio el primer producto");
-            res.render('links/indexFix', { mensajito });
+            res.render('links/productoPlantilla', { Query, str, str2, mensajito });
         } else {
             mensajito = "Esa cantidad no se encuentra disponible, el carrito esta cvacio";
-            res.render('links/indexFix', { mensajito });
+            res.render('links/productoPlantilla', { Query, str, str2, mensajito });
         }
-
     } else {
         console.log("entro en el else");
         for (let i = 0; i < carrito.length; i++) {
@@ -330,18 +330,20 @@ router.get('/comprando/:id_producto', async(req, res) => {
             console.log("params", req.params.id_producto);
             if ((carrito[i].id_producto === Number(req.params.id_producto))) {
                 if (Number(req.query.cantidad) <= cantidadsita) {
-                    carrito[i].Cantidad = carrito[i].Cantidad + Number(req.query.cantidad)
+                    carrito[i].Cantidad = carrito[i].Cantidad + Number(req.query.Cantidad)
                 }
                 mensajito = "El producto ya se encuentra en el carrito, Cantidad actualizada"
+                    //res.render('links/productoPlantilla', { Query, str, str2 });
                 break;
             } else {
                 cont++;
             }
         }
+        console.log(carrito);
         console.log("se salio del for y este es el cont ", cont);
         if ((cont === carrito.length)) carrito.push(producto[0]);
         console.log("carrito ", carrito);
-        res.render('links/indexFix', { mensajito });
+        res.render('links/productoPlantilla', { Query, str, str2, mensajito });
     }
 
 })
