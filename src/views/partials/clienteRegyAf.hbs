@@ -3,11 +3,11 @@
                         <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
                         <div class="col-md-2 input-group mt-3">
                             <input form = "form1"  name ="cedula" type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required readonly value = {{cliente.DocIdentidad}}>
-                             <a href="/links/Producto">  <button class="btn btn-success">Buscar</button> </a>
+                             <a href="/links/Producto">  <button class="btn btn-success" disabled>Buscar</button> </a>
                             <div class="invalid-feedback" style="font-weight: bold; border-color: white;">
                                 Debe colocar una cédula!
                             </div>
-                        </div>
+                        </div> 
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="Primer Nombre" disabled value ={{cliente.Primer_Nombre}}>
                         </div>

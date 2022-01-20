@@ -5,8 +5,8 @@ const pool = require('../database');
 const moment = require('moment');
 var mensaje = true;
 var carrito = [];
-var id = [];
-var ciudad = 0;
+var total = 0;
+var cantidadTotal = 0;
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 
@@ -321,6 +321,8 @@ router.get('/comprando/:id_producto', async(req, res) => {
     if (carrito.length === 0) {
         if (Number(req.query.Cantidad) <= cantidadsita) {
             carrito.push(Query[0]);
+            total = total + Number(Query[0].Precio);
+            cantidadTotal = cantidadTotal + Number(Query[0].Cantidad);
             console.log("anadio el primer producto");
             res.render('links/productoPlantilla', { Query, str, str2, mensajito });
         } else {
@@ -342,7 +344,11 @@ router.get('/comprando/:id_producto', async(req, res) => {
             }
         }
         console.log("carrito ", carrito);
-        if ((cont === carrito.length)) carrito.push(Query[0]);
+        if ((cont === carrito.length)) {
+            cantidadTotal = cantidadTotal + Number(Query[0].Cantidad);
+            total = total + Number(Query[0].Precio);
+            carrito.push(Query[0]);
+        }
         res.render('links/productoPlantilla', { Query, str, str2, mensajito });
     }
 
@@ -436,10 +442,26 @@ router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
 
 router.get('/carrito', async(req, res, next) => {
     console.log("el carrito bello", carrito);
-    res.render('links/carrito', { carrito });
+    res.render('links/carrito', { carrito, total, cantidadTotal });
 })
 
-// Metodos de factura 
+router.get('/EliminaCarrito/:id_producto', (req, res) => {
+    console.log("entro al eliminar ");
+    for (let i = 0; i < carrito.length; i++) {
+        console.log(carrito[i].id_producto);
+        console.log(req.params.id_producto);
+        if (Number(req.params.id_producto) === carrito[i].id_producto) {
+            total = total - carrito[i].Precio;
+            cantidadTotal = cantidadTotal - carrito[i].Cantidad;
+            carrito.splice(i, 1);
+
+        }
+
+    }
+    res.render("links/carrito", { carrito, total, cantidadTotal });
+})
+
+// Metodos de  factura 
 
 router.get('/factura', async(req, res, next) => {
     var mensajito = "El cliente se encuentra afiliado"
@@ -447,18 +469,18 @@ router.get('/factura', async(req, res, next) => {
     const cedula = Number(req.query.cedula);
     const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     if (clientico.length === 0) {
-        res.render("links/factura");
+        res.render("links/factura", { carrito, total, cantidadTotal });
     } else {
         const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
         const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
         const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         if (cueri.length === 0) {
-
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado });
+            console.log("el carrito", carrito);
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal });
         } else {
             afiliado = true;
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado });
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal });
         }
     }
 
@@ -469,9 +491,7 @@ router.get('/afiliado', async(req, res) => {
     var afiliado = false;
     const clientela = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     while (!afiliado) {
-
         const numero_afiliado = parseInt(getRandomArbitrary(0, 101));
-
         const query = await pool.query("select Numero_afiliado from afiliacion where Numero_afiliado = ?", numero_afiliado);
         console.log("El query", query);
         if (query.length === 0) {
@@ -490,7 +510,7 @@ router.get('/afiliado', async(req, res) => {
             console.log("logrado", clientela[0])
             console.log("Ciudad", ciudad);
             console.log("telefoono", telffinal);
-            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal })
+            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal, carrito, total, cantidadTotal })
         }
     }
 
@@ -616,7 +636,8 @@ router.get("/Registro", (req, res) => {
 })
 
 router.get("/PrincipalFactura2", (req, res) => {
-    res.render("links/PrincipalFactura2");
+
+    res.render("links/PrincipalFactura2", { carrito, total, cantidadTotal });
 })
 
 

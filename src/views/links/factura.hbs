@@ -19,7 +19,7 @@
             <div class="row pt-3">
             <div class="col" id="fila1Factura">
                 <div id="tablaCarrito">
-                    {{#each Query}}
+                    {{#each carrito}}
                     <table class="table">
                 <thead>
                     <tr>
@@ -35,7 +35,6 @@
                     <td id="contenidoTabla">{{nombre}}</td>
                     <td id="contenidoTabla">{{Cantidad}}</td>
                     <td id="contenidoTabla">{{Precio}}</td>
-                    <td><button class="btn btn-danger">Borrar</button></td>
                     </tr>
                 </tbody>
                 </table>
@@ -57,7 +56,6 @@
                     <td id="contenidoTabla"></td>
                     <td id="contenidoTabla"></td>
                     <td id="contenidoTabla"></td>
-                    <td><button class="btn btn-danger">Borrar</button></td>
                     </tr>
                 </tbody>
                 </table>
