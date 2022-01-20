@@ -559,4 +559,16 @@ router.get('/EventoCiudadMexico', (req, res) => {
 });
 
 
+/*PAISES---------------------*/
+router.get('/tiendas/indexFixEspana', (req, res) => {
+    res.render("links/tiendas/indexFixEspana");
+});
+router.get('/tiendas/indexFixUSA', (req, res) => {
+    res.render("links/tiendas/indexFixUSA");
+});
+router.get('/tiendas/indexFixMexico', (req, res) => {
+    res.render("links/tiendas/indexFixMexico");
+});
+
+
 module.exports = router;
