@@ -75,9 +75,9 @@
                 {{/if}}
                  <div class="col-4 pt-2 pb-3" id="col2Factura">
                     <div class="col pb-2" id="datosCarrito">
-                        <form  class="needs-validation" novalidate action = "/link/Producto" method="get">
+                        <form  class="needs-validation" novalidate action = "/links/Confirmacion/{{cedula}}" method="get">
                           <div class="col-md-4" id="numCaja">
-                            <select class="form-select" required name = "pene">
+                            <select class="form-select" required name = "Caja">
                             <option disabled selected value=""># Caja</option>
                             <option>1</option>
                             <option>2</option>
@@ -103,8 +103,10 @@
                                 Debes elegir un numero de caja.
                             </div>
                         </div>
-                        <h4>Cantidad de productos: 100</h4>
-                        <h3>Total: 50,53$</h3>
+                  
+                        <h4>Cantidad de productos:{{cantidadTotal}}</h4>
+                        <h3>Total: {{total}}$</h3>
+
                         <div class="text-center">
                             <button type="submit" class="btn btn-success">Confirmar compra</button>
                         </div>
