@@ -553,5 +553,9 @@ router.get('/tiendas/indexFixMexico', (req, res) => {
     res.render("links/tiendas/indexFixMexico");
 });
 
+router.get("/Registro", (req, res) => {
+
+})
+
 
 module.exports = router;

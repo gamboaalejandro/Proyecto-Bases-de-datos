@@ -1,5 +1,5 @@
  <div class="col pt-2" id="col1Factura">
-    <form id="form1" class="row g-3 pb-3 needs-validation" novalidate>
+    <form id="form1" class="row g-3 pb-3 needs-validation" novalidate  action = "/links/Registro" method="GET">
         <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
         <div class="col-md-2 input-group mt-3">
             <input type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required>
@@ -9,30 +9,36 @@
             </div>
         </div>
         <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Primer Nombre" required>
+            <input type="text" class="form-control" placeholder="Primer Nombre" required name = "primer_nombre">
         </div>
         <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Segundo Nombre (Opcional)">
+            <input type="text" class="form-control" placeholder="Segundo Nombre (Opcional)" name = "segundo_nombre">
         </div>
         <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Primer Apellido" required>
+            <input type="text" class="form-control" placeholder="Primer Apellido" required name = "primer_apellido">
         </div>
         <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Segundo Apellido" required>
+            <input type="text" class="form-control" placeholder="Segundo Apellido" required name = "segundo_apellido">
         </div>
         <div class="col-12">
-            <select class="form-select" id="validationCustom04" required>
+            <select class="form-select" id="validationCustom04" required name = "direccion">
                 <option selected disabled value="">Dirección</option>
-                <option>España</option>
-                <option>Estado Unidos</option>
-                <option>México</option>
+                <option value = "10">Asturias</option>
+                <option value = "11">Goya</option>
+                <option value = "13">Jerez</option>´
+                <option value = "14">Sabadell</option>
+                <option value = "15">Murcia</option>
+                <option value = "20">San Diego</option>
+                <option value = "21">Miami</option>
+                <option value = "22">Norfolk</option>
+                <option value = "30">Ciudad De Mexico</option>
             </select>
         </div>
         <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="Telefono" required>
+            <input type="text" class="form-control" placeholder="Telefono" required name ="telefono">
         </div>
         <div class="col-md-3">
-            <input type="date" class="form-control" placeholder="fecha" required>
+            <input type="date" class="form-control" placeholder="fecha" required name = "fecha">
         </div>
         <div class="col-md-3 pt-2">
             <h5 style="font-weight: bold; color:white;" >Quiere afiliarse?</h5>
