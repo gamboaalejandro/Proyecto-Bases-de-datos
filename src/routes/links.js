@@ -304,32 +304,27 @@ router.get('/ProductoPlantilla/:id', async(req, res, next) => {
 router.get('/comprando/:id_producto', async(req, res) => {
     var mensajito = "Añadido correctamente";
     const Query = await pool.query("Select * from Producto where id_producto = ?", req.params.id_producto);
+    var cantidadsita =Number(Query[0].Cantidad);
     const str = "/img/productos/" + req.params.id_producto + "a.png"
     const str2 = "/img/productos/" + req.params.id_producto + "b.png"
-    var producto = await pool.query("Select * from producto where id_producto  = ?", req.params.id_producto);
     var cont = 0;
-    var cantidadsita =Number(producto[0].Cantidad);
-    console.log("cantidadsita", cantidadsita);
-    producto[0].Cantidad = Number(req.query.cantidad);
+    Query[0].Cantidad = Number(req.query.Cantidad);
     //console.log(producto[0]);
     if (carrito.length === 0) {
-        if (Number(req.query.cantidad) <= cantidadsita) {
-            carrito.push(producto[0]);
+        if (Number(req.query.Cantidad) <= cantidadsita) {
+            carrito.push(Query[0]);
             console.log("anadio el primer producto");
             res.render('links/productoPlantilla', { Query, str, str2 ,mensajito});
         } else {
-            mensajito = "Esa cantidad no se encuentra disponible, el carrito esta cvacio";
+            mensajito = "Esa cantidad no se encuentra disponible, el carrito esta vacio";
             res.render('links/productoPlantilla', { Query, str, str2,mensajito });
         }
-
     } else {
         console.log("entro en el else");
         for (let i = 0; i < carrito.length; i++) {
-            console.log("carrito", carrito[i].id_producto);
-            console.log("params", req.params.id_producto);
             if ((carrito[i].id_producto === Number(req.params.id_producto))) {
-                if (Number(req.query.cantidad) <= cantidadsita) {
-                    carrito[i].Cantidad = carrito[i].Cantidad + Number(req.query.cantidad)
+                if (Number(req.query.Cantidad) <= cantidadsita) {
+                    carrito[i].Cantidad = carrito[i].Cantidad + Number(req.query.Cantidad)
                 }
                 mensajito = "El producto ya se encuentra en el carrito, Cantidad actualizada"
                 //res.render('links/productoPlantilla', { Query, str, str2 });
@@ -338,9 +333,8 @@ router.get('/comprando/:id_producto', async(req, res) => {
                 cont++;
             }
         }
-        console.log("se salio del for y este es el cont ", cont);
-        if ((cont === carrito.length)) carrito.push(producto[0]);
         console.log("carrito ", carrito);
+        if ((cont === carrito.length)) carrito.push(producto[0]);
         res.render('links/productoPlantilla', { Query, str, str2 ,mensajito});
     }
 
