@@ -87,6 +87,10 @@ router.post('/ProductoGuardar', async(req, res, next) => {
             Instrucciones: varr.Instrucciones
 
         });
+        await pool.query("insert into p_c set ?", {
+            id_producto: varr.id_producto,
+            Id_categoria: varr.ID_Categoria
+        });
         res.render('links/Producto', { mensaje, mensajito });
     } else {
         mensajito = "No es posible añadir el producto";
@@ -431,7 +435,7 @@ router.get('/carrito', async(req, res, next) => {
 
 router.get('/factura', async(req, res, next) => {
     console.log(req.query);
-    res.render('links/factura');
+    res.render('links/factura', { carrito });
 })
 
 /* REDIRECT DE España*/
