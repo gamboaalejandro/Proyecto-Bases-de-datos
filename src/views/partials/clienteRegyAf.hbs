@@ -2,29 +2,29 @@
                     <form id="form1" class="row g-3 pb-3 needs-validation" novalidate>
                         <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
                         <div class="col-md-2 input-group mt-3">
-                            <input form = "form1"  name ="cedula" type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required>
+                            <input form = "form1"  name ="cedula" type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required readonly value = {{cliente.DocIdentidad}}>
                              <a href="/links/Producto">  <button class="btn btn-success">Buscar</button> </a>
                             <div class="invalid-feedback" style="font-weight: bold; border-color: white;">
                                 Debe colocar una cédula!
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Primer Nombre" disabled value ={{Primer_Nombre}}>
+                            <input type="text" class="form-control" placeholder="Primer Nombre" disabled value ={{cliente.Primer_Nombre}}>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Segundo Nombre" disabled value = {{Segundo_Nombre}}>
+                            <input type="text" class="form-control" placeholder="Segundo Nombre" disabled value = {{cliente.Segundo_Nombre}}>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Primer Apellido" disabled value = {{Primer_Apellido}}>
+                            <input type="text" class="form-control" placeholder="Primer Apellido" disabled value = {{cliente.Primer_Apellido}}>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Segundo Apellido" disabled value = {{Segundo_Apellido}}>
+                            <input type="text" class="form-control" placeholder="Segundo Apellido" disabled value = {{cliente.Segundo_Apellido}}>
                         </div>
                         <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Dirección" disabled value = {{Pais}}>
+                            <input type="text" class="form-control" placeholder="Dirección" disabled value = {{ciudad.nombre}}>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Telefono"  disabled value {{Telefono}}>
+                            <input type="text" class="form-control" placeholder="Telefono"  disabled value= {{telffinal}}>
                         </div>
                         <div class="col-md-6 pt-2">
                             <div class="form-check">

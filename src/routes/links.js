@@ -12,6 +12,9 @@ var ciudad = 0;
 
 //BUSQUEDA DE UN PRODUCTO 
 
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
 router.get('/Producto', async(req, res, next) => {
     var producto = req.query;
@@ -439,24 +442,57 @@ router.get('/carrito', async(req, res, next) => {
 // Metodos de factura 
 
 router.get('/factura', async(req, res, next) => {
+    var mensajito = "El cliente se encuentra afiliado"
+    var afiliado = false;
     const cedula = Number(req.query.cedula);
     const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     if (clientico.length === 0) {
         res.render("links/factura");
     } else {
-        console.log(clientico[0]);
+        const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
         const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
         const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
-        res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal });
+        if (cueri.length === 0) {
+
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado });
+        } else {
+            afiliado = true;
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado });
+        }
     }
 
 })
 
 router.get('/afiliado', async(req, res) => {
     const cedula = Number(req.query.cedula);
-    console.log(cedula);
-    res.render("links/factura");
+    var afiliado = false;
+    const clientela = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
+    while (!afiliado) {
+
+        const numero_afiliado = parseInt(getRandomArbitrary(0, 101));
+
+        const query = await pool.query("select Numero_afiliado from afiliacion where Numero_afiliado = ?", numero_afiliado);
+        console.log("El query", query);
+        if (query.length === 0) {
+            console.log("entro al if");
+
+            await pool.query(" INSERT INTO afiliacion set ?", {
+                Numero_afiliado: numero_afiliado,
+                Años_de_Afiliacion: 0,
+                DocIdentidad: cedula
+            });
+            var mensajito = "El cliente ha sido afiliado"
+            afiliado = true;
+            const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientela[0].Cod_ciudad);
+            const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
+            const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+            console.log("logrado", clientela[0])
+            console.log("Ciudad", ciudad);
+            console.log("telefoono", telffinal);
+            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal })
+        }
+    }
 
 })
 
