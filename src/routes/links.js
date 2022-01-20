@@ -433,20 +433,28 @@ router.get('/carrito', async(req, res, next) => {
     res.render('links/carrito', { carrito });
 })
 
+// Metodos de factura 
+
 router.get('/factura', async(req, res, next) => {
     const cedula = Number(req.query.cedula);
-    console.log("el query", cedula);
     const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
-    console.log(clientico[0]);
-    const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
-    const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
-    console.log()
-    console.log()
-    console.log()
-    const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
-    console.log(telffinal);
-    console.log(ciudad);
-    res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal });
+    if (clientico.length === 0) {
+        res.render("links/factura");
+    } else {
+        console.log(clientico[0]);
+        const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
+        const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
+        const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+        res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal });
+    }
+
+})
+
+router.get('/afiliado', async(req, res) => {
+    const cedula = Number(req.query.cedula);
+    console.log(cedula);
+    res.render("links/factura");
+
 })
 
 /* REDIRECT DE España*/
