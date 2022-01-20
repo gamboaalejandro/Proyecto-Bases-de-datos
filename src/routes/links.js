@@ -447,18 +447,18 @@ router.get('/factura', async(req, res, next) => {
     const cedula = Number(req.query.cedula);
     const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     if (clientico.length === 0) {
-        res.render("links/factura");
+        res.render("links/factura", { carrito });
     } else {
         const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
         const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
         const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         if (cueri.length === 0) {
-
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado });
+            console.log("el carrito", carrito);
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito });
         } else {
             afiliado = true;
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado });
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito });
         }
     }
 
@@ -469,9 +469,7 @@ router.get('/afiliado', async(req, res) => {
     var afiliado = false;
     const clientela = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     while (!afiliado) {
-
         const numero_afiliado = parseInt(getRandomArbitrary(0, 101));
-
         const query = await pool.query("select Numero_afiliado from afiliacion where Numero_afiliado = ?", numero_afiliado);
         console.log("El query", query);
         if (query.length === 0) {
@@ -490,7 +488,7 @@ router.get('/afiliado', async(req, res) => {
             console.log("logrado", clientela[0])
             console.log("Ciudad", ciudad);
             console.log("telefoono", telffinal);
-            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal })
+            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal, carrito })
         }
     }
 
@@ -616,7 +614,8 @@ router.get("/Registro", (req, res) => {
 })
 
 router.get("/PrincipalFactura2", (req, res) => {
-    res.render("links/PrincipalFactura2");
+
+    res.render("links/PrincipalFactura2", { carrito });
 })
 
 

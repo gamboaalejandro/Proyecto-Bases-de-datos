@@ -19,7 +19,7 @@
             <div class="row pt-3">
             <div class="col" id="fila1Factura">
                 <div id="tablaCarrito">
-                    {{#each Query}}
+                    {{#each carrito}}
                     <table class="table">
                 <thead>
                     <tr>
@@ -35,7 +35,6 @@
                     <td id="contenidoTabla">{{nombre}}</td>
                     <td id="contenidoTabla">{{Cantidad}}</td>
                     <td id="contenidoTabla">{{Precio}}</td>
-                    <td><button class="btn btn-danger">Borrar</button></td>
                     </tr>
                 </tbody>
                 </table>
@@ -57,7 +56,6 @@
                     <td id="contenidoTabla"></td>
                     <td id="contenidoTabla"></td>
                     <td id="contenidoTabla"></td>
-                    <td><button class="btn btn-danger">Borrar</button></td>
                     </tr>
                 </tbody>
                 </table>
@@ -74,9 +72,9 @@
                 {{> PrincipalFactura headline=cliente}}
                  <div class="col-4 pt-2 pb-3" id="col2Factura">
                     <div class="col pb-2" id="datosCarrito">
-                        <form id="form2" formclass="needs-validation" action="/links/factura" method="GET" novalidate>
+                        <form class="needs-validation" novalidate action="/links/Producto" method="get">
                             <div class="col-md-4" id="numCaja">
-                            <select class="form-select" required name = "pene">
+                            <select class="form-select" required name = "caja">
                             <option disabled selected value=""># Caja</option>
                             <option>1</option>
                             <option>2</option>
@@ -105,7 +103,7 @@
                         <h4>Cantidad de productos: 100</h4>
                         <h3>Total: 50,53$</h3>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success" onclick="submitForms()">Confirmar compra</button>
+                            <button type="submit" class="btn btn-success" disabled >Confirmar compra</button>
                         </div>
                         </form>
                     </div>
