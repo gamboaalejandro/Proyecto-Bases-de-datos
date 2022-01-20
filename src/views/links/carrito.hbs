@@ -36,7 +36,12 @@
                     <td id="contenidoTabla">{{nombre}}</td>
                     <td id="contenidoTabla">{{Cantidad}}</td>
                     <td id="contenidoTabla">{{Precio}}</td>
-                    <td><button class="btn btn-danger">Borrar</button></td>
+
+                    <td>
+                        <form action="/links/EliminaCarrito/{{id_producto}}" method="get">
+                        <button class="btn btn-danger">Borrar</button>
+                    </form>
+                    </td>
                     </tr>
                 </tbody>   
                 </table>
@@ -59,8 +64,8 @@
             </div>
                 <div class="col-4 pt-5 pb-3" id="col2Carrito">
                     <div class="col pb-2" id="datosCarrito">
-                        <h4>Cantidad de productos: 100</h4>
-                        <h3>Total: 50,53$</h3>
+                        <h4>Cantidad de productos: {{cantidadTotal}}</h4>
+                        <h3>Total: {{total}} €</h3>
                         <div class="text-center">
                             <a href="/links/PrincipalFactura2">
                                <button class="btn btn-success" >Confirmar compra</button>
