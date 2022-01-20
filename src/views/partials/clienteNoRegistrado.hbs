@@ -34,14 +34,17 @@
                 <option value = "30">Ciudad De Mexico</option>
             </select>
         </div>
-        <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="Telefono" required name ="telefono">
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Código" required name ="Codigo" data-bs-toggle="tooltip" data-bs-placement="top" title="Código telefónico del pais (+X/+XX)">
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Codigo Area" required name ="codigoArea" data-bs-toggle="tooltip" data-bs-placement="top" title="Código de Area (XXX)">
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Telefono" required name ="telefono" data-bs-toggle="tooltip" data-bs-placement="top" title="Número telefonico">
         </div>
         <div class="col-md-3">
             <input type="date" class="form-control" placeholder="fecha" required name = "fecha">
-        </div>
-        <div class="col-md-3 pt-2">
-            <h5 style="font-weight: bold; color:white;" >Quiere afiliarse?</h5>
         </div>
         <div class="col-md-1" id="colBotonAfiliado">
                 <button class="btn btn-warning" type="submit" disabled>Afiliarse</button>

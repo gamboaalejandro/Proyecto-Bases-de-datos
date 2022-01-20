@@ -388,7 +388,8 @@ router.get('/Tienda', async(req, res, next) => {
 
 /* TIENDAS -----------------------------------------------------*/
 
-/*ESPAÑA----------------------------*/
+/*
+ESPAÑA-- -- -- -- -- -- -- -- -- -- -- -- -- --*/
 router.get('/tiendas/indexFixAsturias', async(req, res, next) => {
     Pais =
         res.render('links/tiendas/indexFixAsturias');
@@ -410,7 +411,8 @@ router.get('/tiendas/indexFixCataluna', async(req, res, next) => {
     res.render('links/tiendas/indexFixCataluna');
 })
 
-/*ESTADOS UNIDOS--------------------------------*/
+/*
+ESTADOS UNIDOS-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --*/
 router.get('/tiendas/indexFixVirginia', async(req, res, next) => {
     res.render('links/tiendas/indexFixVirginia');
 })
@@ -423,7 +425,8 @@ router.get('/tiendas/indexFixFlorida', async(req, res, next) => {
     res.render('links/tiendas/indexFixFlorida');
 })
 
-/*MEXICO-------------------------------------------*/
+/
+/*MEXICO-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - */
 router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
     res.render('links/tiendas/indexFixCiudadMexico');
 })
@@ -561,7 +564,7 @@ router.get('/EventoCiudadMexico', (req, res) => {
 });
 
 
-/*PAISES---------------------*/
+/PAISES---------------------/
 router.get('/tiendas/indexFixEspana', (req, res) => {
     res.render("links/tiendas/indexFixEspana");
 });
