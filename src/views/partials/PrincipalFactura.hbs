@@ -1,0 +1,39 @@
+ <div class="col pt-2" id="col1Factura">
+    <form id="form1" class="row g-3 pb-3 needs-validation" novalidate>
+        <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
+        <div class="col-md-2 input-group mt-3">
+            <input type="text" class="form-control" id="cedulaPlantilla"
+                placeholder="Cédula" style="max-width: 250px;" required>
+                <a href="/links/factura">  <button class="btn btn-success">Buscar</button> </a>
+          
+            <div class="invalid-feedback" style="font-weight: bold;
+                border-color: white;">
+                Debe colocar una cédula!
+            </div>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Primer Nombre" disabled name = "primer_nombre">
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Segundo Nombre" disabled name = "segundo_nombre+">
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Primer Apellido" disabled >
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Segundo Apellido" disabled>
+        </div>
+        <div class="col-12">
+            <input type="text" class="form-control" placeholder="Dirección" disabled>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Telefono" disabled>
+        </div>
+        <div class="col-md-3 pt-2">
+            <h5 style="font-weight: bold; color:white;" >Quiere afiliarse?</h5>
+        </div>
+        <div class="col-md-1" id="colBotonAfiliado">
+                <button class="btn btn-warning" type="submit" disabled >Afiliarse</button>
+            </div>
+    </form>
+</div>

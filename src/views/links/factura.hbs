@@ -61,56 +61,14 @@
                     </tr>
                 </tbody>
                 </table>
-
-
                 {{/each}}
-               
-
-
                 </div>
             </div>
             </div>
             <div class="row">
                 {{#if cliente}}
                     {{#if afiliado}}
-                <div class="col pt-2" id="col1Factura">
-                    <form id="form1" class="row g-3 pb-3 needs-validation" novalidate>
-                        <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
-                        <div class="col-md-2 input-group mt-3">
-                            <input form = "form1"  name ="cedula" type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required>
-                            <button class="btn btn-success">Buscar</button>
-                            <div class="invalid-feedback" style="font-weight: bold; border-color: white;">
-                                Debe colocar una cédula!
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Primer Nombre" disabled value ={{Primer_Nombre}}>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Segundo Nombre" disabled value = {{Segundo_Nombre}}>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Primer Apellido" disabled value = {{Primer_Apellido}}>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Segundo Apellido" disabled value = {{Segundo_Apellido}}>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Dirección" disabled value = {{Pais}}>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Telefono"  disabled value {{Telefono}}>
-                        </div>
-                        <div class="col-md-6 pt-2">
-                            <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="afiliado" style="border-color: white;" checked disabled>
-                            <label class="form-check-label" for="afiliado" style="color: white; font-weight: bold;">
-                                Afiliado
-                            </label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                         {{> clienteRegyAf headline=cliente}}
                     {{else}}
                         {{> clienteNoAfiliado headline=cliente}}
                     {{/if}}

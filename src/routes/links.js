@@ -557,5 +557,10 @@ router.get("/Registro", (req, res) => {
 
 })
 
+router.get("/PrincipalFactura2", (req, res) => {
+    res.render("links/PrincipalFactura2");
+})
+
+
 
 module.exports = router;
