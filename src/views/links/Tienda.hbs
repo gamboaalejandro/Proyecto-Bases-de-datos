@@ -66,8 +66,10 @@
                         <span class="input-group-text" id="basic-addon2">Fecha de Apertura</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
-                        <input name="telefonoTienda" type="text" class="form-control" aria-label="First name" id="telefonoTienda" disabled>
+                        {{#if telffinal}}
+                        <input name="telefonoTienda" type="text" class="form-control" aria-label="First name" id="telefonoTienda" disabled value="{{telffinal}}">
                         <span class="input-group-text" id="basic-addon2">Teléfono</span>
+                        {{/if}}
                     </div>
                     <div class="mt-2 input-group mb-3">
                         <input name="estilo_arquitectonico" type="text" class="form-control" placeholder="Estilo Arquitectonico" aria-label="First name" id="estiloArquitectonico" maxlength="50" value="{{estilo_arquitectonico}}" disabled>

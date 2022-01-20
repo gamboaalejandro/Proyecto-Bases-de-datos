@@ -48,11 +48,6 @@
                 <!-- QUERY PARA MOSTRAR LOS DATOS QUE VIENEN DE LA BASE DE DATOS EN LOS INPUTS -->
                 <form action="/links/Categoria/Buscar" method="GET">
                     {{#each Query}}
-                    <select class="form-select mt-2" aria-label="Default select example" disabled  >
-                        <option selected>Seleccionar categoria</option>
-                        <option value="1">Categoria</option>
-                        <option value="2">Sub-categoria</option>
-                    </select>
                     <div class="mt-2 input-group mb-3">
                         <input name="Id_categoria" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" value="{{Id_categoria}}" readonly>
                         <span class="input-group-text" id="basic-addon1">ID Categoria</span>
@@ -103,7 +98,7 @@
             </div>
             <div class="col-auto" id="col6">
                 <div class="mt-2" id="divGuardarBoton">
-                    <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardar" disabled>Guardar</button>
                 </div>
             </div>
         </div>
@@ -111,12 +106,6 @@
                     {{!-- FIN DEL BLOQUE DE BOTONES HABILITADOS PARA ELIMINAR ANADIR O GUARDAR O MODIFICAR --}}
                     <!-- ELSE CUANDO EN LA PRIMERA INSTANCIA EL QUERY ES VACIO -->
                     {{else}}
-
-                    <select class="form-select mt-2" aria-label="Default select example">
-                        <option selected>Seleccionar categoria</option>
-                        <option value="1">Categoria</option>
-                        <option value="2">Sub-categoria</option>
-                    </select>
                     <div class="mt-2 input-group mb-3">
                         <input name="id_producto" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" disabled>
                         <span class="input-group-text" id="basic-addon1">ID Categoria</span>
