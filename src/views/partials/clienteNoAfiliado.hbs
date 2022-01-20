@@ -34,5 +34,48 @@
         <div class="col-md-1" id="colBotonAfiliado">
              <button class="btn btn-warning" type="submit" >Afiliarse</button>
             </div>
-    </form>
-</div>
+</div>     
+</form>
+ <div class="col-4 pt-2 pb-3" id="col2Factura">
+                       <form class="row g-3 pb-3 needs-validation" novalidate action="/links/facturacion/{{cliente.DocIdentidad}}"  method = "GET">
+                    <div class="col pb-2" id="datosCarrito">
+                          <div class="col-md-4" id="numCaja">
+                            <select class="form-select" required name = "Caja">
+                            <option disabled selected value=""># Caja</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Debes elegir un numero de caja.
+                            </div>
+                        </div>
+                  
+                        <h4>Cantidad de productos:{{cantidadTotal}}</h4>
+                        <h3>Total: {{total}}$</h3>
+
+                        <div class="text-center">
+                            <a href="/links/Producto"> <button type="submit" class="btn btn-success">Confirmar compra</button></a>
+                           
+                        </div>
+                           
+                    </div>
+                   
+                </div>
+ </form>

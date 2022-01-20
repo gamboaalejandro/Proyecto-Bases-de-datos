@@ -9,7 +9,13 @@ var total = 0;
 var cantidadTotal = 0;
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
-
+function Facturacion(Monto, forma_pago, Doc_identidad, NumeroCaja) {
+    const numero_factura = parseInt(getRandomArbitrary(0, 101));
+    var hoy = new Date();
+    var actual = hoy.getDate();
+    console.log(actual);
+    //campos que se generan aqui numero_factura (aleatorio), fecha emision,
+}
 //BUSQUEDA DE UN PRODUCTO 
 
 function getRandomArbitrary(min, max) {
@@ -17,6 +23,7 @@ function getRandomArbitrary(min, max) {
 }
 
 router.get('/Producto', async(req, res, next) => {
+    Facturacion(23, 55, 55, 55);
     var producto = req.query;
     console.log(Object.keys(producto).length);
     if (Object.keys(producto).length !== 0) {
@@ -494,7 +501,6 @@ router.get('/afiliado', async(req, res) => {
         console.log("El query", query);
         if (query.length === 0) {
             console.log("entro al if");
-
             await pool.query(" INSERT INTO afiliacion set ?", {
                 Numero_afiliado: numero_afiliado,
                 Años_de_Afiliacion: 0,
@@ -515,15 +521,40 @@ router.get('/afiliado', async(req, res) => {
 })
 
 router.get('/Confirmacion/:cedula', async(req, res) => {
-    //const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
-    // if (clientico.length === 0) {
-    //   res.render("links/factura", { carrito, total, cantidadTotal });
-    // }
-    console.log(req.params.cedula);
     carrito = [];
     total = 0;
     cantidadTotal = 0;
-    res.render("links/PrincipalFactura2", { carrito, total, cantidadTotal })
+    console.log("esta agregaando");
+    await pool.query(" INSERT INTO cliente set ? ", {
+        DocIdentidad: req.query.cedula,
+        Primer_Nombre: req.query.primer_nombre,
+        Segundo_Nombre: req.query.segundo_nombre,
+        Primer_Apellido: req.query.primer_apellido,
+        Segundo_Apellido: req.query.segundo_apellido,
+        Fecha_nac: req.query.fecha,
+        Cod_ciudad: req.query.direccion,
+    })
+    console.log("agrego");
+    await pool.query("INSERT into telefono set ? ", {
+        Codigo: req.query.Codigo,
+        NumeroArea: req.query.codigoArea,
+        Numero: req.query.telefono,
+        id_tienda: null,
+        DocIdentidad: req.query.cedula
+    });
+    //res.render("links/factura", { carrito, total, cantidadTotal });
+    console.log("redireccion");
+    res.redirect("/links/facturacion/" + req.params.cedula + "");
+
+
+})
+
+router.get('/facturacion/:cedula', (req, res) => {
+    console.log("cedula", req.params.cedula);
+    console.log("la caja", req.query);
+    //facturar
+    res.send("lo logramos muchachos");
+
 })
 
 /* REDIRECT DE España*/
