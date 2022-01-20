@@ -543,6 +543,25 @@
     margin-left: -7%;
 }
 
+.botonConfig {
+    background-image: url(/img/config1.png);
+    background-color: transparent;
+    border: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+    background-position: center;
+}
+
+#config {
+    float: right;
+}
+
+.botonConfig:hover {
+    opacity: 80%;
+}
+
 
 /*Animaciones*/
 
