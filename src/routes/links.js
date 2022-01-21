@@ -10,13 +10,14 @@ var total = 0;
 var cantidadTotal = 0;
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
+/*
 function Facturacion(Monto, forma_pago, Doc_identidad, NumeroCaja) {
     const numero_factura = parseInt(getRandomArbitrary(0, 101)); //numero de factura generado aleatoreamente
     var actual = Date.now(); // Fecha actual
     var hoy = new Date(actual);
     pool.query(" insert into factura")
         //campos que se generan aqui numero_factura (aleatorio), fecha emision,
-}
+}*/
 //BUSQUEDA DE UN PRODUCTO 
 
 function getRandomArbitrary(min, max) {
@@ -24,7 +25,6 @@ function getRandomArbitrary(min, max) {
 }
 
 router.get('/Producto', async(req, res, next) => {
-    Facturacion(23, 55, 55, 55);
     var producto = req.query;
     console.log(Object.keys(producto).length);
     if (Object.keys(producto).length !== 0) {
@@ -78,7 +78,6 @@ router.get('/ProductoGuardar', async(req, res, next) => {
 });
 
 router.post('/ProductoGuardar', async(req, res, next) => {
-
     var mensajito = "Producto añadido exitosamente";
     const varr = req.body;
 
@@ -111,7 +110,6 @@ router.post('/ProductoGuardar', async(req, res, next) => {
 
 //ELIMINAR PRODUCTO
 router.get('/delete/:id_producto', async(req, res, next) => {
-
     var mensajito = "Producto Eliminado exitosamente";
     console.log("Entrando a borrar producto");
     const id_Producto = req.params.id_producto;
@@ -142,7 +140,6 @@ router.get('/CategoriaGuardar', async(req, res, next) => {
 
 
 router.post('/CategoriaGuardar', async(req, res, next) => {
-
     var mensajito = "Categoria añadida exitosamente";
     const varr = req.body;
     if ((varr.Id_Categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "")) {
@@ -176,8 +173,8 @@ router.post('/modificarc', async(req, res, next) => {
     const categoria = {
         Id_Categoria: varr.Id_categoria,
         Nombre: varr.Nombre,
-        Descripcion: varr.Descripcion,
-        Id_categoria_Padre: varr.Id_categoria_Padre
+        Descripcion: varr.Descripcion
+
     }
     console.log(categoria);
     if ((varr.Id_categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "") && (varr.Id_categoria_Padre !== "")) {
@@ -192,8 +189,7 @@ router.post('/modificarc', async(req, res, next) => {
 })
 
 //ELIMINAR CATEGORIA 
-router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
-
+router.get('/borrar/:Id_categoria'), async(req, res, next) => {
     var mensajito = "Categoria Eliminada exitosamente";
     const id_Categoria = req.params.Id_categoria;
     await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
@@ -309,13 +305,13 @@ router.post('/modificart/:id_tienda', async(req, res, next) => {
     }
 })
 
-//ELIMINAR TIENDA 
-router.get('/Eliminar/:id_tienda'), async(req, res, next) => {
+//ELIMINAR TIENDA  
+router.get('/Eliminar/:id'), async(req, res, next) => {
     var mensajito = "Tienda Eliminada exitosamente";
     console.log("Entrando a borrar tienda");
     const id_tienda = req.params.id_tienda;
-    await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda)
-    res.render('/links/Tienda', { mensaje, mensajito });
+    await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda);
+    res.render('links/Tienda', { mensaje, mensajito });
 }
 
 //---------------------------------------------REDIRECCCIONAMIENTOS DEL FRONT
@@ -541,10 +537,11 @@ router.get('/afiliado', async(req, res) => {
 })
 
 router.get('/Confirmacion/:cedula', async(req, res) => {
-    carrito = [];
-    total = 0;
-    cantidadTotal = 0;
     console.log("esta agregaando");
+    var actual = Date.now(); // Fecha actual
+    var hoy = new Date(actual);
+    hoy = moment(hoy).format('YYYY-MM-DD');
+    // insercion de clientes
     await pool.query(" INSERT INTO cliente set ? ", {
         DocIdentidad: req.query.cedula,
         Primer_Nombre: req.query.primer_nombre,
@@ -554,6 +551,43 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         Fecha_nac: req.query.fecha,
         Cod_ciudad: req.query.direccion,
     })
+    var numero_factura = 0;
+    var numero = [];
+    var repetido = true;
+    while (repetido) {
+        numero_factura = parseInt(getRandomArbitrary(0, 101)); //numero de factura generado aleatoreamente
+        numero = await pool.query("SELECT numero_factura from factura where numero_factura = ?", numero_factura);
+        if (numero.length === 0) {
+            repetido = false;
+
+        }
+    }
+    //Insercion de facturas
+    await pool.query("insert into factura set ? ", {
+        numero_factura: numero_factura,
+        monto: total,
+        fecha_emision: hoy,
+        forma_pago: req.query.metodoPago,
+        Doc_identidad: req.params.cedula,
+        NumeroCaja: req.query.Caja
+    });
+    var fechita = new Date();
+    var consulta = [];
+    var cantidad = [];
+    for (let i = 0; i < carrito.length; i++) {
+        consulta = await pool.query("select codigo from lugar_geo where codigo = (select codigop from lugar_geo where codigo = ?)", Number(req.query.direccion));
+        fechita = await pool.query("select Fecha_añadido from catalogo_producto where id_producto = ? AND Codigo_Pais = ? ", [Number(carrito[i].id_producto), Number(consulta[0].codigo)]);
+        cantidad = await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto));
+
+        await pool.query("UPDATE producto set Cantidad WHERE id_producto = ? ", [(cantidad[0].Cantidad - Number(carrito[i].Cantidad)), Number(carrito[i].id_producto)]);
+        console.log(await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto)));
+        await pool.query(" INSERT INTO detalle_factura set ? ", {
+            cantidad: Number(carrito[i].Cantidad),
+            numero_factura: numero_factura,
+            fecha_anadido: fechita[0].Fecha_añadido
+        })
+    }
+    //console.log(await pool.query("select * from factura where numero_factura = ?", numero_factura));
     console.log("agrego");
     console.log(req.query.telefono)
     await pool.query("INSERT into telefono set ? ", {
@@ -562,7 +596,6 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         DocIdentidad: req.query.cedula
     });
     //res.render("links/factura", { carrito, total, cantidadTotal });
-    console.log("redireccion");
     res.redirect("/links/facturacion/" + req.params.cedula + "");
 
 
@@ -570,8 +603,8 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
 
 router.get('/facturacion/:cedula', (req, res) => {
     console.log("cedula", req.params.cedula);
-    console.log("la caja", req.query);
     //facturar
+
     res.send("lo logramos muchachos");
 
 })
