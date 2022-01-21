@@ -77,7 +77,6 @@ router.get('/ProductoGuardar', async(req, res, next) => {
 });
 
 router.post('/ProductoGuardar', async(req, res, next) => {
-
     var mensajito = "Producto añadido exitosamente";
     const varr = req.body;
 
@@ -110,7 +109,6 @@ router.post('/ProductoGuardar', async(req, res, next) => {
 
 //ELIMINAR PRODUCTO
 router.get('/delete/:id_producto', async(req, res, next) => {
-
     var mensajito = "Producto Eliminado exitosamente";
     console.log("Entrando a borrar producto");
     const id_Producto = req.params.id_producto;
@@ -141,7 +139,6 @@ router.get('/CategoriaGuardar', async(req, res, next) => {
 
 
 router.post('/CategoriaGuardar', async(req, res, next) => {
-
     var mensajito = "Categoria añadida exitosamente";
     const varr = req.body;
     if ((varr.Id_Categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "")) {
@@ -189,8 +186,7 @@ router.post('/modificarc', async(req, res, next) => {
 })
 
 //ELIMINAR CATEGORIA 
-router.get('/Borrar/:Id_categoria'), async(req, res, next) => {
-
+router.get('/borrar/:Id_categoria'), async(req, res, next) => {
     var mensajito = "Categoria Eliminada exitosamente";
     const id_Categoria = req.params.Id_categoria;
     await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)

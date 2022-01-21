@@ -49,7 +49,7 @@
                 <form action="/links/Categoria/Buscar" method="GET">
                     {{#each Query}}
                     <div class="mt-2 input-group mb-3">
-                        <input name="Id_categoria" type="text" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" value="{{Id_categoria}}" readonly>
+                        <input name="Id_categoria" type="number" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idCategoriaCategoria" maxlength="50" value="{{Id_categoria}}" readonly>
                         <span class="input-group-text" id="basic-addon1">ID Categoria</span>
                     </div> 
                     <div class="mt-2 input-group mb-3">
@@ -79,20 +79,20 @@
                 </div>
             </div>
             <div class="col-1" id="col4">
-                <form action="/links/Borrar" method="GET">
+                <form action="/links/borrar" method="GET">
                 <div class="mt-2" id="divBorrarBoton">
                     <button type="submit" class="btn btn-danger" id="btnBorrar">
-                        <a href="/links/Borrar/{{Id_categoria}}"> Borrar</a> 
+                        <a href="/links/borrar/{{Id_categoria}}"> borrar</a> 
                     </button>
                 </div> 
                 </form>
             </div>
             <div class="col-1" id="col5">
-                 <form action="/links/modificarc" method="GET">
+                <form action="/links/modificarc" method="GET">
                 <div class="mt-2" id="divModificarBoton">
                     <button type="submit" class="btn btn-warning" id="btnModificar">
                         <a href="/links/modificarc/{{Id_categoria}}">Modificar</a>
-                        </button>
+                    </button>
                 </div>
                 </form>
             </div>
@@ -139,7 +139,7 @@
                 <div class="mt-2" id="divBorrarBoton">
                     <button type="submit" class="btn btn-danger" id="btnBorrar"disabled>
                         Borrar
-                        </button>
+                    </button>
                 </div>
             </div>
             <div class="col-1" id="col5">

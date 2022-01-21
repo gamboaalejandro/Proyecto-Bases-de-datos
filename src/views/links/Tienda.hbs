@@ -50,7 +50,7 @@
                 <form action="/links/Tienda" method="GET">
                     {{#each Query}}
                     <div class="mt-2 input-group mb-3">
-                        <input name="id_tienda" type="number" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idTienda" maxlength="50" value="{{id_tienda}}" readonly >
+                        <input name="id_tienda" type="number" class="form-control" placeholder="Id Categoria" aria-label="First name" id="idTienda" maxlength="50" value="{{id_tienda}}" readonly>
                         <span class="input-group-text" id="basic-addon2">ID Tienda</span>
                     </div>
                     <div class="mt-2 input-group mb-3">
@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div class="col-1" id="col4">
-                <form action="/links/Eliminar" method="GET">
+                <form action="/links/Eliminar/{{id_tienda}}" method="GET">
                 <div class="mt-2" id="divBorrarBoton">
                     <button type="submit" class="btn btn-danger" id="btnBorrar">
                         <a href="/links/Eliminar/{{id_tienda}}"> Borrar</a> 
