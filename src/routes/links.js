@@ -9,6 +9,11 @@ var mensaje = true;
 var carrito = [];
 var total = 0;
 var cantidadTotal = 0;
+var ofertageneral = [
+    []
+];
+var ofertaespecifica = 0;
+tienda = 0;
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 /*
@@ -25,6 +30,9 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+router.get('/eliminado/:id_tienda', (req, res) => {
+
+});
 router.get('/Producto', async(req, res, next) => {
     var producto = req.query;
     console.log(Object.keys(producto).length);
@@ -194,7 +202,7 @@ router.get('/borrar/:Id_categoria', async(req, res, next) => {
     var mensajito = "Categoria Eliminada exitosamente";
     const id_Categoria = req.params.Id_categoria;
     await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
-    res.render('/links/Categoria', { mensaje, mensajito });
+    res.render('links/Categoria', { mensaje, mensajito });
 })
 
 //------------------------------------------------------PROCEDIMIENTOS DE TIENDAS
@@ -311,7 +319,7 @@ router.get('/Eliminar/:id_tienda', async(req, res, next) => {
     const id_tienda = req.params.id_tienda;
     await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda);
     res.render('links/Tienda', { mensaje, mensajito });
-})
+});
 
 //---------------------------------------------REDIRECCCIONAMIENTOS DEL FRONT
 
@@ -416,48 +424,88 @@ router.get('/Tienda', async(req, res, next) => {
 /*
 ESPAÑA-- -- -- -- -- -- -- -- -- -- -- -- -- --*/
 router.get('/tiendas/indexFixAsturias', async(req, res, next) => {
-    Pais =
-        res.render('links/tiendas/indexFixAsturias');
+    tienda = 1;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
+    res.render('links/tiendas/indexFixAsturias');
 })
 
 router.get('/tiendas/indexFixMadrid', async(req, res, next) => {
+    tienda = 2;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixMadrid');
 })
 
 router.get('/tiendas/indexFixMurcia', async(req, res, next) => {
+    tienda = 3;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixMurcia');
 })
 
 router.get('/tiendas/indexFixAndalucia', async(req, res, next) => {
+    tienda = 4;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixAndalucia');
 })
 
 router.get('/tiendas/indexFixCataluna', async(req, res, next) => {
+    tienda = 5;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixCataluna');
 })
 
 /*
 ESTADOS UNIDOS-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --*/
 router.get('/tiendas/indexFixVirginia', async(req, res, next) => {
+    tienda = 6;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixVirginia');
 })
 
 router.get('/tiendas/indexFixCalifornia', async(req, res, next) => {
+    tienda = 7;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixCalifornia');
 })
 
 router.get('/tiendas/indexFixFlorida', async(req, res, next) => {
+    tienda = 8;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixFlorida');
 })
 
-/
+
 /*MEXICO-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - */
 router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
+
+    tienda = 9;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixCiudadMexico');
 })
 
 router.get('/carrito', async(req, res, next) => {
+    console.log("el carrito bello", carrito);
+    const productoOferta = await pool.query("select id_producto from p_c where id_categoria = (select id_categoria from oferta_categoria where Id_oferta = (Select Idoferta from oferta where Id_tienda =  ?))", tienda);
+    const ofertafinal = await pool.query("select Idoferta from oferta where Id_tienda IS NULL");
+    console.log(ofertafinal);
+    console.log(productoOferta);
     for (let i = 0; i < carrito.length; i++) {
+        for (let j = 0; j < productoOferta.length; j++) {
+            if (carrito[i].id_producto === productoOferta[j].id_producto) {
+                console.log(ofertaespecifica);
+                console.log(carrito[i].Precio);
+                carrito[i].Precio = ((Number(carrito[i].Precio)) * (ofertaespecifica[0].Descuento / 100)) * (Number(carrito[i].Cantidad));
+                console.log(carrito[i].Precio);
+            }
+        }
         carrito[i].Precio = (Number(carrito[i].Precio)) * (Number(carrito[i].Cantidad));
         total = total + carrito[i].Precio;
     }
@@ -480,13 +528,15 @@ router.get('/EliminaCarrito/:id_producto', (req, res) => {
 
 // Metodos de  factura 
 
+
+
 router.get('/factura', async(req, res, next) => {
     var mensajito = "El cliente se encuentra afiliado"
     var afiliado = false;
     const cedula = Number(req.query.cedula);
     const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     if (clientico.length === 0) {
-        res.render("links/factura", { carrito, total, cantidadTotal, cedula });
+        res.render("links/factura", { carrito, total, cantidadTotal, cedula, ofertaespecifica });
     } else {
         const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
@@ -494,10 +544,10 @@ router.get('/factura', async(req, res, next) => {
         const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         if (cueri.length === 0) {
             console.log("el carrito", carrito);
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal });
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal, ofertaespecifica });
         } else {
             afiliado = true;
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal });
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal, ofertaespecifica });
         }
     }
 
@@ -526,7 +576,7 @@ router.get('/afiliado', async(req, res) => {
             console.log("logrado", clientela[0])
             console.log("Ciudad", ciudad);
             console.log("telefoono", telffinal);
-            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal, carrito, total, cantidadTotal })
+            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal, carrito, total, cantidadTotal, ofertaespecifica })
         }
     }
 

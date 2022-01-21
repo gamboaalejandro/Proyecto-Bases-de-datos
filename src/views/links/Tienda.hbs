@@ -129,9 +129,10 @@
                 <div class="mt-2" id="divBorrarBoton">
                     <button type="submit" class="btn btn-danger" id="btnBorrar">
                         <a href="/links/Eliminar/{{id_tienda}}">Borrar</a> 
-                    </button>
+                    </button>   
+                   </form>
                 </div> 
-                </form>
+            
             </div>
             <div class="col-1" id="col5">
                 <form action="/links/modificart" method="GET">
@@ -237,11 +238,11 @@
             </div>
         </div>
                     {{!-- FIN DEL BLOQUE ANTES DE BUSQUEDA --}}
-                    {{/each}}
-
-                
+                   
+   {{/each}}
+                </form>
+              
           
     </div>
-    </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
