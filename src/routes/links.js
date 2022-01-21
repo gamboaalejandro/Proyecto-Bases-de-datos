@@ -3,6 +3,8 @@ const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
 const moment = require('moment');
+const Query = require("mysql/lib/protocol/sequences/Query");
+const { query } = require("express");
 var mensaje = true;
 var carrito = [];
 var total = 0;
@@ -171,15 +173,17 @@ router.get('/modificarc/:Id_categoria', async(req, res, next) => {
 })
 
 router.post('/modificarc', async(req, res, next) => {
+
     var mensajito = "Categoria Modificada exitosamente";
     const varr = req.body;
     const categoria = {
+        Id_Categoria: varr.Id_categoria,
         Nombre: varr.Nombre,
         Descripcion: varr.Descripcion
 
     }
     console.log(categoria);
-    if ((varr.Id_categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "")) {
+    if ((varr.Id_categoria !== "") && (varr.Nombre !== "") && (varr.Descripcion !== "") && (varr.Id_categoria_Padre !== "")) {
         console.log("MODIFICAR CATEGORIA");
         await pool.query("UPDATE categoria set ? WHERE Id_categoria = ? ", [categoria, varr.Id_categoria]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
@@ -205,14 +209,15 @@ router.get('/Tienda', async(req, res, next) => {
     var tienda2 = req.query;
     if (Object.keys(tienda2).length !== 0) {
         var id_tienda = tienda2.Tienda;
-        const telefono = await pool.query("Select NumeroArea, Numero from telefono where id_tienda = ? ", id_tienda);
-        const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+        const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where id_tienda = ? ", id_tienda);
+        const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         const Query = await pool.query("Select * from tienda where id_tienda = ? ", id_tienda);
         Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
         Query[0].telffinal = telffinal;
         res.render('links/Tienda', { Query })
     } else {
         res.render('links/Tienda')
+
     }
 });
 
@@ -224,7 +229,7 @@ router.get('/TiendaGuardar', async(req, res, next) => {
 router.post('/TiendaGuardar', async(req, res, next) => {
     var mensajito = "Tienda añadida exitosamente";
     const varr = req.body;
-    if ((varr.telefonoTienda !== "") && (varr.telefonoCodigoArea !== "") && (varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
+    if ((varr.telefonoTienda !== "") && (varr.telefonoCodigoArea !== "") && (varr.telefonoCodigo !== "") && (varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
         await pool.query("INSERT into tienda set ? ", {
             id_tienda: varr.id_tienda,
             nombre_sucursal: varr.nombre_sucursal,
@@ -257,15 +262,18 @@ router.post('/TiendaGuardar', async(req, res, next) => {
 
 router.get('/modificart/:id_tienda', async(req, res, next) => {
     var tienda = req.params.id_tienda;
-    const telefono = await pool.query("Select NumeroArea, Numero from telefono where id_tienda = ? ", tienda);
+    const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where id_tienda = ? ", tienda);
+    //const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
     const Query = await pool.query("Select * from tienda where id_tienda = ? ", tienda);
     Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
+    Query[0].codigo = telefono[0].Codigo;
     Query[0].numeroarea = telefono[0].NumeroArea;
     Query[0].numero = telefono[0].Numero;
     res.render('links/Tiendamodificar', { Query: Query[0] })
 })
 
 router.post('/modificart/:id_tienda', async(req, res, next) => {
+
     var mensajito = "Tienda Modificada exitosamente";
     const varr = req.body;
     const tienda = {
@@ -283,6 +291,8 @@ router.post('/modificart/:id_tienda', async(req, res, next) => {
     }
 
     const telefono = {
+        identificador: varr.id_tienda,
+        Codigo: varr.telefonoCodigo,
         NumeroArea: varr.telefonoCodigoArea,
         Numero: varr.telefonoTienda
     }
@@ -494,8 +504,6 @@ router.get('/carrito', async(req, res, next) => {
         carrito[i].Precio = (Number(carrito[i].Precio)) * (Number(carrito[i].Cantidad));
         total = total + carrito[i].Precio;
     }
-
-    console.log("el carrito bello2", carrito);
     res.render('links/carrito', { carrito, total, cantidadTotal });
 })
 
@@ -573,6 +581,7 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
     console.log("esta agregaando");
     var actual = Date.now(); // Fecha actual
     var hoy = new Date(actual);
+    var mensajito = "Compra realizada con éxito";
     hoy = moment(hoy).format('YYYY-MM-DD');
     // insercion de clientes
     await pool.query(" INSERT INTO cliente set ? ", {
@@ -604,6 +613,22 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         Doc_identidad: req.params.cedula,
         NumeroCaja: req.query.Caja
     });
+
+    var idMetodoRepetido = true;
+    var id_tipo = 0;
+    var id_tipoConsulta = [];
+    while (idMetodoRepetido) {
+        id_tipo = parseInt(getRandomArbitrary(0, 101));
+        id_tipoConsulta = await pool.query("select Id_metodo from metodo_de_pago where Id_metodo = ?", id_tipo);
+        if (id_tipoConsulta.length === 0) {
+            idMetodoRepetido = false;
+        }
+    }
+    await pool.query("insert into metodo_de_pago set ?", {
+        Id_metodo: id_tipo,
+        tipo: req.query.metodoPago
+    });
+
     var fechita = new Date();
     var consulta = [];
     var cantidad = [];
@@ -611,35 +636,98 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         consulta = await pool.query("select codigo from lugar_geo where codigo = (select codigop from lugar_geo where codigo = ?)", Number(req.query.direccion));
         fechita = await pool.query("select Fecha_añadido from catalogo_producto where id_producto = ? AND Codigo_Pais = ? ", [Number(carrito[i].id_producto), Number(consulta[0].codigo)]);
         cantidad = await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto));
-
-        await pool.query("UPDATE producto set Cantidad WHERE id_producto = ? ", [(cantidad[0].Cantidad - Number(carrito[i].Cantidad)), Number(carrito[i].id_producto)]);
-        console.log(await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto)));
+        await pool.query("UPDATE producto set Cantidad = ? WHERE id_producto = ? ", [(cantidad[0].Cantidad - Number(carrito[i].Cantidad)), Number(carrito[i].id_producto)]);
+        if ((cantidad[0].Cantidad - Number(carrito[i].Cantidad) === 0)) {
+            await pool.query("UPDATE catalogo_producto set Fecha_Agotado = ? where id_producto= ? ", [hoy, Number(carrito[i].id_producto)]);
+        }
         await pool.query(" INSERT INTO detalle_factura set ? ", {
             cantidad: Number(carrito[i].Cantidad),
             numero_factura: numero_factura,
             fecha_anadido: fechita[0].Fecha_añadido
         })
     }
-    //console.log(await pool.query("select * from factura where numero_factura = ?", numero_factura));
-    console.log("agrego");
     await pool.query("INSERT into telefono set ? ", {
         NumeroArea: req.query.codigoArea,
         Numero: req.query.telefono,
         DocIdentidad: req.query.cedula
     });
-    //res.render("links/factura", { carrito, total, cantidadTotal });
-    res.redirect("/links/facturacion/" + req.params.cedula + "");
-
-
+    carrito = [];
+    total = 0;
+    cantidadTotal = 0;
+    res.render("links/indexFix", { mensajito });
 })
 
-router.get('/facturacion/:cedula', (req, res) => {
-    console.log("cedula", req.params.cedula);
-    //facturar
+router.get('/facturacion/:cedula', async(req, res) => {
+    console.log("esta agregaando");
+    var actual = Date.now(); // Fecha actual
+    var hoy = new Date(actual);
+    var mensajito = "Compra realizada con éxito";
+    hoy = moment(hoy).format('YYYY-MM-DD');
+    ////////
+    var numero_factura = 0;
+    var numero = [];
+    var repetido = true;
+    while (repetido) {
+        numero_factura = parseInt(getRandomArbitrary(0, 101)); //numero de factura generado aleatoreamente
+        numero = await pool.query("SELECT numero_factura from factura where numero_factura = ?", numero_factura);
+        if (numero.length === 0) {
+            repetido = false;
 
-    res.send("lo logramos muchachos");
+        }
+    }
+    //Insercion de facturas
+    //console.log(req.query.metodoPago);
+    await pool.query("insert into factura set ? ", {
+        numero_factura: numero_factura,
+        monto: total,
+        fecha_emision: hoy,
+        forma_pago: req.query.metodoPago,
+        Doc_identidad: req.params.cedula,
+        NumeroCaja: req.query.Caja
+    });
 
+    var idMetodoRepetido = true;
+    var id_tipo = 0;
+    var id_tipoConsulta = [];
+    while (idMetodoRepetido) {
+        id_tipo = parseInt(getRandomArbitrary(0, 101));
+        id_tipoConsulta = await pool.query("select Id_metodo from metodo_de_pago where Id_metodo = ?", id_tipo);
+        if (id_tipoConsulta.length === 0) {
+            idMetodoRepetido = false;
+        }
+    }
+    await pool.query("insert into metodo_de_pago set ?", {
+        Id_metodo: id_tipo,
+        tipo: req.query.metodoPago
+    });
+
+    var fechita = new Date();
+    var cliente = [];
+    var consulta = [];
+    var cantidad = [];
+    for (let i = 0; i < carrito.length; i++) {
+        cliente = await pool.query("select Cod_ciudad from cliente where DocIdentidad = ? ", req.params.cedula);
+        // console.log(cliente[0].Cod_ciudad);
+        consulta = await pool.query("select codigo from lugar_geo where codigo = (select codigop from lugar_geo where codigo = ?)", Number(cliente[0].Cod_ciudad));
+        fechita = await pool.query("select Fecha_añadido from catalogo_producto where id_producto = ? AND Codigo_Pais = ? ", [Number(carrito[i].id_producto), Number(consulta[0].codigo)]);
+        cantidad = await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto));
+        await pool.query("UPDATE producto set Cantidad = ? WHERE id_producto = ? ", [(cantidad[0].Cantidad - Number(carrito[i].Cantidad)), Number(carrito[i].id_producto)]);
+        if ((cantidad[0].Cantidad - Number(carrito[i].Cantidad) === 0)) {
+            await pool.query("UPDATE catalogo_producto set Fecha_Agotado = ? where id_producto= ? ", [hoy, Number(carrito[i].id_producto)]);
+        }
+        await pool.query(" INSERT INTO detalle_factura set ? ", {
+            cantidad: Number(carrito[i].Cantidad),
+            numero_factura: numero_factura,
+            fecha_anadido: fechita[0].Fecha_añadido
+        })
+
+    }
+    carrito = [];
+    total = 0;
+    cantidadTotal = 0;
+    res.render("links/indexFix", { mensajito });
 })
+
 
 /* REDIRECT DE España*/
 router.get('/adornosDeNavidad-Es', (req, res) => {
