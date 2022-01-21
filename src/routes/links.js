@@ -494,7 +494,7 @@ router.get('/factura', async(req, res, next) => {
         const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
         const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
-        const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+        const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         if (cueri.length === 0) {
             console.log("el carrito", carrito);
             res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal });
@@ -525,7 +525,7 @@ router.get('/afiliado', async(req, res) => {
             afiliado = true;
             const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientela[0].Cod_ciudad);
             const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
-            const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+            const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
             console.log("logrado", clientela[0])
             console.log("Ciudad", ciudad);
             console.log("telefoono", telffinal);
@@ -551,10 +551,8 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
     })
     console.log("agrego");
     await pool.query("INSERT into telefono set ? ", {
-        Codigo: req.query.Codigo,
         NumeroArea: req.query.codigoArea,
         Numero: req.query.telefono,
-        id_tienda: null,
         DocIdentidad: req.query.cedula
     });
     //res.render("links/factura", { carrito, total, cantidadTotal });
