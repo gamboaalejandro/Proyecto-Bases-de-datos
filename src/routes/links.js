@@ -570,7 +570,7 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
     for (let i = 0; i < carrito.length; i++) {
 
         await pool.query(" INSERT INTO detalle_factura set ? ", {
-            cantidad: numero_factura: fecha_añadido:
+            // cantidad: numero_factura: fecha_añadido:
         })
     }
     console.log(await pool.query("select * from factura where numero_factura = ?", numero_factura));
