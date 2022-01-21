@@ -509,7 +509,7 @@ router.get('/carrito', async(req, res, next) => {
         carrito[i].Precio = (Number(carrito[i].Precio)) * (Number(carrito[i].Cantidad));
         total = total + carrito[i].Precio;
     }
-    res.render('links/carrito', { carrito, total, cantidadTotal });
+    res.render('links/carrito', { carrito, total, cantidadTotal, ofertaespecifica: ofertaespecifica[0].Descuento });
 })
 
 router.get('/EliminaCarrito/:id_producto', (req, res) => {
@@ -523,7 +523,7 @@ router.get('/EliminaCarrito/:id_producto', (req, res) => {
             carrito.splice(i, 1);
         }
     }
-    res.render("links/carrito", { carrito, total, cantidadTotal });
+    res.render("links/carrito", { carrito, total, cantidadTotal, ofertaespecifica: ofertaespecifica[0].Descuento });
 })
 
 // Metodos de  factura 
@@ -536,7 +536,7 @@ router.get('/factura', async(req, res, next) => {
     const cedula = Number(req.query.cedula);
     const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     if (clientico.length === 0) {
-        res.render("links/factura", { carrito, total, cantidadTotal, cedula, ofertaespecifica });
+        res.render("links/factura", { carrito, total, cantidadTotal, cedula, ofertaespecifica: ofertaespecifica[0].Descuento });
     } else {
         const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
@@ -544,10 +544,10 @@ router.get('/factura', async(req, res, next) => {
         const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         if (cueri.length === 0) {
             console.log("el carrito", carrito);
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal, ofertaespecifica });
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal, ofertaespecifica: ofertaespecifica[0].Descuento });
         } else {
             afiliado = true;
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal, ofertaespecifica });
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal, ofertaespecifica: ofertaespecifica[0].Descuento });
         }
     }
 
@@ -576,7 +576,7 @@ router.get('/afiliado', async(req, res) => {
             console.log("logrado", clientela[0])
             console.log("Ciudad", ciudad);
             console.log("telefoono", telffinal);
-            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal, carrito, total, cantidadTotal, ofertaespecifica })
+            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal, carrito, total, cantidadTotal, ofertaespecifica: ofertaespecifica[0].Descuento })
         }
     }
 
@@ -894,9 +894,9 @@ router.get("/Registro", (req, res) => {
 router.get("/PrincipalFactura2", (req, res) => {
     var mensajito = "El carrito esta vacio";
     if (carrito.length !== 0)
-        res.render("links/PrincipalFactura2", { carrito, total, cantidadTotal });
+        res.render("links/PrincipalFactura2", { carrito, total, cantidadTotal, ofertaespecifica: ofertaespecifica[0].Descuento });
     else {
-        res.render("links/carrito", { mensajito, total, cantidadTotal })
+        res.render("links/carrito", { mensajito, total, cantidadTotal, ofertaespecifica: ofertaespecifica[0].Descuento })
     }
 })
 
