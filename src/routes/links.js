@@ -30,6 +30,9 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+router.get('/eliminado/:id_tienda', (req, res) => {
+
+});
 router.get('/Producto', async(req, res, next) => {
     var producto = req.query;
     console.log(Object.keys(producto).length);
@@ -195,12 +198,12 @@ router.post('/modificarc', async(req, res, next) => {
 })
 
 //ELIMINAR CATEGORIA 
-router.get('/borrar/:Id_categoria'), async(req, res, next) => {
+router.get('/borrar/:Id_categoria', async(req, res, next) => {
     var mensajito = "Categoria Eliminada exitosamente";
     const id_Categoria = req.params.Id_categoria;
     await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
-    res.render('/links/Categoria', { mensaje, mensajito });
-}
+    res.render('links/Categoria', { mensaje, mensajito });
+})
 
 //------------------------------------------------------PROCEDIMIENTOS DE TIENDAS
 
@@ -310,13 +313,13 @@ router.post('/modificart/:id_tienda', async(req, res, next) => {
 })
 
 //ELIMINAR TIENDA  
-router.get('/Elimina/:id_tienda'), async(req, res, next) => {
+router.get('/Eliminar/:id_tienda', async(req, res, next) => {
     var mensajito = "Tienda Eliminada exitosamente";
     console.log("Entrando a borrar tienda");
-    //const id_tienda = req.params.id_tienda;
-    //await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda);
+    const id_tienda = req.params.id_tienda;
+    await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda);
     res.render('links/Tienda', { mensaje, mensajito });
-}
+});
 
 //---------------------------------------------REDIRECCCIONAMIENTOS DEL FRONT
 
@@ -491,6 +494,8 @@ router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
 router.get('/carrito', async(req, res, next) => {
     console.log("el carrito bello", carrito);
     const productoOferta = await pool.query("select id_producto from p_c where id_categoria = (select id_categoria from oferta_categoria where Id_oferta = (Select Idoferta from oferta where Id_tienda =  ?))", tienda);
+    const ofertafinal = await pool.query("select Idoferta from oferta where Id_tienda IS NULL");
+    console.log(ofertafinal);
     console.log(productoOferta);
     for (let i = 0; i < carrito.length; i++) {
         for (let j = 0; j < productoOferta.length; j++) {
