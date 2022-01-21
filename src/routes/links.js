@@ -190,12 +190,12 @@ router.post('/modificarc', async(req, res, next) => {
 })
 
 //ELIMINAR CATEGORIA 
-router.get('/borrar/:Id_categoria'), async(req, res, next) => {
+router.get('/borrar/:Id_categoria', async(req, res, next) => {
     var mensajito = "Categoria Eliminada exitosamente";
     const id_Categoria = req.params.Id_categoria;
     await pool.query("DELETE FROM categoria where Id_categoria = ?", id_Categoria)
     res.render('/links/Categoria', { mensaje, mensajito });
-}
+})
 
 //------------------------------------------------------PROCEDIMIENTOS DE TIENDAS
 
@@ -205,7 +205,7 @@ router.get('/Tienda', async(req, res, next) => {
     if (Object.keys(tienda2).length !== 0) {
         var id_tienda = tienda2.Tienda;
         const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where id_tienda = ? ", id_tienda);
-        const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+        const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         const Query = await pool.query("Select * from tienda where id_tienda = ? ", id_tienda);
         Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
         Query[0].telffinal = telffinal;
@@ -305,13 +305,13 @@ router.post('/modificart/:id_tienda', async(req, res, next) => {
 })
 
 //ELIMINAR TIENDA  
-router.get('/Eliminar/:id'), async(req, res, next) => {
+router.get('/Eliminar/:id_tienda', async(req, res, next) => {
     var mensajito = "Tienda Eliminada exitosamente";
     console.log("Entrando a borrar tienda");
     const id_tienda = req.params.id_tienda;
     await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda);
     res.render('links/Tienda', { mensaje, mensajito });
-}
+})
 
 //---------------------------------------------REDIRECCCIONAMIENTOS DEL FRONT
 
@@ -581,7 +581,26 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
     }
     await pool.query("insert into metodo_de_pago set ?", {
         Id_metodo: id_tipo,
-        tipo: req.query.metodoPago
+        tipo: req.query.metodoPago,
+        DocIdentidad: req.params.cedula
+    });
+
+    var idCaja = 0;
+    var idCajaMetodo = [];
+    var cajaValida = true;
+    while (cajaValida) {
+        idCaja = parseInt(getRandomArbitrary(0, 101));
+        idCajaMetodo = await pool.query("select numero_caja from caja where numero_caja = ?", idCaja);
+        if (id_tipoConsulta.length === 0) {
+            cajaValida = false;
+        }
+    }
+    var direccion = await pool.query("select Cod_ciudad from cliente where DocIdentidad = ?", req.params.cedula)
+    console.log(direccion);
+    await pool.query("insert into caja set ?", {
+        numero_caja: idCaja,
+        Tipo: req.query.Caja,
+        Id_tienda: direccion[0].Cod_ciudad
     });
 
     var fechita = new Date();
@@ -653,8 +672,27 @@ router.get('/facturacion/:cedula', async(req, res) => {
     }
     await pool.query("insert into metodo_de_pago set ?", {
         Id_metodo: id_tipo,
-        tipo: req.query.metodoPago
+        tipo: req.query.metodoPago,
+        DocIdentidad: req.params.cedula
     });
+    var idCaja = 0;
+    var idCajaMetodo = [];
+    var cajaValida = true;
+    while (cajaValida) {
+        idCaja = parseInt(getRandomArbitrary(0, 101));
+        idCajaMetodo = await pool.query("select numero_caja from caja where numero_caja = ?", idCaja);
+        if (id_tipoConsulta.length === 0) {
+            cajaValida = false;
+        }
+    }
+    var direccion = await pool.query("select Cod_ciudad from cliente where DocIdentidad = ?", req.params.cedula)
+    console.log(direccion);
+    await pool.query("insert into caja set ?", {
+        numero_caja: idCaja,
+        Tipo: req.query.Caja,
+        Id_tienda: direccion[0].Cod_ciudad
+    });
+
 
     var fechita = new Date();
     var cliente = [];
