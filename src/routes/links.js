@@ -3,6 +3,7 @@ const { route } = require(".");
 const router = express.Router();
 const pool = require('../database');
 const moment = require('moment');
+const Query = require("mysql/lib/protocol/sequences/Query");
 var mensaje = true;
 var carrito = [];
 var total = 0;
@@ -554,6 +555,7 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         Cod_ciudad: req.query.direccion,
     })
     console.log("agrego");
+    console.log(req.query.telefono)
     await pool.query("INSERT into telefono set ? ", {
         NumeroArea: req.query.codigoArea,
         Numero: req.query.telefono,
