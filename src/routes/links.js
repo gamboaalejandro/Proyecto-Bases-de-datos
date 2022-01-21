@@ -10,11 +10,11 @@ var cantidadTotal = 0;
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 function Facturacion(Monto, forma_pago, Doc_identidad, NumeroCaja) {
-    const numero_factura = parseInt(getRandomArbitrary(0, 101));
-    var hoy = new Date();
-    var actual = hoy.getDate();
-    console.log(actual);
-    //campos que se generan aqui numero_factura (aleatorio), fecha emision,
+    const numero_factura = parseInt(getRandomArbitrary(0, 101)); //numero de factura generado aleatoreamente
+    var actual = Date.now(); // Fecha actual
+    var hoy = new Date(actual);
+    pool.query(" insert into factura")
+        //campos que se generan aqui numero_factura (aleatorio), fecha emision,
 }
 //BUSQUEDA DE UN PRODUCTO 
 
@@ -328,7 +328,6 @@ router.get('/comprando/:id_producto', async(req, res) => {
     if (carrito.length === 0) {
         if (Number(req.query.Cantidad) <= cantidadsita) {
             carrito.push(Query[0]);
-            total = total + Number(Query[0].Precio);
             cantidadTotal = cantidadTotal + Number(Query[0].Cantidad);
             console.log("anadio el primer producto");
             res.render('links/productoPlantilla', { Query, str, str2, mensajito });
@@ -353,7 +352,6 @@ router.get('/comprando/:id_producto', async(req, res) => {
         console.log("carrito ", carrito);
         if ((cont === carrito.length)) {
             cantidadTotal = cantidadTotal + Number(Query[0].Cantidad);
-            total = total + Number(Query[0].Precio);
             carrito.push(Query[0]);
         }
         res.render('links/productoPlantilla', { Query, str, str2, mensajito });
@@ -449,6 +447,12 @@ router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
 
 router.get('/carrito', async(req, res, next) => {
     console.log("el carrito bello", carrito);
+    for (let i = 0; i < carrito.length; i++) {
+        carrito[i].Precio = (Number(carrito[i].Precio)) * (Number(carrito[i].Cantidad));
+        total = total + carrito[i].Precio;
+    }
+
+    console.log("el carrito bello2", carrito);
     res.render('links/carrito', { carrito, total, cantidadTotal });
 })
 
