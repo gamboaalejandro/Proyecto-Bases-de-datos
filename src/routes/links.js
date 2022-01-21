@@ -579,7 +579,7 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         fechita = await pool.query("select Fecha_añadido from catalogo_producto where id_producto = ? AND Codigo_Pais = ? ", [Number(carrito[i].id_producto), Number(consulta[0].codigo)]);
         cantidad = await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto));
 
-        await pool.query("UPDATE producto set Cantidad WHERE id_producto = ? ", [(cantidad[0].Cantidad - Number(carrito[i].Cantidad)), Number(carrito[i].id_producto)]);
+        await pool.query("UPDATE producto set Cantidad = ? WHERE id_producto = ? ", [(cantidad[0].Cantidad - Number(carrito[i].Cantidad)), Number(carrito[i].id_producto)]);
         console.log(await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto)));
         await pool.query(" INSERT INTO detalle_factura set ? ", {
             cantidad: Number(carrito[i].Cantidad),
