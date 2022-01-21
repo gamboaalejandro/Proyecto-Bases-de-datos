@@ -7,6 +7,11 @@ var mensaje = true;
 var carrito = [];
 var total = 0;
 var cantidadTotal = 0;
+var ofertageneral = [
+    []
+];
+var ofertaespecifica = 0;
+tienda = 0;
 
 //------------------------------------------------------PROCEDIMIENTOS DE PRODUCTOS   
 /*
@@ -295,7 +300,7 @@ router.post('/modificart/:id_tienda', async(req, res, next) => {
 })
 
 //ELIMINAR TIENDA  
-router.get('/Eliminar'), async(req, res, next) => {
+router.get('/Elimina/:id_tienda'), async(req, res, next) => {
     var mensajito = "Tienda Eliminada exitosamente";
     console.log("Entrando a borrar tienda");
     //const id_tienda = req.params.id_tienda;
@@ -406,49 +411,86 @@ router.get('/Tienda', async(req, res, next) => {
 /*
 ESPAÑA-- -- -- -- -- -- -- -- -- -- -- -- -- --*/
 router.get('/tiendas/indexFixAsturias', async(req, res, next) => {
-    Pais =
-        res.render('links/tiendas/indexFixAsturias');
+    tienda = 1;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
+    res.render('links/tiendas/indexFixAsturias');
 })
 
 router.get('/tiendas/indexFixMadrid', async(req, res, next) => {
+    tienda = 2;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixMadrid');
 })
 
 router.get('/tiendas/indexFixMurcia', async(req, res, next) => {
+    tienda = 3;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixMurcia');
 })
 
 router.get('/tiendas/indexFixAndalucia', async(req, res, next) => {
+    tienda = 4;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixAndalucia');
 })
 
 router.get('/tiendas/indexFixCataluna', async(req, res, next) => {
+    tienda = 5;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixCataluna');
 })
 
 /*
 ESTADOS UNIDOS-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --*/
 router.get('/tiendas/indexFixVirginia', async(req, res, next) => {
+    tienda = 6;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixVirginia');
 })
 
 router.get('/tiendas/indexFixCalifornia', async(req, res, next) => {
+    tienda = 7;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixCalifornia');
 })
 
 router.get('/tiendas/indexFixFlorida', async(req, res, next) => {
+    tienda = 8;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixFlorida');
 })
 
-/
+
 /*MEXICO-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - */
 router.get('/tiendas/indexFixCiudadMexico', async(req, res, next) => {
+
+    tienda = 9;
+    ofertaespecifica = await pool.query("select Descuento from oferta where Id_tienda = ? ", tienda);
+    ofertageneral = await pool.query("select Descuento from oferta where Id_tienda IS NULL ");
     res.render('links/tiendas/indexFixCiudadMexico');
 })
 
 router.get('/carrito', async(req, res, next) => {
     console.log("el carrito bello", carrito);
+    const productoOferta = await pool.query("select id_producto from p_c where id_categoria = (select id_categoria from oferta_categoria where Id_oferta = (Select Idoferta from oferta where Id_tienda =  ?))", tienda);
+    console.log(productoOferta);
     for (let i = 0; i < carrito.length; i++) {
+        for (let j = 0; j < productoOferta.length; j++) {
+            if (carrito[i].id_producto === productoOferta[j].id_producto) {
+                console.log(ofertaespecifica);
+                console.log(carrito[i].Precio);
+                carrito[i].Precio = ((Number(carrito[i].Precio)) * (ofertaespecifica[0].Descuento / 100)) * (Number(carrito[i].Cantidad));
+                console.log(carrito[i].Precio);
+            }
+        }
         carrito[i].Precio = (Number(carrito[i].Precio)) * (Number(carrito[i].Cantidad));
         total = total + carrito[i].Precio;
     }
@@ -472,6 +514,8 @@ router.get('/EliminaCarrito/:id_producto', (req, res) => {
 })
 
 // Metodos de  factura 
+
+
 
 router.get('/factura', async(req, res, next) => {
     var mensajito = "El cliente se encuentra afiliado"
@@ -560,20 +604,20 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         Doc_identidad: req.params.cedula,
         NumeroCaja: req.query.Caja
     });
-    var fechita=new Date();
-    var consulta=[];
-    var cantidad=[];
+    var fechita = new Date();
+    var consulta = [];
+    var cantidad = [];
     for (let i = 0; i < carrito.length; i++) {
-        consulta=await pool.query("select codigo from lugar_geo where codigo = (select codigop from lugar_geo where codigo = ?)",Number(req.query.direccion));
-        fechita=await pool.query("select Fecha_añadido from catalogo_producto where id_producto = ? AND Codigo_Pais = ? ",[Number(carrito[i].id_producto),Number(consulta[0].codigo)]);
-        cantidad = await pool.query("select Cantidad from producto where id_producto = ? ",Number(carrito[i].id_producto));
+        consulta = await pool.query("select codigo from lugar_geo where codigo = (select codigop from lugar_geo where codigo = ?)", Number(req.query.direccion));
+        fechita = await pool.query("select Fecha_añadido from catalogo_producto where id_producto = ? AND Codigo_Pais = ? ", [Number(carrito[i].id_producto), Number(consulta[0].codigo)]);
+        cantidad = await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto));
 
-        await pool.query("UPDATE producto set Cantidad WHERE id_producto = ? ", [(cantidad[0].Cantidad-Number(carrito[i].Cantidad)),Number(carrito[i].id_producto)]);
+        await pool.query("UPDATE producto set Cantidad WHERE id_producto = ? ", [(cantidad[0].Cantidad - Number(carrito[i].Cantidad)), Number(carrito[i].id_producto)]);
         console.log(await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto)));
         await pool.query(" INSERT INTO detalle_factura set ? ", {
             cantidad: Number(carrito[i].Cantidad),
-            numero_factura:numero_factura,
-            fecha_anadido:fechita[0].Fecha_añadido
+            numero_factura: numero_factura,
+            fecha_anadido: fechita[0].Fecha_añadido
         })
     }
     //console.log(await pool.query("select * from factura where numero_factura = ?", numero_factura));
