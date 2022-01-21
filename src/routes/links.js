@@ -37,8 +37,6 @@ router.get('/Producto', async(req, res, next) => {
     }
 });
 
-
-
 //MODIFICACION DE PRODUCTOS
 router.get('/modificar/:id_producto', async(req, res, next) => {
     var producto = req.params.id_producto;
@@ -208,9 +206,11 @@ router.get('/Tienda', async(req, res, next) => {
     var tienda2 = req.query;
     if (Object.keys(tienda2).length !== 0) {
         var id_tienda = tienda2.Tienda;
+        const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where id_tienda = ? ", id_tienda);
+        const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         const Query = await pool.query("Select * from tienda where id_tienda = ? ", id_tienda);
-        console.log(Query)
         Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
+        Query[0].telffinal = telffinal;
         res.render('links/Tienda', { Query })
     } else {
         res.render('links/Tienda')
@@ -224,11 +224,9 @@ router.get('/TiendaGuardar', async(req, res, next) => {
 });
 
 router.post('/TiendaGuardar', async(req, res, next) => {
-
     var mensajito = "Tienda añadida exitosamente";
     const varr = req.body;
-    console.log(varr);
-    if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
+    if ((varr.telefonoTienda !== "") && (varr.telefonoCodigoArea !== "") && (varr.telefonoCodigo !== "") && (varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamano !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
         await pool.query("INSERT into tienda set ? ", {
             id_tienda: varr.id_tienda,
             nombre_sucursal: varr.nombre_sucursal,
@@ -242,10 +240,19 @@ router.post('/TiendaGuardar', async(req, res, next) => {
             area_de_ninos: varr.area,
             codigo_lugar_geo: varr.codigo_lugar_geo
         });
-        res.render('links/Tienda', mensaje, mensajito);
+
+        await pool.query("INSERT into telefono set ? ", {
+            identificador: varr.id_tienda,
+            Codigo: varr.telefonoCodigo,
+            NumeroArea: varr.telefonoCodigoArea,
+            Numero: varr.telefonoTienda,
+            id_tienda: varr.id_tienda
+        })
+
+        res.render('links/Tienda', { mensaje, mensajito });
     } else {
         mensajito = "No es posible añadir la tienda";
-        res.render('links/Tienda', mensaje, mensajito);
+        res.render('links/Tienda', { mensaje, mensajito });
     }
 
 });
@@ -253,14 +260,15 @@ router.post('/TiendaGuardar', async(req, res, next) => {
 //MODIFICAR TIENDA
 
 router.get('/modificart/:id_tienda', async(req, res, next) => {
-    console.log("ENTRO AL MODIFICAR GET");
     var tienda = req.params.id_tienda;
+    const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where id_tienda = ? ", tienda);
+    //const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
     const Query = await pool.query("Select * from tienda where id_tienda = ? ", tienda);
     Query[0].fecha_apertura = moment(Query[0].fecha_apertura).format('YYYY-MM-DD');
-    console.log(Query);
-    console.log("SE VA A SALIR");
+    Query[0].codigo = telefono[0].Codigo;
+    Query[0].numeroarea = telefono[0].NumeroArea;
+    Query[0].numero = telefono[0].Numero;
     res.render('links/Tiendamodificar', { Query: Query[0] })
-        //res.render('links/Tienda',{Query});
 })
 
 router.post('/modificart/:id_tienda', async(req, res, next) => {
@@ -281,10 +289,17 @@ router.post('/modificart/:id_tienda', async(req, res, next) => {
         codigo_lugar_geo: varr.codigo_lugar_geo
     }
 
-    console.log(tienda);
-    if ((varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
+    const telefono = {
+        identificador: varr.id_tienda,
+        Codigo: varr.telefonoCodigo,
+        NumeroArea: varr.telefonoCodigoArea,
+        Numero: varr.telefonoTienda
+    }
+
+    if ((varr.telefonoTienda !== "") && (varr.capacidad_almacenamiento < varr.tamano) && (varr.id_tienda !== "") && (varr.nombre_sucursal !== "") && (varr.direccion !== "") && (varr.estilo_arquitectonico !== "") && (varr.tamaño !== "") && (varr.numero_pasillos !== "") && (varr.capacidad_almacenamiento !== "") && (varr.cantidad_productos !== "") && (varr.codigo_lugar_geo !== "")) {
         console.log("MODIFICAR TIENDA");
         await pool.query("UPDATE tienda set ? WHERE id_tienda = ? ", [tienda, varr.id_tienda]);
+        await pool.query("UPDATE telefono set ? where id_tienda = ? ", [telefono, varr.id_tienda]);
         //mensaje de que ta bueno *Flash esta disponible desde los request (req)
         res.render('links/Tienda', { mensaje, mensajito });
     } else {
@@ -483,7 +498,7 @@ router.get('/factura', async(req, res, next) => {
         const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
         const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
-        const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+        const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         if (cueri.length === 0) {
             console.log("el carrito", carrito);
             res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal });
@@ -514,7 +529,7 @@ router.get('/afiliado', async(req, res) => {
             afiliado = true;
             const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientela[0].Cod_ciudad);
             const telefono = await pool.query("Select Codigo, NumeroArea, Numero from telefono where DocIdentidad = ? ", cedula);
-            const telffinal = "+" + String(telefono[0].Codigo) + "" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
+            const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
             console.log("logrado", clientela[0])
             console.log("Ciudad", ciudad);
             console.log("telefoono", telffinal);
@@ -540,10 +555,8 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
     })
     console.log("agrego");
     await pool.query("INSERT into telefono set ? ", {
-        Codigo: req.query.Codigo,
         NumeroArea: req.query.codigoArea,
         Numero: req.query.telefono,
-        id_tienda: null,
         DocIdentidad: req.query.cedula
     });
     //res.render("links/factura", { carrito, total, cantidadTotal });

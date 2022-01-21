@@ -20,8 +20,15 @@
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="Segundo Apellido" disabled value = {{cliente.Segundo_Apellido}}>
                         </div>
-                        <div class="col-12">
+                        <div class="col-8">
                             <input type="text" class="form-control" placeholder="Dirección" disabled value = {{ciudad.nombre}}>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="validationCustom04" required name = "metodoPago">
+                                <option selected disabled value="">Método de Pago</option>
+                                <option value = >Tarjeta de Debito</option>
+                                <option value = >Tarjeta de Crédito</option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="Telefono"  disabled value= {{telffinal}}>
