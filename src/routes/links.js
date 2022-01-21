@@ -299,11 +299,11 @@ router.post('/modificart/:id_tienda', async(req, res, next) => {
 })
 
 //ELIMINAR TIENDA  
-router.get('/Eliminar/:id'), async(req, res, next) => {
+router.get('/Eliminar'), async(req, res, next) => {
     var mensajito = "Tienda Eliminada exitosamente";
     console.log("Entrando a borrar tienda");
-    const id_tienda = req.params.id_tienda;
-    await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda);
+    //const id_tienda = req.params.id_tienda;
+    //await pool.query("DELETE FROM tienda where id_tienda = ?", id_tienda);
     res.render('links/Tienda', { mensaje, mensajito });
 }
 
