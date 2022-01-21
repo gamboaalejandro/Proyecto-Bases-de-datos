@@ -560,16 +560,23 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         Doc_identidad: req.params.cedula,
         NumeroCaja: req.query.Caja
     });
-
-
-
+    var fechita=new Date();
+    var consulta=[];
+    var cantidad=[];
     for (let i = 0; i < carrito.length; i++) {
+        consulta=await pool.query("select codigo from lugar_geo where codigo = (select codigop from lugar_geo where codigo = ?)",Number(req.query.direccion));
+        fechita=await pool.query("select Fecha_añadido from catalogo_producto where id_producto = ? AND Codigo_Pais = ? ",[Number(carrito[i].id_producto),Number(consulta[0].codigo)]);
+        cantidad = await pool.query("select Cantidad from producto where id_producto = ? ",Number(carrito[i].id_producto));
 
+        await pool.query("UPDATE producto set Cantidad WHERE id_producto = ? ", [(cantidad[0].Cantidad-Number(carrito[i].Cantidad)),Number(carrito[i].id_producto)]);
+        console.log(await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto)));
         await pool.query(" INSERT INTO detalle_factura set ? ", {
-            // cantidad: numero_factura: fecha_añadido:
+            cantidad: Number(carrito[i].Cantidad),
+            numero_factura:numero_factura,
+            fecha_anadido:fechita[0].Fecha_añadido
         })
     }
-    console.log(await pool.query("select * from factura where numero_factura = ?", numero_factura));
+    //console.log(await pool.query("select * from factura where numero_factura = ?", numero_factura));
     console.log("agrego");
     await pool.query("INSERT into telefono set ? ", {
         NumeroArea: req.query.codigoArea,
