@@ -240,8 +240,6 @@ router.post('/TiendaGuardar', async(req, res, next) => {
         });
 
         await pool.query("INSERT into telefono set ? ", {
-            identificador: varr.id_tienda,
-            Codigo: varr.telefonoCodigo,
             NumeroArea: varr.telefonoCodigoArea,
             Numero: varr.telefonoTienda,
             id_tienda: varr.id_tienda
@@ -570,6 +568,22 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         Doc_identidad: req.params.cedula,
         NumeroCaja: req.query.Caja
     });
+
+    var idMetodoRepetido = true;
+    var id_tipo = 0;
+    var id_tipoConsulta = [];
+    while (idMetodoRepetido) {
+        id_tipo = parseInt(getRandomArbitrary(0, 101));
+        id_tipoConsulta = await pool.query("select Id_metodo from metodo_de_pago where Id_metodo = ?", id_tipo);
+        if (id_tipoConsulta.length === 0) {
+            idMetodoRepetido = false;
+        }
+    }
+    await pool.query("insert into metodo_de_pago set ?", {
+        Id_metodo: id_tipo,
+        tipo: req.query.metodoPago
+    });
+
     var fechita = new Date();
     var consulta = [];
     var cantidad = [];
@@ -626,6 +640,22 @@ router.get('/facturacion/:cedula', async(req, res) => {
         Doc_identidad: req.params.cedula,
         NumeroCaja: req.query.Caja
     });
+
+    var idMetodoRepetido = true;
+    var id_tipo = 0;
+    var id_tipoConsulta = [];
+    while (idMetodoRepetido) {
+        id_tipo = parseInt(getRandomArbitrary(0, 101));
+        id_tipoConsulta = await pool.query("select Id_metodo from metodo_de_pago where Id_metodo = ?", id_tipo);
+        if (id_tipoConsulta.length === 0) {
+            idMetodoRepetido = false;
+        }
+    }
+    await pool.query("insert into metodo_de_pago set ?", {
+        Id_metodo: id_tipo,
+        tipo: req.query.metodoPago
+    });
+
     var fechita = new Date();
     var cliente = [];
     var consulta = [];
@@ -645,12 +675,14 @@ router.get('/facturacion/:cedula', async(req, res) => {
             numero_factura: numero_factura,
             fecha_anadido: fechita[0].Fecha_añadido
         })
+
     }
     carrito = [];
     total = 0;
     cantidadTotal = 0;
     res.render("links/indexFix", { mensajito });
 })
+
 
 /* REDIRECT DE España*/
 router.get('/adornosDeNavidad-Es', (req, res) => {
