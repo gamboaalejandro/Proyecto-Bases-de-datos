@@ -4,6 +4,7 @@ const router = express.Router();
 const pool = require('../database');
 const moment = require('moment');
 const Query = require("mysql/lib/protocol/sequences/Query");
+const { query } = require("express");
 var mensaje = true;
 var carrito = [];
 var total = 0;
@@ -537,6 +538,7 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
     console.log("esta agregaando");
     var actual = Date.now(); // Fecha actual
     var hoy = new Date(actual);
+    var mensajito = "Compra realizada con éxito";
     hoy = moment(hoy).format('YYYY-MM-DD');
     // insercion de clientes
     await pool.query(" INSERT INTO cliente set ? ", {
@@ -590,16 +592,64 @@ router.get('/Confirmacion/:cedula', async(req, res) => {
         Numero: req.query.telefono,
         DocIdentidad: req.query.cedula
     });
-    //res.render("links/factura", { carrito, total, cantidadTotal });
-    res.redirect("/links/facturacion/" + req.params.cedula + "");
+    carrito = [];
+    total = 0;
+    cantidadTotal = 0;
+    res.render("links/indexFix", { mensajito });
 })
 
-router.get('/facturacion/:cedula', (req, res) => {
-    console.log("cedula", req.params.cedula);
-    //facturar
+router.get('/facturacion/:cedula', async(req, res) => {
+    console.log("esta agregaando");
+    var actual = Date.now(); // Fecha actual
+    var hoy = new Date(actual);
+    var mensajito = "Compra realizada con éxito";
+    hoy = moment(hoy).format('YYYY-MM-DD');
+    ////////
+    var numero_factura = 0;
+    var numero = [];
+    var repetido = true;
+    while (repetido) {
+        numero_factura = parseInt(getRandomArbitrary(0, 101)); //numero de factura generado aleatoreamente
+        numero = await pool.query("SELECT numero_factura from factura where numero_factura = ?", numero_factura);
+        if (numero.length === 0) {
+            repetido = false;
 
-    res.send("lo logramos muchachos");
-
+        }
+    }
+    //Insercion de facturas
+    //console.log(req.query.metodoPago);
+    await pool.query("insert into factura set ? ", {
+        numero_factura: numero_factura,
+        monto: total,
+        fecha_emision: hoy,
+        forma_pago: req.query.metodoPago,
+        Doc_identidad: req.params.cedula,
+        NumeroCaja: req.query.Caja
+    });
+    var fechita = new Date();
+    var cliente = [];
+    var consulta = [];
+    var cantidad = [];
+    for (let i = 0; i < carrito.length; i++) {
+        cliente = await pool.query("select Cod_ciudad from cliente where DocIdentidad = ? ", req.params.cedula);
+        // console.log(cliente[0].Cod_ciudad);
+        consulta = await pool.query("select codigo from lugar_geo where codigo = (select codigop from lugar_geo where codigo = ?)", Number(cliente[0].Cod_ciudad));
+        fechita = await pool.query("select Fecha_añadido from catalogo_producto where id_producto = ? AND Codigo_Pais = ? ", [Number(carrito[i].id_producto), Number(consulta[0].codigo)]);
+        cantidad = await pool.query("select Cantidad from producto where id_producto = ? ", Number(carrito[i].id_producto));
+        await pool.query("UPDATE producto set Cantidad = ? WHERE id_producto = ? ", [(cantidad[0].Cantidad - Number(carrito[i].Cantidad)), Number(carrito[i].id_producto)]);
+        if ((cantidad[0].Cantidad - Number(carrito[i].Cantidad) === 0)) {
+            await pool.query("UPDATE catalogo_producto set Fecha_Agotado = ? where id_producto= ? ", [hoy, Number(carrito[i].id_producto)]);
+        }
+        await pool.query(" INSERT INTO detalle_factura set ? ", {
+            cantidad: Number(carrito[i].Cantidad),
+            numero_factura: numero_factura,
+            fecha_anadido: fechita[0].Fecha_añadido
+        })
+    }
+    carrito = [];
+    total = 0;
+    cantidadTotal = 0;
+    res.render("links/indexFix", { mensajito });
 })
 
 /* REDIRECT DE España*/
