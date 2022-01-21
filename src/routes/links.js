@@ -536,7 +536,7 @@ router.get('/factura', async(req, res, next) => {
     const cedula = Number(req.query.cedula);
     const clientico = await pool.query("Select * from cliente where DocIdentidad = ? ", cedula);
     if (clientico.length === 0) {
-        res.render("links/factura", { carrito, total, cantidadTotal, cedula });
+        res.render("links/factura", { carrito, total, cantidadTotal, cedula, ofertaespecifica });
     } else {
         const cueri = await pool.query("select DocIdentidad from afiliacion where DocIdentidad = ?", cedula);
         const ciudad = await pool.query("Select nombre from lugar_geo where codigo = ? ", clientico[0].Cod_ciudad);
@@ -544,10 +544,10 @@ router.get('/factura', async(req, res, next) => {
         const telffinal = "+" + String(telefono[0].NumeroArea) + "" + String(telefono[0].Numero);
         if (cueri.length === 0) {
             console.log("el carrito", carrito);
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal });
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal, ofertaespecifica });
         } else {
             afiliado = true;
-            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal });
+            res.render('links/factura', { cliente: clientico[0], ciudad: ciudad[0], telffinal, afiliado, carrito, total, cantidadTotal, ofertaespecifica });
         }
     }
 
@@ -576,7 +576,7 @@ router.get('/afiliado', async(req, res) => {
             console.log("logrado", clientela[0])
             console.log("Ciudad", ciudad);
             console.log("telefoono", telffinal);
-            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal, carrito, total, cantidadTotal })
+            res.render("links/factura", { cliente: clientela[0], afiliado, ciudad: ciudad[0], telffinal, carrito, total, cantidadTotal, ofertaespecifica })
         }
     }
 
