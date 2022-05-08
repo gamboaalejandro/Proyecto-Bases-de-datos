@@ -1,0 +1,581 @@
+#barra {
+    background-color: #0057a4;
+}
+
+#buscarBoton {
+    background-color: green;
+    color: rgb(201, 201, 201);
+}
+
+#buscarBoton:hover {
+    color: white;
+}
+
+#textNavBar a {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    margin-left: 10px;
+}
+
+#textNavBar a:hover {
+    color: rgb(194, 194, 194);
+}
+
+#separador {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+
+#separador .content {
+    width: 150%;
+    height: 50px;
+    margin-left: -25px;
+    background-color: #0057a4;
+}
+
+#ribbon {
+    background-image: url("/img/tabla2.png");
+}
+
+.card {
+    margin: auto;
+}
+
+#dropdown-menu {
+    font-size: 10px;
+    background-color: #0057a4;
+    padding-right: 20px;
+    border: 2px solid #003e74;
+    text-align: center;
+}
+
+#dropdown-menu a:hover {
+    color: black;
+}
+
+#dropdown-divider {
+    color: white;
+    width: 200px;
+    height: 2px;
+}
+
+#dropdown-productos:hover,
+#dropdown-usuarios:hover,
+#dropdown-tercero:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+#fondoContainer {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    background-image: url("/img/tabla2.png");
+    background-size: 100%;
+}
+
+#col1 {
+    background-color: #0057a4;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+#col2 {
+    background-color: #E8E8E8;
+    padding-right: 200px;
+}
+
+#col3 {
+    background-color: #E8E8E8;
+    width: 88px;
+}
+
+#col4 {
+    background-color: #E8E8E8;
+    width: 85px;
+}
+
+#col5 {
+    background-color: #E8E8E8;
+    width: 108px;
+}
+
+#col6 {
+    background-color: #E8E8E8;
+    width: 110px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#basic-addon1 {
+    width: 128px;
+    font-weight: bold;
+}
+
+#intruccionesProducto,
+#caracteristicasProducto,
+#materialesProducto {
+    padding-bottom: 113px;
+}
+
+#btnModificar a {
+    text-decoration: none;
+    color: black;
+}
+
+#btnAñadir a,
+#btnBorrar a,
+#btnGuardar a {
+    text-decoration: none;
+    color: white;
+}
+
+#buscarBoton1 {
+    background-color: rgb(1, 156, 1);
+    border-color: rgb(0, 88, 0);
+}
+
+#buscarBoton1:focus {
+    box-shadow: 0 0 0 0.25rem rgba(58, 184, 0, 0.5);
+}
+
+#buscarBoton1:hover {
+    background-color: rgb(0, 139, 0);
+}
+
+#divBuscarBoton {
+    margin-top: 20px;
+    margin-left: 225px;
+}
+
+#textCaracteristicas,
+#textInstrucciones {
+    resize: none;
+    height: 113px;
+}
+
+#textIdProducto,
+#textPrecio,
+#textIdCategoria {
+    resize: none;
+    height: 0;
+}
+
+#textNombre {
+    resize: none;
+    height: 100px;
+}
+
+#tablaFondo {
+    background: #0057a4;
+    border-style: none;
+    border-width: 4px;
+    border-color: white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+#fondoSubcategoria {
+    background: url(/img/tabla2.png);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#rowSubcategoria1 {
+    color: white;
+    margin-left: 10px;
+    padding-bottom: 20px;
+    text-decoration-line: underline;
+}
+
+#precioProductos {
+    text-size-adjust: 100px;
+    margin-top: -10px;
+    font-size: 40px;
+    font-style: italic;
+}
+
+#textDecoration {
+    color: black;
+    text-decoration-line: none;
+}
+
+#cardProducto:hover {
+    box-shadow: 0px 0px 10px white;
+    animation: crecer .7s alternate infinite ease-in-out;
+}
+
+#fondoProducto {
+    background-image: url("/img/tabla2.png");
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#fichaTecnica {
+    background: #0057a4;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin-left: 5px;
+}
+
+#tablaFondoProdunto {
+    background: rgb(221, 221, 221);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: solid;
+    border-color: rgb(221, 221, 221);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#rowComprarProducto {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#comprarProducto {
+    background-color: green;
+    border-color: rgb(0, 88, 0);
+}
+
+#comprarProducto:hover {
+    background-color: rgb(0, 139, 0);
+}
+
+#comprarProducto:focus {
+    box-shadow: 0 0 0 0.25rem rgba(58, 184, 0, 0.5);
+}
+
+#nombrePlantilla {
+    margin-top: 93px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    resize: none;
+    background: none;
+    border: none;
+    overflow: auto;
+    -webkit-text-fill-color: white;
+}
+
+#diseñadorPlantilla {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    resize: none;
+    background: none;
+    border: none;
+    overflow: auto;
+    -webkit-text-fill-color: white;
+}
+
+#precioPlantilla {
+    margin-top: 90px;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    font-style: italic;
+    resize: none;
+    background: none;
+    border: none;
+    overflow: auto;
+    -webkit-text-fill-color: white;
+}
+
+#cantidadPlantillaProducto {
+    width: 100px;
+    background: #0057a4;
+    border-width: 5px;
+    border-color: white;
+    font-weight: bold;
+    color: white;
+}
+
+#cantidadGrupo {
+    padding-left: 30%;
+    padding-right: 20px;
+}
+
+#caracteristicasPlantilla {
+    margin-top: 5px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#accordionExample {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#accordionItemCaracteristicas {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#textAcordionCaracteristicas {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#textAcordionInstrucciones {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#textAcordionMateriales {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#accordionItemMateriales {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#tamañoImagen {
+    height: 521px;
+    width: 855px;
+    border-radius: 10px;
+}
+
+#descripcionCategoria {
+    padding-bottom: 120px;
+}
+
+#divIdPadreCategoria {
+    padding-bottom: 160px;
+}
+
+#basic-addon2 {
+    width: 190px;
+    font-weight: bold;
+}
+
+#tamañoBanderas {
+    margin-top: 8px;
+    margin-left: 10px;
+    width: 50px;
+    height: 30px;
+    border: solid;
+}
+
+#rowEventos h2 {
+    color: white;
+    margin-left: 10px;
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+
+#rowEventos h1 {
+    color: white;
+    margin-left: 10px;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+#divFormFloating {
+    margin-left: 50px;
+    width: 300px;
+}
+
+#colCard1 h6 {
+    margin-top: -8px;
+}
+
+#cardTextFecha {
+    margin-top: -15px;
+}
+
+#tituloError h1 {
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+#tituloError p {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+#tituloError img {
+    margin: 0 auto;
+    width: 500px;
+}
+
+#rowMenu h2 {
+    color: white;
+    margin-left: 10px;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+#cardBody {
+    height: 220px;
+}
+
+#btn-color {
+    background-color: #0057a4;
+    color: #fff;
+}
+
+#cardbody-color {
+    background-color: #ebf2fa;
+}
+
+#fondoLogin {
+    background-image: url(/img/carousel1.png);
+}
+
+#col1Carrito {
+    background: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+#col2Carrito {
+    background: #0057a4;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#contenidoTabla {
+    max-width: 100px;
+    word-wrap: break-word;
+}
+
+#tablaCarrito {
+    overflow-y: scroll;
+    max-height: 582px;
+}
+
+#datosCarrito {
+    background: white;
+    border-radius: 10px;
+}
+
+.botonImagen {
+    background-image: url(/img/carrito1.png);
+    background-color: transparent;
+    border: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+    background-position: center;
+}
+
+.botonImagen:hover {
+    opacity: 80%;
+}
+
+#datosCarrito h3 {
+    text-align: end;
+    padding-bottom: 10%;
+    padding-left: 10px;
+    padding-right: 2px;
+}
+
+#datosCarrito h4 {
+    text-align: end;
+    padding-right: 2px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+#fila1Factura {
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#col2Factura {
+    background: #0057a4;
+    border-bottom-right-radius: 20px;
+}
+
+#col1Factura {
+    background: #0057a4;
+    border-bottom-left-radius: 20px;
+}
+
+#numCaja {
+    padding-top: 10px;
+    margin-left: 5%;
+}
+
+#numCaja select {
+    border-color: #0057a4;
+    border-width: 5px;
+}
+
+.botonConfig {
+    background-image: url(/img/config1.png);
+    background-color: transparent;
+    border: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+    background-position: center;
+}
+
+#config {
+    float: right;
+}
+
+.botonConfig:hover {
+    opacity: 80%;
+}
+
+#metodoPago {
+    padding-top: 5px;
+    margin-left: 5%;
+    padding-bottom: 10%;
+}
+
+#metodoPago select {
+    border-color: #0057a4;
+    border-width: 5px;
+}
+
+
+/*Animaciones*/
+
+@keyframes crecer {
+    0% {
+        transform: scale(100%, 100%);
+    }
+    100% {
+        transform: scale(101.5%, 101.5%);
+    }
+}

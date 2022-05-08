@@ -1,0 +1,102 @@
+ <div class="col pt-2" id="col1Factura">
+    <form id="form1" class="row g-3 pb-3 needs-validation" novalidate  action = "/links/Confirmacion/{{cedula}}" method="GET">
+        <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
+        <div class="col-md-2 input-group mt-3">
+            <input type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" name = "cedula" required value = {{variable}}>
+            <button class="btn btn-success" disabled>Buscar</button> 
+            <div class="invalid-feedback" style="font-weight: bold; border-color: white;">
+                Debe colocar una cédula!
+            </div>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Primer Nombre" required name = "primer_nombre">
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Segundo Nombre (Opcional)" name = "segundo_nombre">
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Primer Apellido" required name = "primer_apellido">
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Segundo Apellido" required name = "segundo_apellido">
+        </div>
+        <div class="col-md-12">
+            <select class="form-select" id="validationCustom04" required name = "direccion">
+                <option selected disabled value="">Dirección</option>
+                <option value = "10">Asturias</option>
+                <option value = "11">Goya</option>
+                <option value = "13">Jerez</option>
+                <option value = "14">Sabadell</option>
+                <option value = "15">Murcia</option>
+                <option value = "20">San Diego</option>
+                <option value = "21">Miami</option>
+                <option value = "22">Norfolk</option>
+                <option value = "30">Ciudad De Mexico</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Codigo" required name ="codigoArea" data-bs-toggle="tooltip" data-bs-placement="top" title="Código de teléfono (+XX)">
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Telefono" required name ="telefono" data-bs-toggle="tooltip" data-bs-placement="top" title="Número telefonico">
+        </div>
+        <div class="col-md-3">
+            <input type="date" class="form-control" placeholder="fecha" required name = "fecha">
+        </div>
+        <div class="col-md-1" id="colBotonAfiliado">
+                <button class="btn btn-warning" type="submit" disabled>Afiliarse</button>
+            </div>
+
+           
+</div>
+
+ <div class="col-4 pt-2 pb-3" id="col2Factura">
+                    <div class="col pb-2" id="datosCarrito">
+                          <div class="col-md-4" id="numCaja">
+                            <select class="form-select" required name = "Caja">
+                            <option disabled selected value=""># Caja</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Debes elegir un numero de caja.
+                            </div>
+                        </div>
+                        <div class="col-md-7" id="metodoPago">
+                            <select class="form-select" id="validationCustom04" required name = "metodoPago">
+                                <option selected disabled value="">Método de Pago</option>
+                                <option value = "1" >Tarjeta de Debito</option>
+                                <option value = "2" >Tarjeta de Crédito</option>
+                            </select>
+                        </div>
+                  
+                        <h4>Cantidad de productos:{{cantidadTotal}}</h4>
+                        <h4>Oferta: {{ofertaespecifica}}</h4>
+                        <h3>Total: {{total}}€</h3>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Confirmar compra</button>
+                        </div>
+                           
+                    </div>
+                   
+                </div>
+                 </form>
+ 

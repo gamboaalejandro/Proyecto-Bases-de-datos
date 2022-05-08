@@ -1,0 +1,89 @@
+  <div class="col pt-2" id="col1Factura">
+                    <form id="form1" class="row g-3 pb-3 needs-validation" novalidate action="/links/facturacion/{{cliente.DocIdentidad}}" method="GET">
+                        <h2 style="font-weight: bold; color:white;">Datos de facturación</h2>
+                        <div class="col-md-2 input-group mt-3">
+                            <input form = "form1"  name ="cedula" type="text" class="form-control" id="cedulaPlantilla" placeholder="Cédula" style="max-width: 250px;" required readonly value = {{cliente.DocIdentidad}}>
+                             <a href="/links/Producto">  <button class="btn btn-success" disabled>Buscar</button> </a>
+                            <div class="invalid-feedback" style="font-weight: bold; border-color: white;">
+                                Debe colocar una cédula!
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Primer Nombre" disabled value ={{cliente.Primer_Nombre}}>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Segundo Nombre" disabled value = {{cliente.Segundo_Nombre}}>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Primer Apellido" disabled value = {{cliente.Primer_Apellido}}>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Segundo Apellido" disabled value = {{cliente.Segundo_Apellido}}>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" placeholder="Dirección" disabled value = {{ciudad.nombre}}>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Telefono"  disabled value= {{telffinal}}>
+                        </div>
+                        <div class="col-md-6 pt-2">
+                            <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="afiliado" style="border-color: white;" checked disabled>
+                            <label class="form-check-label" for="afiliado" style="color: white; font-weight: bold;">
+                                Afiliado
+                            </label>
+                            </div>
+                        </div>
+       
+                </div>
+
+                
+ <div class="col-4 pt-2 pb-3" id="col2Factura">
+                    <div class="col pb-2" id="datosCarrito">
+                          <div class="col-md-4" id="numCaja">
+                            <select class="form-select" required name = "Caja">
+                            <option disabled selected value=""># Caja</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Debes elegir un numero de caja.
+                            </div>
+                        </div>
+                        <div class="col-md-7" id="metodoPago">
+                            <select class="form-select" id="validationCustom04" required name = "metodoPago">
+                                <option selected disabled value="">Método de Pago</option>
+                                <option value = "1" >Tarjeta de Debito</option>
+                                <option value = "2" >Tarjeta de Crédito</option>
+                            </select>
+                        </div>
+                  
+                        <h4>Cantidad de productos:{{cantidadTotal}}</h4>
+                        <h4>Oferta: {{ofertaespecifica}}</h4>
+                        <h3>Total: {{total}}€</h3>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Confirmar compra</button>
+                        </div>
+                           
+                    </div>
+                   
+                </div>
+                             </form>
